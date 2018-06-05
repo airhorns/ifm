@@ -1,0 +1,159 @@
+sensors/BCDDC2E81300/app:
+  farm: bct
+  topic: sensors/BCDDC2E81300/app
+  contents: ESPURNA
+sensors/BCDDC2E81300/version:
+  farm: bct
+  topic: sensors/BCDDC2E81300/version
+  contents: 1.12.6
+sensors/BCDDC2E81300/board:
+  farm: bct
+  topic: sensors/BCDDC2E81300/board
+  contents: ITEAD_SONOFF_TH
+sensors/BCDDC2E81300/host:
+  farm: bct
+  topic: sensors/BCDDC2E81300/host
+  contents: BCF-TH-2
+sensors/BCDDC2E81300/ip:
+  farm: bct
+  topic: sensors/BCDDC2E81300/ip
+  contents: 192.168.2.92
+sensors/BCDDC2E81300/mac:
+  farm: bct
+  topic: sensors/BCDDC2E81300/mac
+  contents: BC:DD:C2:E8:13:00
+sensors/BCDDC2E81300/relay/0:
+  farm: bct
+  topic: sensors/BCDDC2E81300/relay/0
+  contents: '0'
+sensors/BCDDC2E81300/vcc:
+  farm: bct
+  topic: sensors/BCDDC2E81300/vcc
+  contents: '3260'
+sensors/BCDDC2E81300/status:
+  farm: bct
+  topic: sensors/BCDDC2E81300/status
+  contents: '1'
+sensors/BCDDC2E81300/temperature:
+  farm: bct
+  topic: sensors/BCDDC2E81300/temperature
+  contents: '22.9'
+sensors/BCDDC2E81300/humidity:
+  farm: bct
+  topic: sensors/BCDDC2E81300/humidity
+  contents: '49'
+sensors/BCDDC2E81300/rssi:
+  farm: bct
+  topic: sensors/BCDDC2E81300/rssi
+  contents: "-52"
+sensors/BCDDC2E81300/freeheap:
+  farm: bct
+  topic: sensors/BCDDC2E81300/freeheap
+  contents: '22984'
+sensors/BCDDC2E81300/uptime:
+  farm: bct
+  topic: sensors/BCDDC2E81300/uptime
+  contents: '502933'
+sensors/BCDDC2E81300/datetime:
+  farm: bct
+  topic: sensors/BCDDC2E81300/datetime
+  contents: '2018-06-05 18:31:26'
+sensors/BCDDC2E81300/loadavg:
+  farm: bct
+  topic: sensors/BCDDC2E81300/loadavg
+  contents: '1'
+
+sensors/5CCF7F7F95C7/relay/0:
+  farm: bct
+  topic: sensors/5CCF7F7F95C7/relay/0
+  contents: '0'
+sensors/5CCF7F7F95C7/status:
+  farm: bct
+  topic: sensors/5CCF7F7F95C7/status
+  contents: '1'
+sensors/5CCF7F7F95C7/datetime:
+  farm: bct
+  topic: sensors/5CCF7F7F95C7/datetime
+  contents: '2018-06-05 18:31:26'
+sensors/5CCF7F7F95C7/vcc:
+  farm: bct
+  topic: sensors/5CCF7F7F95C7/vcc
+  contents: '3197'
+sensors/5CCF7F7F95C7/app:
+  farm: bct
+  topic: sensors/5CCF7F7F95C7/app
+  contents: ESPURNA
+sensors/5CCF7F7F95C7/version:
+  farm: bct
+  topic: sensors/5CCF7F7F95C7/version
+  contents: 1.12.6
+sensors/5CCF7F7F95C7/board:
+  farm: bct
+  topic: sensors/5CCF7F7F95C7/board
+  contents: ITEAD_SONOFF_TH
+sensors/5CCF7F7F95C7/host:
+  farm: bct
+  topic: sensors/5CCF7F7F95C7/host
+  contents: BCF-TH-1
+sensors/5CCF7F7F95C7/ip:
+  farm: bct
+  topic: sensors/5CCF7F7F95C7/ip
+  contents: 192.168.2.170
+sensors/5CCF7F7F95C7/mac:
+  farm: bct
+  topic: sensors/5CCF7F7F95C7/mac
+  contents: 5C:CF:7F:7F:95:C7
+sensors/5CCF7F7F95C7/loadavg:
+  farm: bct
+  topic: sensors/5CCF7F7F95C7/loadavg
+  contents: '1'
+sensors/5CCF7F7F95C7/rssi:
+  farm: bct
+  topic: sensors/5CCF7F7F95C7/rssi
+  contents: "-49"
+sensors/5CCF7F7F95C7/freeheap:
+  farm: bct
+  topic: sensors/5CCF7F7F95C7/freeheap
+  contents: '22984'
+sensors/5CCF7F7F95C7/uptime:
+  farm: bct
+  topic: sensors/5CCF7F7F95C7/uptime
+  contents: '504886'
+
+
+sensors/ac:23:3f:a0:3b:16/ble-gateway:
+  farm: bct
+  topic: sensors/ac:23:3f:a0:3b:16/ble-gateway
+  contents: '1'
+sensors/ac:23:3f:a0:3b:16/device:
+  farm: bct
+  topic: sensors/ac:23:3f:a0:3b:16/device
+  contents: Minew S1
+sensors/ac:23:3f:a0:3b:16/battery_percentage:
+  farm: bct
+  topic: sensors/ac:23:3f:a0:3b:16/battery_percentage
+  contents: '100'
+sensors/ac:23:3f:a0:3b:16/transmission_power:
+  farm: bct
+  topic: sensors/ac:23:3f:a0:3b:16/transmission_power
+  contents: ''
+sensors/ac:23:3f:a0:3b:16/temperature:
+  farm: bct
+  topic: sensors/ac:23:3f:a0:3b:16/temperature
+  contents: '22.55859375'
+sensors/ac:23:3f:a0:3b:16/humidity:
+  farm: bct
+  topic: sensors/ac:23:3f:a0:3b:16/humidity
+  contents: '48.59765625'
+sensors/ac:23:3f:a0:3b:16/local_name:
+  farm: bct
+  topic: sensors/ac:23:3f:a0:3b:16/local_name
+  contents: ''
+sensors/ac:23:3f:a0:3b:16/ble-gateway-uuid:
+  farm: bct
+  topic: sensors/ac:23:3f:a0:3b:16/ble-gateway-uuid
+  contents: db45b855df33b2b6cb5f65d8c24e4ff2
+sensors/ac:23:3f:a0:3b:16/datetime:
+  farm: bct
+  topic: sensors/ac:23:3f:a0:3b:16/datetime
+  contents: '1528216375729'

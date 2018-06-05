@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'scan_beacon'
 scanner = ScanBeacon::CoreBluetoothScanner.new cycle_seconds: 1
 scanner.scan do |beacons|

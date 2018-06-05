@@ -1,8 +1,11 @@
 version: '3'
+
 volumes:
   postgres-data:
     driver: local
   redis-data:
+    driver: local
+  mqtt-data:
     driver: local
   app-gems:
     driver: local
@@ -16,6 +19,14 @@ services:
       POSTGRES_USER: ifm
       POSTGRES_DB: ifm
 
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - 3001:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@bigclear.farm
+      PGADMIN_DEFAULT_PASSWORD: bigclear1
+
   redis:
     image: redis:3.2.4-alpine
     ports:
@@ -24,27 +35,37 @@ services:
       - redis-data:/var/lib/redis
     command: redis-server --appendonly yes
 
+  mqtt:
+    image: eclipse-mosquitto
+    ports:
+      - 1883:1883
+      - 9001:9001
+    volumes:
+      - mqtt-data:/mosquitto/data
+
   web: &app_base
     build: .
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
     volumes:
       - .:/app
+      - ~/Code:/root/Code # useful for linking other gems
       - app-gems:/usr/local/bundle
     ports:
-      - "3000:3000"
+      - 3000:3000
     depends_on:
       - postgres
     environment:
       DATABASE_URL: postgres://ifm@postgres/ifm_development
-      REDIS_URL: redis://redis:6379
+      REDIS_URL: redis://redis:6379/1
+      MQTT_URL: mqtt://peacxxic:rfLeHoJBFMAp@m10.cloudmqtt.com:13796
       RACK_ENV: development
       RAILS_ENV: development
-    stdin_open: true
-    tty: true
+
   jobs:
     <<: *app_base
     command: sidekiq -c 25 -q default
     ports: []
+
   test:
     <<: *app_base
     command: guard start --no-bundler-warning --no-interactions
@@ -53,6 +74,7 @@ services:
       - postgres
     environment:
       DATABASE_URL: postgres://ifm@postgres/ifm_test
-      REDIS_URL: redis://redis:6379
+      REDIS_URL: redis://redis:6379/15
+      MQTT_URL: mqtt://mqtt
       RACK_ENV: test
       RAILS_ENV: test

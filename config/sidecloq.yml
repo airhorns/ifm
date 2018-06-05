@@ -1,0 +1,4 @@
+mqtt_injest:
+  class: MqttInjestAllFarms
+  cron: "* * * * *"
+  queue: "default"
