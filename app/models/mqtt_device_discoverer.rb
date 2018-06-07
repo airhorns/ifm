@@ -23,17 +23,17 @@ class MqttDeviceDiscoverer
       end
     end
 
-    discoveries = groups.map do |key, group|
+    groups.each_with_object({}) do |(key, group), discoveries|
       DEVICES.detect do |device_klass|
         if device_klass.discover(group)
-          break device_klass
+          discoveries[key] = [device_klass, group]
         end
       end
-    end.compact
+    end
   end
 
   def parse_topic_group_and_key(topic_string)
     segments = topic_string.split('/')
-    [segments[0...-1].join('/'), segments[-1]]
+    [segments[0..1].join('/'), segments[2..-1].join('/')]
   end
 end

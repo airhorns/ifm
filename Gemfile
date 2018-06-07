@@ -7,7 +7,7 @@ ruby '2.5.1'
 gem 'rails', '~> 5.2.0'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.11'
-gem 'webpacker'
+gem 'webpacker', '~> 3.5.3'
 gem 'jbuilder', '~> 2.5'
 gem 'redis', '~> 4.0'
 gem 'bcrypt', '~> 3.1.7'
@@ -21,6 +21,10 @@ gem 'sidekiq-daemon', git: "https://github.com/airhorns/sidekiq-daemon.git"
 gem "mlanett-redis-lock", git: "https://github.com/mlanett/redis-lock.git"
 
 gem 'mqtt', '~> 0.5.0'
+
+gem 'administrate', '~> 0.10.0'
+
+gem 'graphql', '~> 1.8.2'
 
 group :development, :test do
   gem 'byebug'
@@ -40,3 +44,5 @@ group :test do
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
 end
+
+gem 'graphiql-rails', group: :development

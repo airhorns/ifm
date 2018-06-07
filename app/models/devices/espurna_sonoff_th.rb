@@ -6,7 +6,7 @@ module Devices
     publishes :humidity, with: DevicePublisher::Espurna, comprehension: DeviceComprehensions::Humidity
 
     def self.discover(known_data)
-      known_data['app'] == 'ESPURNA' && known_data['board'] == 'ITEAD_SONOFF_BASIC'
+      known_data['app'] == 'ESPURNA' && known_data['board'] == 'ITEAD_SONOFF_TH'
     end
   end
 end

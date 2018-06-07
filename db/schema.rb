@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_05_154958) do
+ActiveRecord::Schema.define(version: 2018_06_07_000748) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,11 +28,14 @@ ActiveRecord::Schema.define(version: 2018_06_05_154958) do
 
   create_table "device_discovery_logs", force: :cascade do |t|
     t.bigint "farm_id", null: false
-    t.string "mac_address", null: false
     t.datetime "last_seen", null: false
     t.json "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "mqtt_key"
+    t.string "device_class", null: false
+    t.datetime "dismissed_at"
+    t.index ["mqtt_key"], name: "index_device_discovery_logs_on_mqtt_key"
   end
 
   create_table "farms", force: :cascade do |t|

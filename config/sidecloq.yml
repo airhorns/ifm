@@ -1,4 +1,4 @@
-mqtt_injest:
-  class: MqttInjestAllFarms
+all_farm_dispatcher:
+  class: AllFarmDispatcher
   cron: "* * * * *"
   queue: "default"

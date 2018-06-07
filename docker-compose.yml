@@ -61,6 +61,12 @@ services:
       RACK_ENV: development
       RAILS_ENV: development
 
+  webpack-dev-server:
+    <<: *app_base
+    command: bin/webpack-dev-server
+    ports:
+      - 3035:3035
+
   jobs:
     <<: *app_base
     command: sidekiq -c 25 -q default
