@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_07_000748) do
+ActiveRecord::Schema.define(version: 2018_06_07_211504) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2018_06_07_000748) do
     t.json "config"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "device_class", null: false
     t.index ["farm_id", "mac_address"], name: "index_device_configurations_on_farm_id_and_mac_address", unique: true
     t.index ["farm_id"], name: "index_device_configurations_on_farm_id"
   end
@@ -35,6 +36,7 @@ ActiveRecord::Schema.define(version: 2018_06_07_000748) do
     t.string "mqtt_key"
     t.string "device_class", null: false
     t.datetime "dismissed_at"
+    t.bigint "device_configuration_id"
     t.index ["mqtt_key"], name: "index_device_discovery_logs_on_mqtt_key"
   end
 

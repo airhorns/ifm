@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+set -ex
+npx gql-gen --schema http://localhost:3000/graphql --template graphql-codegen-typescript-template --out app/javascript/ifm/ "app/javascript/**/*.{ts,tsx}"

@@ -7,8 +7,12 @@ import { ApolloLink } from "apollo-link";
 import { ApolloProvider } from "react-apollo";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+import { AppContainer } from "./app_container/app_container";
 import { DeviceDiscoveryList } from "./device_discovery/list";
 import { Home } from "./home/home";
+
+const metaCsrf = document.querySelector("meta[name=csrf-token]");
+const csrfToken = metaCsrf && metaCsrf.getAttribute("content") || null;
 
 const client = new ApolloClient({
   link: ApolloLink.from([
@@ -25,6 +29,9 @@ const client = new ApolloClient({
     new HttpLink({
       uri: "/graphql",
       credentials: "same-origin",
+      headers: {
+          "X-CSRF-Token": csrfToken
+      }
     }),
   ]),
   cache: new InMemoryCache(),
@@ -33,12 +40,14 @@ const client = new ApolloClient({
 export class App extends React.Component<{}, {}> {
   public render() {
     return <ApolloProvider client={client}>
-      <Router>
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/device_discovery" exact component={DeviceDiscoveryList} />
-        </Switch>
-      </Router>
+        <AppContainer>
+          <Router>
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/device_discovery" exact component={DeviceDiscoveryList} />
+            </Switch>
+          </Router>
+        </AppContainer>
     </ApolloProvider>;
   }
 }

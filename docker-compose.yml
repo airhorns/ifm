@@ -7,6 +7,8 @@ volumes:
     driver: local
   mqtt-data:
     driver: local
+  influx-data:
+    driver: local
   app-gems:
     driver: local
 
@@ -14,7 +16,7 @@ services:
   postgres:
     image: postgres
     volumes:
-       - postgres-data:/var/lib/postgresql/data
+       - postgres-data:/var/lib/postgresql/data:delegated
     environment:
       POSTGRES_USER: ifm
       POSTGRES_DB: ifm
@@ -32,7 +34,7 @@ services:
     ports:
       - 6379:6379
     volumes:
-      - redis-data:/var/lib/redis
+      - redis-data:/var/lib/redis:delegated
     command: redis-server --appendonly yes
 
   mqtt:
@@ -41,15 +43,25 @@ services:
       - 1883:1883
       - 9001:9001
     volumes:
-      - mqtt-data:/mosquitto/data
+      - mqtt-data:/mosquitto/data:delegated
+
+  influxdb:
+    image: influxdb
+    ports:
+      - 8086:8086
+    volumes:
+      - influx-data:/var/lib/influxdb
+    environment:
+      INFLUXDB_ADMIN_USER: admin
+      INFLUXDB_ADMIN_PASSWORD: bigclear1
 
   web: &app_base
     build: .
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
     volumes:
-      - .:/app
-      - ~/Code:/root/Code # useful for linking other gems
-      - app-gems:/usr/local/bundle
+      - .:/app:delegated
+      - ~/Code:/root/Code:delegated # useful for linking other gems
+      - app-gems:/usr/local/bundle:delegated
     ports:
       - 3000:3000
     depends_on:

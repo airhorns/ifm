@@ -4,6 +4,7 @@ class MqttDeviceDiscoverer
   DEVICES = [
     Devices::EspurnaSonoffBasic,
     Devices::EspurnaSonoffTh,
+    Devices::EspurnaSonoffPowR2,
     Devices::MinewS1,
     Devices::XiaomiBleHt
   ]

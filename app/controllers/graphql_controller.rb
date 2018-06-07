@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class GraphqlController < ApplicationController
+  skip_before_action :verify_authenticity_token, if: :local_introspection?
+
   def execute
     variables = ensure_hash(params[:variables])
     query = params[:query]
@@ -31,5 +33,9 @@ class GraphqlController < ApplicationController
     else
       raise ArgumentError, "Unexpected parameter: #{ambiguous_param}"
     end
+  end
+
+  def local_introspection?
+    Rails.env.development? && params[:query].include?("IntrospectionQuery")
   end
 end
