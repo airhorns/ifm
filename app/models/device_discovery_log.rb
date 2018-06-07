@@ -7,4 +7,8 @@ class DeviceDiscoveryLog < ApplicationRecord
 
   scope :dismissed, -> { where.not(dismissed_at: nil) }
   scope :pending, -> { where(dismissed_at: nil) }
+
+  def data_address
+    "mqtt://#{mqtt_key}"
+  end
 end

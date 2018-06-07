@@ -32,9 +32,12 @@ export class Header extends React.Component<{}, {}> {
           size="large"
         >
           <Container>
-            <Menu.Item as="a" active>
+            <Menu.Item as="a" header>
               <Icon name="home" />
               Home
+            </Menu.Item>
+            <Menu.Item as="a">
+              Devices
             </Menu.Item>
           </Container>
         </Menu>

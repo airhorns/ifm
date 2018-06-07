@@ -86,7 +86,7 @@ services:
 
   test:
     <<: *app_base
-    command: guard start --no-bundler-warning --no-interactions
+    command: bin/rails test
     ports: []
     depends_on:
       - postgres

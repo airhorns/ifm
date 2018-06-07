@@ -5,6 +5,10 @@ module Devices
     publishes :temperature, with: DevicePublisher::BLEGateway, comprehension: DeviceComprehensions::Temperature
     publishes :humidity, with: DevicePublisher::BLEGateway, comprehension: DeviceComprehensions::Humidity
 
+    def self.human_name
+      "Xiaomi BLE Hygrometer"
+    end
+
     def self.discover(known_data)
       known_data['ble-gateway'] && known_data['device'] == 'Xiaomi Mijia BTLE TH'
     end

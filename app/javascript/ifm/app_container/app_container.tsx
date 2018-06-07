@@ -1,14 +1,15 @@
 import "./styles";
 import * as React from "react";
+import { Container } from "semantic-ui-react";
 import { Header } from "../header/header";
 
 export class AppContainer extends React.Component<{}, {}> {
   public render() {
     return <div className="ifm-container">
       <Header/>
-      <div className="ifm-content">
-        {this.props.children}
-      </div>
+      <Container text style={{ marginTop: '1em' }}>
+      {this.props.children}
+      </Container>
     </div>;
   }
 }

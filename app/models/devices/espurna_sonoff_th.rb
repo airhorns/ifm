@@ -5,6 +5,10 @@ module Devices
     publishes :temperature, with: DevicePublisher::Espurna, comprehension: DeviceComprehensions::Temperature
     publishes :humidity, with: DevicePublisher::Espurna, comprehension: DeviceComprehensions::Humidity
 
+    def self.human_name
+      "Espurna Sonoff TH"
+    end
+
     def self.discover(known_data)
       known_data['app'] == 'ESPURNA' && known_data['board'] == 'ITEAD_SONOFF_TH'
     end

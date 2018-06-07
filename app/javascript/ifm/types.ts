@@ -1,5 +1,5 @@
 /* tslint:disable */
-/** Generated in 2018-06-07T22:35:02+00:00 */
+/** Generated in 2018-06-07T23:27:21+00:00 */
 
 export type Json = any;
 
@@ -13,10 +13,11 @@ export interface Query {
 
 export interface DeviceDiscoveryLog {
   data?: Json | null;
+  dataAddress: string;
   deviceClass: string;
+  deviceName: string;
   id: string;
   lastSeen: DateTime;
-  mqttKey: string;
 }
 
 export interface Mutation {
@@ -63,8 +64,8 @@ export namespace GetAllDeviceDiscoveryLogs {
   export type AllDeviceDiscoveryLogs = {
     __typename?: "DeviceDiscoveryLog";
     id: string;
-    mqttKey: string;
-    deviceClass: string;
+    dataAddress: string;
+    deviceName: string;
     lastSeen: DateTime;
     data?: Json | null;
   };

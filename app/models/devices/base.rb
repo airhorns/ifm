@@ -15,6 +15,10 @@ module Devices
         self.publishers ||= []
         self.publishers += [with.new(field, comprehension, config)]
       end
+
+      def human_name
+        name.split("::")[-1].titleize
+      end
     end
 
     def initialize(mqtt)
