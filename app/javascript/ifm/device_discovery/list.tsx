@@ -5,7 +5,7 @@ import { GetAllDeviceDiscoveryLogsQuery } from "../queries";
 export class DeviceDiscoveryList extends React.Component<{}, {}> {
   public render() {
     return <React.Fragment>
-      <Header as='h1'>Discovered Devices</Header>
+      <Header as="h1">Discovered Devices</Header>
       <GetAllDeviceDiscoveryLogsQuery query={GetAllDeviceDiscoveryLogsQuery.query}>
       {({ loading, error, data }) => {
         if (loading) { return "Loading..."; }

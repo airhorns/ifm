@@ -1,5 +1,5 @@
 /* tslint:disable */
-/** Generated in 2018-06-07T23:27:21+00:00 */
+/** Generated in 2018-06-08T00:47:03+00:00 */
 
 export type Json = any;
 

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class MqttDeviceDiscoverer
+  EPOCH = "30/Nov/2009 16:29:30 +0100".to_datetime
+
   DEVICES = [
     Devices::EspurnaSonoffBasic,
     Devices::EspurnaSonoffTh,
@@ -15,23 +17,35 @@ class MqttDeviceDiscoverer
     @farm = farm
   end
 
+  def discover_and_save!
+    discoveries.each do |_sensor_key, attribute_hash|
+      discovery = DeviceDiscoveryLog.find_or_initialize_by(farm_id: farm.id, mqtt_key: attribute_hash[:mqtt_key])
+      discovery.assign_attributes(attribute_hash)
+      discovery.save!
+    end
+  end
+
   def discoveries
-    groups = MqttTopicState.where(farm_id: @farm.id).find_in_batches.each_with_object({}) do |batch, states|
+    attributes = MqttTopicState.where(farm_id: @farm.id).find_in_batches.each_with_object({}) do |batch, attribute_hashes|
       batch.each do |topic_state|
-        group, key = parse_topic_group_and_key(topic_state.topic)
-        states[group] ||= {}
-        states[group][key] = topic_state.contents
+        sensor_key, data_key = parse_topic_group_and_key(topic_state.topic)
+        attribute_hashes[sensor_key] ||= { data: {}, last_seen: EPOCH, mqtt_key: sensor_key }
+        attribute_hashes[sensor_key][:data][data_key] = topic_state.contents
+        attribute_hashes[sensor_key][:last_seen] = topic_state.updated_at if topic_state.updated_at > attribute_hashes[sensor_key][:last_seen]
       end
     end
 
-    groups.each_with_object({}) do |(key, group), discoveries|
-      DEVICES.detect do |device_klass|
-        if device_klass.discover(group)
-          discoveries[key] = [device_klass, group]
+    attributes.each_with_object({}) do |(sensor_key, attribute_hash), discoveries|
+      DEVICES.detect do |device_class|
+        if device_class.discover(attribute_hash[:data])
+          attribute_hash[:device_class] = device_class
+          discoveries[sensor_key] = attribute_hash
         end
       end
     end
   end
+
+  private
 
   def parse_topic_group_and_key(topic_string)
     segments = topic_string.split('/')
