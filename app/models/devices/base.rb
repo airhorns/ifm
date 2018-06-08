@@ -30,12 +30,12 @@ module Devices
       end
     end
 
-    attr_reader :farm, :config, :controls, :publishers
+    attr_reader :farm, :config, :controllers, :publishers
 
     def initialize(farm, config)
       @farm = farm
       @config = config
-      @controls = self.class.controllers.transform_values do |attributes|
+      @controllers = self.class.controllers.transform_values do |attributes|
         attributes[:with].new(self, field: attributes[:field], config: attributes[:config])
       end
       @publishers = self.class.publishers.transform_values do |attributes|

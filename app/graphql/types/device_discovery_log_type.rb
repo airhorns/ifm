@@ -24,5 +24,9 @@ module Types
         UNKNOWN_DEVICE_IMAGE
       end
     end
+
+    def proposed_configuration
+      DeviceEnlister.propose_configuration(object)
+    end
   end
 end

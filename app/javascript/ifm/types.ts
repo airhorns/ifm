@@ -1,5 +1,5 @@
 /* tslint:disable */
-/** Generated in 2018-06-08T21:25:03+00:00 */
+/** Generated in 2018-06-08T22:41:38+00:00 */
 
 export type Json = any;
 
@@ -28,13 +28,25 @@ export interface DeviceDiscoveryLog {
 }
 
 export interface ProposedDeviceConfiguration {
-  controller: DeviceController[];
-  publications: DevicePublication[];
+  config: Json;
+  controllers: DeviceController[];
+  publishers: DevicePublisher[];
 }
 
-export interface DeviceController {}
+export interface DeviceController {
+  controlStrategyHumanName: string;
+  field: string;
+  humanName: string;
+  icon: string;
+}
 
-export interface DevicePublication {}
+export interface DevicePublisher {
+  comprehensionHumanName: string;
+  comprehensionUnit?: string | null;
+  field: string;
+  humanName: string;
+  icon: string;
+}
 
 export interface Farm {}
 
@@ -68,7 +80,28 @@ export namespace Enlist {
     dataAddress: string;
     deviceName: string;
     lastSeen: DateTime;
-    data?: Json | null;
+    proposedConfiguration: ProposedConfiguration;
+  };
+
+  export type ProposedConfiguration = {
+    __typename?: "ProposedDeviceConfiguration";
+    publishers: Publishers[];
+    controllers: Controllers[];
+  };
+
+  export type Publishers = {
+    __typename?: "DevicePublisher";
+    humanName: string;
+    comprehensionHumanName: string;
+    comprehensionUnit?: string | null;
+    icon: string;
+  };
+
+  export type Controllers = {
+    __typename?: "DeviceController";
+    humanName: string;
+    controlStrategyHumanName: string;
+    icon: string;
   };
 
   export type FarmZones = {

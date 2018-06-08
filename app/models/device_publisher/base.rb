@@ -11,6 +11,19 @@ module DevicePublisher
       @config = config
     end
 
+    def human_name
+      case @field
+      when :rssi, :vcc, :ip
+        @field.to_s.upcase
+      when :loadavg
+        "Load Average"
+      when :mac, :mac_address
+        "MAC Address"
+      else
+        @field.to_s.humanize
+      end
+    end
+
     def mqtt_state_for(topic)
       @device.farm.mqtt_topic_states.where(topic: @device.absolute_mqtt_topic(topic)).first
     end
