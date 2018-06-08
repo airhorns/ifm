@@ -6,3 +6,4 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 farm = Farm.create!(name: "Big Clear Farms")
+farm.farm_zones.create!([{name: 'Germination'}, {name: 'Seedling Rack'}, {name: 'Aisle 1'}])

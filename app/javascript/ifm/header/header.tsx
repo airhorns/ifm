@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 import {
   Button,
   Container,
@@ -32,12 +33,14 @@ export class Header extends React.Component<{}, {}> {
           size="large"
         >
           <Container>
-            <Menu.Item as="a" header>
-              <Icon name="home" />
-              Home
+            <Menu.Item as="div" header>
+              <Link to="/">
+                <Icon name="home" />
+                Home
+              </Link>
             </Menu.Item>
-            <Menu.Item as="a">
-              Devices
+            <Menu.Item as="div">
+              <Link to="/device_discovery">Devices</Link>
             </Menu.Item>
           </Container>
         </Menu>

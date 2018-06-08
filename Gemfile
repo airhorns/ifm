@@ -45,6 +45,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
   gem 'timecop'
+  gem 'mocha'
 end
 
 gem 'graphiql-rails', group: :development

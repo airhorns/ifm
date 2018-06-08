@@ -58,6 +58,8 @@ services:
   web: &app_base
     build: .
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    stdin_open: true
+    tty: true
     volumes:
       - .:/app:delegated
       - ~/Code:/root/Code:delegated # useful for linking other gems
@@ -84,15 +86,15 @@ services:
     command: sidekiq -c 25 -q default
     ports: []
 
-  test:
-    <<: *app_base
-    command: bin/rails test
-    ports: []
-    depends_on:
-      - postgres
-    environment:
-      DATABASE_URL: postgres://ifm@postgres/ifm_test
-      REDIS_URL: redis://redis:6379/15
-      MQTT_URL: mqtt://mqtt
-      RACK_ENV: test
-      RAILS_ENV: test
+  # test:
+  #   <<: *app_base
+  #   command: bin/rails test
+  #   ports: []
+  #   depends_on:
+  #     - postgres
+  #   environment:
+  #     DATABASE_URL: postgres://ifm@postgres/ifm_test
+  #     REDIS_URL: redis://redis:6379/15
+  #     MQTT_URL: mqtt://mqtt
+  #     RACK_ENV: test
+  #     RAILS_ENV: test

@@ -8,8 +8,7 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      # Query context goes here, for example:
-      # current_user: current_user,
+      current_farm: current_farm,
     }
     result = IfmSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
@@ -37,5 +36,9 @@ class GraphqlController < ApplicationController
 
   def local_introspection?
     Rails.env.development? && params[:query].include?("IntrospectionQuery")
+  end
+
+  def current_farm
+    @farm ||= Farm.first
   end
 end

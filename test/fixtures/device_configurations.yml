@@ -1,1 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+sonoff_basic:
+  farm: bct
+  human_name: "Test Sonoff Basic"
+  device_class: "Devices::EspurnaSonoffBasic"
+  data_address: "mqtt://sensors/aa11aa11aa11"
+
+sonoff_th:
+  farm: bct
+  human_name: "Test Sonoff TH"
+  device_class: "Devices::EspurnaSonoffTh"
+  data_address: "mqtt://sensors/BCDDC2E81300"

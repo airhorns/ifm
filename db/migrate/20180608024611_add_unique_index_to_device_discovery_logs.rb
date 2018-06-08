@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddUniqueIndexToDeviceDiscoveryLogs < ActiveRecord::Migration[5.2]
   def change
     remove_index :device_discovery_logs, :mqtt_key

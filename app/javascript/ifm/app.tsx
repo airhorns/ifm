@@ -41,15 +41,15 @@ const client = new ApolloClient({
 export class App extends React.Component<{}, {}> {
   public render() {
     return <ApolloProvider client={client}>
+      <Router>
         <AppContainer>
-          <Router>
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/device_discovery" exact component={DeviceDiscoveryIndex} />
               <Route path="/device_discovery/:id/enlist" render={({match}) => <DeviceDiscoveryEnlist id={match.params.id}/>}/>
             </Switch>
-          </Router>
         </AppContainer>
+      </Router>
     </ApolloProvider>;
   }
 }

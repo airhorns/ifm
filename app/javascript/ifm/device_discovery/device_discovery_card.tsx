@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { Header, Item, Table } from "semantic-ui-react";
-import { GetAllDeviceDiscoveryLogs } from "../types";
+import { GetDeviceDiscoveryLogs } from "../types";
 
 interface IDeviceDiscoveryCard {
-  log: GetAllDeviceDiscoveryLogs.AllDeviceDiscoveryLogs;
+  log: GetDeviceDiscoveryLogs.DeviceDiscoveryLogs;
   dataTable?: boolean;
 }
 
@@ -18,7 +18,7 @@ export class DeviceDiscoveryCard extends React.Component<IDeviceDiscoveryCard, {
     });
 
     return <Item>
-      <Item.Image size="tiny" src="/assets/images/wireframe/image.png" />
+      <Item.Image size="tiny" src={this.props.log.imageUrl} />
 
       <Item.Content>
         <Item.Header>{this.props.log.deviceName} @ {this.props.log.dataAddress}</Item.Header>

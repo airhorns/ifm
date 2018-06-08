@@ -2,11 +2,16 @@
 
 module DeviceControllers
   class Base
-    attr_reader :field, :config
+    attr_reader :device, :field, :config
 
-    def initialize(field, config)
+    def initialize(device, field:, config:)
+      @device = device
       @field = field
       @config = config
+    end
+
+    def mqtt_send(topic, contents)
+      @device.farm.mqtt_client.publish(@device.absolute_mqtt_topic(topic), contents)
     end
   end
 end

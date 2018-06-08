@@ -10,20 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_08_024611) do
+ActiveRecord::Schema.define(version: 2018_06_08_200456) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "device_configurations", force: :cascade do |t|
     t.bigint "farm_id", null: false
-    t.string "mac_address", null: false
     t.string "human_name"
     t.json "config"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "device_class", null: false
-    t.index ["farm_id", "mac_address"], name: "index_device_configurations_on_farm_id_and_mac_address", unique: true
+    t.string "data_address", null: false
     t.index ["farm_id"], name: "index_device_configurations_on_farm_id"
   end
 
@@ -38,6 +37,13 @@ ActiveRecord::Schema.define(version: 2018_06_08_024611) do
     t.datetime "dismissed_at"
     t.bigint "device_configuration_id"
     t.index ["farm_id", "mqtt_key"], name: "index_device_discovery_logs_on_farm_id_and_mqtt_key", unique: true
+  end
+
+  create_table "farm_zones", force: :cascade do |t|
+    t.bigint "farm_id", null: false
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "farms", force: :cascade do |t|
