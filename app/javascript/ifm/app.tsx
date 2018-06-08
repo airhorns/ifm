@@ -8,7 +8,8 @@ import { ApolloProvider } from "react-apollo";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { AppContainer } from "./app_container/app_container";
-import { DeviceDiscoveryList } from "./device_discovery/list";
+import { DeviceDiscoveryIndex } from "./device_discovery/index";
+import { DeviceDiscoveryEnlist } from "./device_discovery/enlist";
 import { Home } from "./home/home";
 
 const metaCsrf = document.querySelector("meta[name=csrf-token]");
@@ -44,7 +45,8 @@ export class App extends React.Component<{}, {}> {
           <Router>
             <Switch>
               <Route path="/" exact component={Home} />
-              <Route path="/device_discovery" exact component={DeviceDiscoveryList} />
+              <Route path="/device_discovery" exact component={DeviceDiscoveryIndex} />
+              <Route path="/device_discovery/:id/enlist" render={({match}) => <DeviceDiscoveryEnlist id={match.params.id}/>}/>
             </Switch>
           </Router>
         </AppContainer>

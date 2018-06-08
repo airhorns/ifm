@@ -18,7 +18,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'sidekiq', '~> 5.1.3', require: ['sidekiq', 'sidekiq/web']
 gem 'sidecloq', '~> 0.4.1', require: ['sidecloq', 'sidecloq/web']
-gem 'sidekiq-daemon', git: "https://github.com/airhorns/sidekiq-daemon.git"
+gem 'sidekiq-daemon', git: "https://github.com/airhorns/sidekiq-daemon.git", ref: "f5113ae1f5a7fec9fe8af55718ddd7466aa2da22"
 gem "mlanett-redis-lock", git: "https://github.com/mlanett/redis-lock.git"
 
 gem 'mqtt', '~> 0.5.0'

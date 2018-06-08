@@ -1,6 +1,7 @@
 GIT
   remote: https://github.com/airhorns/sidekiq-daemon.git
-  revision: 80345bc675f0e30cb2debc670a360e79e372eba4
+  revision: f5113ae1f5a7fec9fe8af55718ddd7466aa2da22
+  ref: f5113ae1f5a7fec9fe8af55718ddd7466aa2da22
   specs:
     sidekiq-daemon (0.1.0)
       mlanett-redis-lock (~> 0.2.7)
@@ -189,7 +190,7 @@ GEM
     puma (3.11.4)
     raabro (1.1.5)
     rack (2.0.5)
-    rack-protection (2.0.1)
+    rack-protection (2.0.2)
       rack
     rack-proxy (0.6.4)
       rack

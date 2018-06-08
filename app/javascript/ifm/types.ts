@@ -1,5 +1,5 @@
 /* tslint:disable */
-/** Generated in 2018-06-08T00:47:03+00:00 */
+/** Generated in 2018-06-08T03:06:03+00:00 */
 
 export type Json = any;
 
@@ -8,7 +8,8 @@ export type DateTime = any;
 export interface Query {
   allDeviceDiscoveryLogs?:
     | DeviceDiscoveryLog[]
-    | null /** List DeviceDiscoveryLogs */;
+    | null /** List DeviceDiscoveryLogs with scope arguments */;
+  deviceDiscoveryLog?: DeviceDiscoveryLog | null /** Get one DeviceDiscoveryLog */;
 }
 
 export interface DeviceDiscoveryLog {
@@ -50,6 +51,9 @@ export interface EnlistDeviceInput {
 export interface AllDeviceDiscoveryLogsQueryArgs {
   dismissed?: boolean | null;
 }
+export interface DeviceDiscoveryLogQueryArgs {
+  id: string;
+}
 export interface EnlistDeviceMutationArgs {
   input: EnlistDeviceInput;
 }
@@ -62,6 +66,25 @@ export namespace GetAllDeviceDiscoveryLogs {
   };
 
   export type AllDeviceDiscoveryLogs = {
+    __typename?: "DeviceDiscoveryLog";
+    id: string;
+    dataAddress: string;
+    deviceName: string;
+    lastSeen: DateTime;
+    data?: Json | null;
+  };
+}
+export namespace GetDeviceDiscoveryLog {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+    deviceDiscoveryLog?: DeviceDiscoveryLog | null;
+  };
+
+  export type DeviceDiscoveryLog = {
     __typename?: "DeviceDiscoveryLog";
     id: string;
     dataAddress: string;

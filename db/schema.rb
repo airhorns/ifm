@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_07_211504) do
+ActiveRecord::Schema.define(version: 2018_06_08_024611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 2018_06_07_211504) do
     t.string "device_class", null: false
     t.datetime "dismissed_at"
     t.bigint "device_configuration_id"
-    t.index ["mqtt_key"], name: "index_device_discovery_logs_on_mqtt_key"
+    t.index ["farm_id", "mqtt_key"], name: "index_device_discovery_logs_on_farm_id_and_mqtt_key", unique: true
   end
 
   create_table "farms", force: :cascade do |t|
