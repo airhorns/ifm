@@ -87,8 +87,8 @@ services:
       - postgres
       - influxdb
     environment:
-      DEV_DATABASE_URL: postgres://ifm@postgres/ifm_development
-      TEST_DATABASE_URL: postgres://ifm@postgres/ifm_test
+      DEV_DATABASE_URL: postgres://ifm@postgres/ifm_development?pool=20
+      TEST_DATABASE_URL: postgres://ifm@postgres/ifm_test?pool=20
       INFLUXDB_URL: http://influxdb:8086/ifm_development
       REDIS_URL: redis://redis:6379/1
       MQTT_URL: mqtt://peacxxic:rfLeHoJBFMAp@m10.cloudmqtt.com:13796
@@ -113,8 +113,8 @@ services:
     depends_on:
       - postgres
     environment:
-      DEV_DATABASE_URL: postgres://ifm@postgres/ifm_development
-      TEST_DATABASE_URL: postgres://ifm@postgres/ifm_test
+      DEV_DATABASE_URL: postgres://ifm@postgres/ifm_development?pool=20
+      TEST_DATABASE_URL: postgres://ifm@postgres/ifm_test?pool=20
       INFLUXDB_URL: http://influxdb:8086/ifm_test
       REDIS_URL: redis://redis:6379/15
       MQTT_URL: mqtt://mqtt
