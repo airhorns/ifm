@@ -26,6 +26,9 @@ module DevicePublisher
 
     def comprehend(raw_value)
       comprehension.comprehend(raw_value)
+    rescue ArgumentError
+      Rails.logger.warn "uncomprehensible raw_value=#{raw_value} field=#{field}"
+      nil
     end
 
     def tags
@@ -34,8 +37,10 @@ module DevicePublisher
 
     def publish(raw_value)
       rich_value = comprehend(raw_value)
-      series = comprehension.series_name
-      Ifm::Application.influxdb.write_point(series, values: { value: rich_value }, tags: tags)
+      unless rich_value.nil?
+        series = comprehension.series_name
+        Ifm::Application.influxdb.write_point(series, values: { value: rich_value }, tags: tags)
+      end
     end
   end
 end

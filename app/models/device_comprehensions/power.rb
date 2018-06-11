@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module DeviceComprehensions
-  class Power < Base
+  class Power < DeviceComprehensions::Numeric
     def self.unit_string
       "W"
     end

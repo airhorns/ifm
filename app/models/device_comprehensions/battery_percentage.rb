@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module DeviceComprehensions
-  class BatteryPercentage < Base
+  class BatteryPercentage < DeviceComprehensions::Numeric
     def self.unit_string
       "%"
     end

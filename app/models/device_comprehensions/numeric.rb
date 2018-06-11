@@ -2,8 +2,16 @@
 
 module DeviceComprehensions
   class Numeric < Base
+    def self.comprehend(value)
+      Float(value)
+    end
+
     def self.human_name
-      "Generic numeric"
+      if self == DeviceComprehensions::Numeric
+        "Generic numeric"
+      else
+        super
+      end
     end
   end
 end

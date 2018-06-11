@@ -45,7 +45,7 @@ module Devices
     end
 
     def tags
-      @tags ||= { device: self.class.device_key }
+      @tags ||= { device: self.class.file_key }
     end
 
     private
