@@ -28,5 +28,9 @@ module Ifm
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+
+    def self.influxdb
+      @influx ||= InfluxDB::Client.new(url: ENV["INFLUXDB_URL"])
+    end
   end
 end

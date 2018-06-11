@@ -22,9 +22,8 @@ gem 'sidekiq-daemon', git: "https://github.com/airhorns/sidekiq-daemon.git", ref
 gem "mlanett-redis-lock", git: "https://github.com/mlanett/redis-lock.git"
 
 gem 'mqtt', '~> 0.5.0'
-
+gem 'influxdb', '~> 0.5.3'
 gem 'administrate', '~> 0.10.0'
-
 gem 'graphql', '~> 1.8.2'
 
 group :development, :test do

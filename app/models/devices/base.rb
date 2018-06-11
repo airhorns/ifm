@@ -27,11 +27,11 @@ module Devices
       end
     end
 
-    attr_reader :farm, :config, :controllers, :publishers
+    attr_reader :farm, :configuration, :controllers, :publishers
 
-    def initialize(farm, config)
+    def initialize(farm, configuration)
       @farm = farm
-      @config = config
+      @configuration = configuration
       @controllers = self.class.controllers.transform_values do |attributes|
         attributes[:with].new(self, field: attributes[:field], config: attributes[:config])
       end
@@ -41,7 +41,21 @@ module Devices
     end
 
     def absolute_mqtt_topic(topic)
-      [config['mqtt_key'], topic].join('/')
+      [mqtt_key, topic].join('/')
+    end
+
+    def tags
+      @tags ||= { device: self.class.device_key }
+    end
+
+    private
+
+    def mqtt_key
+      @mqtt_key ||= if configuration.data_address.start_with?('mqtt')
+        configuration.data_address.sub("mqtt://", '')
+      else
+        raise "Can't get MQTT key for non mqtt device"
+      end
     end
   end
 end

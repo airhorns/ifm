@@ -24,12 +24,18 @@ module DevicePublisher
       end
     end
 
-    def mqtt_state_for(topic)
-      @device.farm.mqtt_topic_states.where(topic: @device.absolute_mqtt_topic(topic)).first
+    def comprehend(raw_value)
+      comprehension.comprehend(raw_value)
     end
 
-    def comprehend(value)
-      comprehension.comprehend(value)
+    def tags
+      @tags ||= {}.merge(@device.tags)
+    end
+
+    def publish(raw_value)
+      rich_value = comprehend(raw_value)
+      series = comprehension.series_name
+      Ifm::Application.influxdb.write_point(series, values: { value: rich_value }, tags: tags)
     end
   end
 end

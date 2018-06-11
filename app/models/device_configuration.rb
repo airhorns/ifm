@@ -10,10 +10,6 @@ class DeviceConfiguration < ApplicationRecord
   has_one :device_discovery_log
 
   def device_instance
-    config = (config || {}).clone
-    if data_address.start_with?('mqtt')
-      config["mqtt_key"] = data_address.sub("mqtt://", '')
-    end
-    device_class.constantize.new(farm, config)
+    @device_instance ||= device_class.constantize.new(farm, self)
   end
 end

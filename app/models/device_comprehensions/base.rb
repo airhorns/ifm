@@ -13,5 +13,9 @@ module DeviceComprehensions
     def self.human_name
       name.split("::")[-1].titleize
     end
+
+    def self.series_name
+      name.split("::")[-1].underscore
+    end
   end
 end

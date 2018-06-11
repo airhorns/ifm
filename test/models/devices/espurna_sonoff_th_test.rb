@@ -14,9 +14,5 @@ module Devices
       @device.farm.mqtt_client.expects(:publish).with('sensors/BCDDC2E81300/relay/0', 'off')
       @device.controllers[:relay_0].send_off!
     end
-
-    test "it can read temperature" do
-      assert_equal 22.9, @device.publishers[:temperature].get
-    end
   end
 end

@@ -6,6 +6,8 @@ sonoff_basic:
   human_name: "Test Sonoff Basic"
   device_class: "Devices::EspurnaSonoffBasic"
   data_address: "mqtt://sensors/aa11aa11aa11"
+  last_seen: <%= Time.now %>
+
 
 sonoff_th:
   farm: bct
@@ -13,3 +15,4 @@ sonoff_th:
   human_name: "Test Sonoff TH"
   device_class: "Devices::EspurnaSonoffTh"
   data_address: "mqtt://sensors/BCDDC2E81300"
+  last_seen: <%= Time.now %>
