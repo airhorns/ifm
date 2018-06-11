@@ -43,7 +43,7 @@ export class DevicesIndex extends React.Component<{}, {}> {
         if (data && data.farmZones) {
           zones = data.farmZones.map((zone) => {
             let devices = zone.deviceConfigurations.map((deviceConfiguration) => {
-              return <DeviceCard deviceConfiguration={deviceConfiguration} key={deviceConfiguration.id} />
+              return <DeviceCard deviceConfiguration={deviceConfiguration} key={deviceConfiguration.id} />;
             });
 
             if (devices.length === 0) {

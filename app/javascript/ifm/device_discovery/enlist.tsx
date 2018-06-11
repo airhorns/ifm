@@ -73,8 +73,7 @@ export class DeviceDiscoveryEnlist extends React.Component<IDeviceDiscoveryEnlis
   }
 
   public render() {
-    return <React.Fragment>
-      <EnlistQuery query={EnlistQuery.query} variables={{id: this.props.id }}>
+    return <EnlistQuery query={EnlistQuery.query} variables={{id: this.props.id }}>
       {({ loading, error, data }) => {
         if (loading) { return "Loading..."; }
         if (error) { return `Error! ${error.message}`; }
@@ -113,14 +112,13 @@ export class DeviceDiscoveryEnlist extends React.Component<IDeviceDiscoveryEnlis
                       <Form.Button type="submit">Enlist</Form.Button>
                     </Segment>
                   </Segment.Group>
-                </Form>
+                </Form>;
               }
             }
             </EnlistMutation>
           </React.Fragment>;
         }
       }}
-    </EnlistQuery>
-  </React.Fragment>;
+    </EnlistQuery>;
   }
 }

@@ -23,6 +23,11 @@ module Types
       description "Get all the configured devices as DeviceConfiguration objects"
     end
 
+    field :device_configuration, DeviceConfigurationType, null: true do
+      description "Get the details of one DeviceConfiguration object"
+      argument :id, ID, required: true
+    end
+
     def device_discovery_logs(dismissed:)
       scope = context[:current_farm].device_discovery_logs
       if dismissed
@@ -33,7 +38,11 @@ module Types
     end
 
     def device_discovery_log(id:)
-      context[:current_farm].device_discovery_logs.find(strip_id(id))
+      context[:current_farm].device_discovery_logs.find(id)
+    end
+
+    def device_configuration(id:)
+      context[:current_farm].device_configurations.find(id)
     end
 
     def farm_zones

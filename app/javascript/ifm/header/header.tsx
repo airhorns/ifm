@@ -6,7 +6,7 @@ import {
   Icon,
   Menu,
   Segment,
-  Dropdown
+  Dropdown,
 } from "semantic-ui-react";
 
 export class Header extends React.Component<{}, {}> {

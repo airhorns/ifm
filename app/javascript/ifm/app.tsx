@@ -9,9 +9,11 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { AppContainer } from "./app_container/app_container";
 import { DevicesIndex } from "./devices/index";
+import { DevicesShow } from "./devices/show";
 import { DeviceDiscoveryIndex } from "./device_discovery/index";
 import { DeviceDiscoveryEnlist } from "./device_discovery/enlist";
 import { Home } from "./home/home";
+import { NoMatch } from "./no_match";
 
 const metaCsrf = document.querySelector("meta[name=csrf-token]");
 const csrfToken = metaCsrf && metaCsrf.getAttribute("content") || null;
@@ -57,8 +59,10 @@ export class App extends React.Component<{}, {}> {
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/devices" exact component={DevicesIndex} />
+              <Route path="/devices/:id" render={({match}) => <DevicesShow id={match.params.id}/>}/>
               <Route path="/device_discovery" exact component={DeviceDiscoveryIndex} />
               <Route path="/device_discovery/:id/enlist" render={({match}) => <DeviceDiscoveryEnlist id={match.params.id}/>}/>
+              <Route component={NoMatch} />
             </Switch>
         </AppContainer>
       </Router>

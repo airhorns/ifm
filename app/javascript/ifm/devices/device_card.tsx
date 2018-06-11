@@ -15,7 +15,7 @@ export class DeviceCard extends React.Component<IDeviceCard, {}> {
 
       <Item.Content>
         <Item.Header>
-          {this.props.deviceConfiguration.humanName}
+          <Link to={`/devices/${this.props.deviceConfiguration.id}`}>{this.props.deviceConfiguration.humanName}</Link>
         </Item.Header>
         <Item.Meta>
           <Label color="green">

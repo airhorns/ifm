@@ -1,11 +1,12 @@
 /* tslint:disable */
-/** Generated in 2018-06-11T02:50:31+00:00 */
+/** Generated in 2018-06-11T03:14:26+00:00 */
 
 export type Json = any;
 
 export type DateTime = any;
 
 export interface Query {
+  deviceConfiguration?: DeviceConfiguration | null /** Get the details of one DeviceConfiguration object */;
   deviceConfigurations?:
     | DeviceConfiguration[]
     | null /** Get all the configured devices as DeviceConfiguration objects */;
@@ -80,6 +81,9 @@ export interface Mutation {
 export interface EnlistDevicePayload {
   deviceConfiguration?: DeviceConfiguration | null;
   errors: string[];
+}
+export interface DeviceConfigurationQueryArgs {
+  id: string;
 }
 export interface DeviceDiscoveryLogQueryArgs {
   id: string;
@@ -212,6 +216,31 @@ export namespace GetDeviceConfigurations {
   };
 
   export type DeviceConfigurations = {
+    __typename?: "DeviceConfiguration";
+    id: string;
+    imageUrl: string;
+    humanName: string;
+    deviceName: string;
+    lastSeen: DateTime;
+    farmZone: FarmZone;
+  };
+
+  export type FarmZone = {
+    __typename?: "FarmZone";
+    name: string;
+  };
+}
+export namespace GetDeviceConfiguration {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+    deviceConfiguration?: DeviceConfiguration | null;
+  };
+
+  export type DeviceConfiguration = {
     __typename?: "DeviceConfiguration";
     id: string;
     imageUrl: string;
