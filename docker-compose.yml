@@ -86,10 +86,12 @@ services:
     depends_on:
       - postgres
       - influxdb
-    environment:
-      DEV_DATABASE_URL: postgres://ifm@postgres/ifm_development?pool=20
-      TEST_DATABASE_URL: postgres://ifm@postgres/ifm_test?pool=20
+    environment: &app_environment
+      DEV_DATABASE_URL: postgres://ifm@postgres/ifm_development
+      TEST_DATABASE_URL: postgres://ifm@postgres/ifm_test
+      DB_POOL: 5
       INFLUXDB_URL: http://influxdb:8086/ifm_development
+      RELOAD_CODE: 'true'
       REDIS_URL: redis://redis:6379/1
       MQTT_URL: mqtt://peacxxic:rfLeHoJBFMAp@m10.cloudmqtt.com:13796
       RACK_ENV: development
@@ -105,6 +107,10 @@ services:
     <<: *app_base
     command: sidekiq -c 25 -q default
     ports: []
+    environment:
+      <<: *app_environment
+      DB_POOL: 30
+      RELOAD_CODE: 'false'
 
   test:
     <<: *app_base
@@ -113,9 +119,7 @@ services:
     depends_on:
       - postgres
     environment:
-      DEV_DATABASE_URL: postgres://ifm@postgres/ifm_development?pool=20
-      TEST_DATABASE_URL: postgres://ifm@postgres/ifm_test?pool=20
-      INFLUXDB_URL: http://influxdb:8086/ifm_test
+      <<: *app_environment
       REDIS_URL: redis://redis:6379/15
       MQTT_URL: mqtt://mqtt
       RACK_ENV: test

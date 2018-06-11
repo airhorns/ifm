@@ -4,6 +4,7 @@ import { Json } from "../types";
 
 interface IDeviceController {
   humanName: string;
+  field: string;
   controlStrategyHumanName: string;
   icon: string;
 }

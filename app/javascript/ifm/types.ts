@@ -1,5 +1,5 @@
 /* tslint:disable */
-/** Generated in 2018-06-11T14:42:10+00:00 */
+/** Generated in 2018-06-11T20:10:27+00:00 */
 
 export type Json = any;
 
@@ -82,6 +82,12 @@ export interface EnlistDevicePayload {
   deviceConfiguration?: DeviceConfiguration | null;
   errors: string[];
 }
+
+export interface EnlistControl {
+  field: string;
+  controlNickname: string;
+  enabled: boolean;
+}
 export interface DeviceConfigurationQueryArgs {
   id: string;
 }
@@ -95,6 +101,7 @@ export interface EnlistDeviceMutationArgs {
   deviceDiscoveryLogId: string;
   deviceNickname: string;
   farmZoneId: string;
+  enlistControls: EnlistControl[];
 }
 
 export enum DiscoveryStateFilter {
@@ -140,6 +147,7 @@ export namespace GetEnlist {
 
   export type Controllers = {
     __typename?: "DeviceController";
+    field: string;
     humanName: string;
     controlStrategyHumanName: string;
     icon: string;
@@ -163,6 +171,7 @@ export namespace SendEnlist {
     deviceDiscoveryLogId: string;
     deviceNickname: string;
     farmZoneId: string;
+    enlistControls: EnlistControl[];
   };
 
   export type Mutation = {

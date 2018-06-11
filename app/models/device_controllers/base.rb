@@ -11,7 +11,7 @@ module DeviceControllers
     end
 
     def human_name
-      @field.to_s.humanize
+      @device.configuration.config['controller_nicknames'].try(:[], field.to_s) || @field.to_s.humanize
     end
 
     def mqtt_send(topic, contents)

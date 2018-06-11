@@ -7,10 +7,11 @@ class DeviceEnlister
     @farm = farm
   end
 
-  def enlist(device_discovery_log, nickname, farm_zone_id)
+  def enlist(device_discovery_log, nickname, farm_zone_id, enlist_controls)
     configuration = propose_configuration(device_discovery_log)
     configuration.farm_zone = farm.farm_zones.find(farm_zone_id)
     configuration.human_name = nickname
+    configuration[]
     DeviceConfiguration.transaction do
       if configuration.save
         device_discovery_log.device_configuration_id = configuration.id

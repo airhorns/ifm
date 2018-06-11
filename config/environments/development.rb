@@ -8,10 +8,12 @@ Rails.application.configure do
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
-  config.cache_classes = false
-
-  # Do not eager load code on boot.
-  config.eager_load = false
+  # We use an environment variable to control this so that for jobs in development we can turn on eager loading.
+  # This gets around a problem where sidekiq tries to reload a lot of code all at once when jobs start after a
+  # docker-compose up and hits a deadlock in the Rails code reloader. I think its probably because of docker's inotify
+  # implementation but don't really care to debug that.
+  config.cache_classes = ENV['RELOAD_CODE'] != 'true'
+  config.eager_load = ENV['RELOAD_CODE'] != 'true'
 
   # Show full error reports.
   config.consider_all_requests_local = true

@@ -1,9 +1,10 @@
 import * as React from "react";
+import * as _ from "lodash";
 import gql from "graphql-tag";
 import { Redirect } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
 import { Header, Segment, Item, List, Form, Dropdown } from "semantic-ui-react";
-import { GetEnlist, SendEnlist } from "../types";
+import { GetEnlist, SendEnlist, EnlistControl } from "../types";
 import { DeviceDiscoveryCard } from "./device_discovery_card";
 import { DeviceIOSegments } from "../devices/device_io_segments";
 
@@ -24,6 +25,7 @@ class EnlistQuery extends Query<GetEnlist.Query, GetEnlist.Variables> {
             icon
           }
           controllers {
+            field
             humanName
             controlStrategyHumanName
             icon
@@ -45,8 +47,13 @@ class EnlistQuery extends Query<GetEnlist.Query, GetEnlist.Variables> {
 
 class EnlistMutation extends Mutation<SendEnlist.EnlistDevice, SendEnlist.Variables> {
   public static mutation = gql`
-  mutation sendEnlist($deviceDiscoveryLogId: ID!, $deviceNickname: String!, $farmZoneId: ID!) {
-    enlistDevice(deviceDiscoveryLogId: $deviceDiscoveryLogId, deviceNickname: $deviceNickname, farmZoneId: $farmZoneId) {
+  mutation sendEnlist($deviceDiscoveryLogId: ID!, $deviceNickname: String!, $farmZoneId: ID!, $enlistControls: [EnlistControl!]!) {
+    enlistDevice(
+      deviceDiscoveryLogId: $deviceDiscoveryLogId,
+      deviceNickname: $deviceNickname,
+      farmZoneId: $farmZoneId,
+      enlistControls: $enlistControls
+    ) {
       deviceConfiguration {
         id
       }
@@ -62,14 +69,37 @@ interface IDeviceDiscoveryEnlistProps {
 }
 
 interface IDeviceDiscoveryEnlistState {
+  deviceDiscoveryLogId?: string;
   deviceNickname?: string;
   farmZoneId?: string;
+  enlistControls?: EnlistControl[];
 }
 
 export class DeviceDiscoveryEnlist extends React.Component<IDeviceDiscoveryEnlistProps, IDeviceDiscoveryEnlistState> {
-  public handleChange = (_: any, data: {name: string, value: string}) => {
-    const {name, value} = data;
-    this.setState({[name]: value} as IDeviceDiscoveryEnlistState);
+  public constructor(props: IDeviceDiscoveryEnlistProps) {
+    super(props);
+    this.state = {enlistControls: [], deviceDiscoveryLogId: this.props.id};
+  }
+
+  public handleChange = (__: any, input: {name: string, value: string}) => {
+    const {name, value} = input;
+    this.setState({[name]: value});
+  }
+
+  public handleControlChange = (__: any, input: {name: string, value: string}) => {
+    const {name, value} = input;
+    this.setState((previousState, ___) => {
+      let controls = previousState.enlistControls;
+      const existingControl = _.find(controls, (control: EnlistControl) => control.field === name);
+
+      if (existingControl) {
+        existingControl.controlNickname = value;
+      } else {
+        controls = [{field: name, controlNickname: value, enabled: true}];
+      }
+
+      return {...previousState, enlistControls: controls};
+    });
   }
 
   public render() {
@@ -91,7 +121,7 @@ export class DeviceDiscoveryEnlist extends React.Component<IDeviceDiscoveryEnlis
                 }
                 return <Form loading={result.loading} onSubmit={(e) => {
                   e.preventDefault();
-                  const variables = Object.assign({}, this.state, {deviceDiscoveryLogId: this.props.id}) as SendEnlist.Variables;
+                  const variables = this.state as SendEnlist.Variables;
                   enlist({variables});
                 }}>
                   <Segment.Group>
@@ -99,7 +129,7 @@ export class DeviceDiscoveryEnlist extends React.Component<IDeviceDiscoveryEnlis
                        deviceConfiguration={deviceDiscoveryLog.proposedConfiguration}
                        contentForControllerList={(controller) => {
                          return <List.Content floated="right">
-                           <Form.Input required label={`${controller.humanName} Nickname`}/>
+                           <Form.Input required name={controller.field} label={`${controller.humanName} Nickname`} onchange={this.handleControlChange}/>
                          </List.Content>;
                        }}
                      />
