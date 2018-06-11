@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Types
   class DiscoveryStateFilter < BaseEnum
     value "DISMISSED", "All discoveries marked as undesirable or not requiring enlisting"

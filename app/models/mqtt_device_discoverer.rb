@@ -21,6 +21,10 @@ class MqttDeviceDiscoverer
     discoveries.each do |_sensor_key, attribute_hash|
       discovery = DeviceDiscoveryLog.find_or_initialize_by(farm_id: farm.id, mqtt_key: attribute_hash[:mqtt_key])
       discovery.assign_attributes(attribute_hash)
+      if discovery.device_configuration
+        discovery.device_configuration.last_seen = discovery.last_seen
+        discovery.device_configuration.save!
+      end
       discovery.save!
     end
   end

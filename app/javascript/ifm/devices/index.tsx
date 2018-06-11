@@ -11,6 +11,7 @@ export class GetDeviceConfigurationsQuery extends Query<GetDeviceConfigurations.
     query getDeviceConfigurations {
       farmZones {
         name
+        id
         deviceConfigurations {
           id
           imageUrl
@@ -47,12 +48,12 @@ export class DevicesIndex extends React.Component<{}, {}> {
             });
 
             if (devices.length === 0) {
-              devices = [<Item>
+              devices = [<Item key="empty">
                 <Item.Content>No devices yet.</Item.Content>
               </Item>];
             }
 
-            return <Segment key={zone.name}>
+            return <Segment key={zone.id}>
               <Header>{zone.name}</Header>
               <Item.Group divided>{devices}</Item.Group>
             </Segment>;

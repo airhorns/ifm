@@ -27,7 +27,7 @@ export class GetDeviceDiscoveryLogsQuery extends Query<GetDeviceDiscoveryLogs.Qu
 }
 
 interface IDeviceDiscoveryIndexState {
-  filter: string
+  filter: string;
 }
 
 export class DeviceDiscoveryIndex extends React.Component<{}, IDeviceDiscoveryIndexState> {
@@ -41,7 +41,7 @@ export class DeviceDiscoveryIndex extends React.Component<{}, IDeviceDiscoveryIn
         let items;
         if (data && data.deviceDiscoveryLogs) {
           items = data.deviceDiscoveryLogs.map((log) => {
-            return <DeviceDiscoveryCard log={log} dataTable key={log.dataAddress}>
+            return <DeviceDiscoveryCard log={log} key={log.dataAddress}>
             <Link to={`/device_discovery/${log.id}/enlist`}>
               <Button primary floated="right">
                 Enlist

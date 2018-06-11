@@ -1,16 +1,29 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Header, Item, Table, Label, Icon } from "semantic-ui-react";
+import { Item, Table, Label, Icon } from "semantic-ui-react";
 import { GetDeviceDiscoveryLogs } from "../types";
+import { LastSeenLabel } from "../devices/last_seen_label";
 
-interface IDeviceDiscoveryCard {
+interface IDeviceDiscoveryCardProps {
   log: GetDeviceDiscoveryLogs.DeviceDiscoveryLogs;
-  dataTable?: boolean;
 }
 
-export class DeviceDiscoveryCard extends React.Component<IDeviceDiscoveryCard, {}> {
+interface IDeviceDiscoveryCardState {
+  dataTable: boolean;
+}
+
+export class DeviceDiscoveryCard extends React.Component<IDeviceDiscoveryCardProps, IDeviceDiscoveryCardState> {
+  public constructor(props: IDeviceDiscoveryCardProps) {
+    super(props);
+    this.state = {dataTable: false};
+  }
+
+  public toggleDataTable(show: boolean) {
+    this.setState({dataTable: show});
+  }
+
   public render() {
-    const dataRows = this.props.dataTable && Object.keys(this.props.log.data).map((key) => {
+    const dataRows = this.state.dataTable && Object.keys(this.props.log.data).map((key) => {
       return <Table.Row key={key}>
         <Table.Cell>{key}</Table.Cell>
         <Table.Cell>{this.props.log.data[key]}</Table.Cell>
@@ -35,9 +48,11 @@ export class DeviceDiscoveryCard extends React.Component<IDeviceDiscoveryCard, {
         <Item.Header>{this.props.log.deviceName} @ {this.props.log.dataAddress}</Item.Header>
         <Item.Meta>
           {label}
-          <span className="lastSeen">Last seen {this.props.log.lastSeen}</span>
+          <LastSeenLabel date={this.props.log.lastSeen}/>
         </Item.Meta>
-        {this.props.dataTable && <Item.Description>
+        <Item.Description>
+        {this.state.dataTable && <React.Fragment>
+          <a onClick={(_) => this.toggleDataTable(false)}><Icon name="database"/> Hide raw data</a>
           <Table basic="very" celled collapsing>
             <Table.Header>
               <Table.Row>
@@ -48,7 +63,9 @@ export class DeviceDiscoveryCard extends React.Component<IDeviceDiscoveryCard, {
 
             <Table.Body>{dataRows}</Table.Body>
           </Table>
-        </Item.Description>}
+        </React.Fragment>}
+        {!this.state.dataTable && <a onClick={(_) => this.toggleDataTable(true)}><Icon name="database"/> Show raw data</a>}
+        </Item.Description>
         <Item.Extra>{this.props.children}</Item.Extra>
       </Item.Content>
     </Item>;

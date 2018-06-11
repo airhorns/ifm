@@ -1,5 +1,5 @@
 /* tslint:disable */
-/** Generated in 2018-06-11T03:14:26+00:00 */
+/** Generated in 2018-06-11T14:42:10+00:00 */
 
 export type Json = any;
 
@@ -89,12 +89,18 @@ export interface DeviceDiscoveryLogQueryArgs {
   id: string;
 }
 export interface DeviceDiscoveryLogsQueryArgs {
-  dismissed?: boolean | null;
+  filter?: DiscoveryStateFilter | null;
 }
 export interface EnlistDeviceMutationArgs {
   deviceDiscoveryLogId: string;
   deviceNickname: string;
   farmZoneId: string;
+}
+
+export enum DiscoveryStateFilter {
+  DISMISSED = "DISMISSED",
+  ENLISTED = "ENLISTED",
+  PENDING = "PENDING"
 }
 export namespace GetEnlist {
   export type Variables = {
@@ -212,6 +218,7 @@ export namespace GetDeviceConfigurations {
   export type FarmZones = {
     __typename?: "FarmZone";
     name: string;
+    id: string;
     deviceConfigurations: DeviceConfigurations[];
   };
 

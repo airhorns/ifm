@@ -31,7 +31,7 @@ export class Header extends React.Component<{}, {}> {
             </Menu.Item>
             <Menu.Menu position="right">
               <Dropdown item text="Admin">
-                <Dropdown.Menu >
+                <Dropdown.Menu>
                   <Dropdown.Header>Admin</Dropdown.Header>
                   <Dropdown.Item><a href="/sidekiq">Sidekiq</a></Dropdown.Item>
                   <Dropdown.Item><a href="/graphiql">GraphIQL</a></Dropdown.Item>

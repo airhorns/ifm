@@ -8,7 +8,7 @@ module Graphql
       @farm = farms(:bct)
       @farm_zone = farm_zones(:bct_aisle_1)
       @discoverer = MqttDeviceDiscoverer.new(@farm)
-      @context = {current_farm: @farm}
+      @context = { current_farm: @farm }
     end
 
     test "getting devices for enlisting" do

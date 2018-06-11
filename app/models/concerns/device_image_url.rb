@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DeviceImageUrl
   UNKNOWN_DEVICE_IMAGE = "/images/devices/unknown.jpg"
 

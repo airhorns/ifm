@@ -4,7 +4,7 @@ class DeviceDiscoveryLog < ApplicationRecord
   validates :device_class, presence: true
   validates :last_seen, presence: true
   belongs_to :farm
-  belongs_to :device_configuration
+  belongs_to :device_configuration, optional: true
 
   scope :dismissed, -> { where.not(dismissed_at: nil) }
   scope :pending, -> { where(device_configuration_id: nil, dismissed_at: nil) }
