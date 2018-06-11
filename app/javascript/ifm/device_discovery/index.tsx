@@ -26,7 +26,11 @@ export class GetDeviceDiscoveryLogsQuery extends Query<GetDeviceDiscoveryLogs.Qu
   `;
 }
 
-export class DeviceDiscoveryIndex extends React.Component<{}, {}> {
+interface IDeviceDiscoveryIndexState {
+  filter: string
+}
+
+export class DeviceDiscoveryIndex extends React.Component<{}, IDeviceDiscoveryIndexState> {
   public render() {
     return <React.Fragment>
       <Header as="h1">Discovered Devices</Header>
@@ -42,6 +46,9 @@ export class DeviceDiscoveryIndex extends React.Component<{}, {}> {
               <Button primary floated="right">
                 Enlist
                 <Icon name="chevron right" />
+              </Button>
+              <Button secondary floated="right">
+                Dismiss
               </Button>
             </Link>
           </DeviceDiscoveryCard>;

@@ -3,7 +3,7 @@ module Types
   class QueryType < BaseObject
     field :device_discovery_logs, [DeviceDiscoveryLogType], null: true do
       description "List DeviceDiscoveryLogs with scope arguments"
-      argument :dismissed, Boolean, default_value: false, required: false
+      argument :filter, Types::DiscoveryStateFilter, default_value: "PENDING", required: false
     end
 
     field :device_discovery_log, DeviceDiscoveryLogType, null: true do
@@ -28,12 +28,17 @@ module Types
       argument :id, ID, required: true
     end
 
-    def device_discovery_logs(dismissed:)
+    def device_discovery_logs(filter:)
       scope = context[:current_farm].device_discovery_logs
-      if dismissed
-        scope.dismissed
-      else
+      case filter
+      when "PENDING"
         scope.pending
+      when "DISMISSED"
+        scope.dismissed
+      when "ENLISTED"
+        scope.enlisted
+      else
+        raise "Unknown discovery log filter type"
       end
     end
 
