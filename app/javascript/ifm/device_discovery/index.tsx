@@ -1,8 +1,30 @@
 import * as React from "react";
+import gql from "graphql-tag";
 import { Link } from "react-router-dom";
+import { Query } from "react-apollo";
 import { Header, Item, Table, Button, Icon } from "semantic-ui-react";
-import { GetDeviceDiscoveryLogsQuery } from "../queries";
+import { GetDeviceDiscoveryLogs } from "../types";
 import { DeviceDiscoveryCard } from "./device_discovery_card";
+
+export class GetDeviceDiscoveryLogsQuery extends Query<GetDeviceDiscoveryLogs.Query, GetDeviceDiscoveryLogs.Variables> {
+  public static query = gql`
+    query getDeviceDiscoveryLogs {
+      deviceDiscoveryLogs {
+        id
+        imageUrl
+        dataAddress
+        deviceName
+        lastSeen
+        data
+        enlistedConfiguration {
+          id
+          humanName
+          deviceName
+        }
+      }
+    }
+  `;
+}
 
 export class DeviceDiscoveryIndex extends React.Component<{}, {}> {
   public render() {

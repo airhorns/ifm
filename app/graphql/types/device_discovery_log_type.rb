@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 module Types
   class DeviceDiscoveryLogType < BaseObject
-    UNKNOWN_DEVIE_IMAGE = "/images/devices/unknown.jpg"
+    include DeviceImageUrl
 
     global_id_field :id
     field :data_address, String, null: false
@@ -11,22 +11,18 @@ module Types
     field :device_name, String, null: false
     field :image_url, String, null: false
     field :proposed_configuration, Types::ProposedDeviceConfigurationType, null: false
+    field :enlisted_configuration, Types::DeviceConfigurationType, null: true
 
     def device_name
       device_class.constantize.human_name
     end
 
-    def image_url
-      root_path = Dir.glob(Rails.root.join("public/images/devices/#{device_class.constantize.file_key}.*")).first
-      if root_path
-        root_path.sub(Rails.root.join('public').to_s, '')
-      else
-        UNKNOWN_DEVICE_IMAGE
-      end
+    def proposed_configuration
+      DeviceEnlister.new(context[:current_farm]).propose_configuration(object)
     end
 
-    def proposed_configuration
-      DeviceEnlister.propose_configuration(object)
+    def enlisted_configuration
+      object.device_configuration
     end
   end
 end

@@ -8,6 +8,7 @@ import { ApolloProvider } from "react-apollo";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { AppContainer } from "./app_container/app_container";
+import { DevicesIndex } from "./devices/index";
 import { DeviceDiscoveryIndex } from "./device_discovery/index";
 import { DeviceDiscoveryEnlist } from "./device_discovery/enlist";
 import { Home } from "./home/home";
@@ -36,6 +37,16 @@ const client = new ApolloClient({
     }),
   ]),
   cache: new InMemoryCache(),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: "network-only",
+      errorPolicy: "ignore",
+    },
+    query: {
+      fetchPolicy: "network-only",
+      errorPolicy: "all",
+    },
+  },
 });
 
 export class App extends React.Component<{}, {}> {
@@ -45,6 +56,7 @@ export class App extends React.Component<{}, {}> {
         <AppContainer>
             <Switch>
               <Route path="/" exact component={Home} />
+              <Route path="/devices" exact component={DevicesIndex} />
               <Route path="/device_discovery" exact component={DeviceDiscoveryIndex} />
               <Route path="/device_discovery/:id/enlist" render={({match}) => <DeviceDiscoveryEnlist id={match.params.id}/>}/>
             </Switch>

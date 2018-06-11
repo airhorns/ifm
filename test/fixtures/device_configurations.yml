@@ -2,12 +2,14 @@
 
 sonoff_basic:
   farm: bct
+  farm_zone: bct_aisle_1
   human_name: "Test Sonoff Basic"
   device_class: "Devices::EspurnaSonoffBasic"
   data_address: "mqtt://sensors/aa11aa11aa11"
 
 sonoff_th:
   farm: bct
+  farm_zone: bct_aisle_1
   human_name: "Test Sonoff TH"
   device_class: "Devices::EspurnaSonoffTh"
   data_address: "mqtt://sensors/BCDDC2E81300"

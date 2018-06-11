@@ -2,15 +2,12 @@
 
 module Devices
   class Base
-    class_attribute :controllers
-    self.controllers = {}
-    class_attribute :publishers
-    self.publishers = {}
-
     class << self
-      def inherited(_subclass)
-        self.controllers = controllers.clone
-        self.publishers = publishers.clone
+      attr_accessor :controllers, :publishers
+
+      def inherited(subclass)
+        subclass.controllers = controllers.try(:clone) || {}
+        subclass.publishers = publishers.try(:clone) || {}
       end
 
       def controls(field, with:, config: {})

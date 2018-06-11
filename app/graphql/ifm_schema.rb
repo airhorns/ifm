@@ -5,6 +5,6 @@ class IfmSchema < GraphQL::Schema
   query(Types::QueryType)
 
   def id_from_object(object, type, _ctx)
-    "#{type.name.underscore}-#{object.id}"
+    object.id.to_s
   end
 end

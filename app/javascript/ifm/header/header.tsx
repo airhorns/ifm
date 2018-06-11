@@ -3,21 +3,14 @@ import { Link } from "react-router-dom";
 import {
   Button,
   Container,
-  Divider,
-  Grid,
   Icon,
-  Image,
-  List,
   Menu,
-  Responsive,
   Segment,
-  Sidebar,
-  Visibility,
+  Dropdown
 } from "semantic-ui-react";
 
 export class Header extends React.Component<{}, {}> {
   public render() {
-    const fixed = false;
 
     return <Segment
         inverted
@@ -25,23 +18,27 @@ export class Header extends React.Component<{}, {}> {
         style={{ padding: "0.25em 0em" }}
         vertical
       >
-        <Menu
-          fixed={fixed ? "top" : undefined}
-          inverted={!fixed}
-          pointing={!fixed}
-          secondary={!fixed}
-          size="large"
-        >
+        <Menu inverted pointing size="large">
           <Container>
-            <Menu.Item as="div" header>
+            <Menu.Item>
               <Link to="/">
                 <Icon name="home" />
                 Home
               </Link>
             </Menu.Item>
-            <Menu.Item as="div">
-              <Link to="/device_discovery">Devices</Link>
+            <Menu.Item>
+              <Link to="/devices">Devices</Link>
             </Menu.Item>
+            <Menu.Menu position="right">
+              <Dropdown item text="Admin">
+                <Dropdown.Menu >
+                  <Dropdown.Header>Admin</Dropdown.Header>
+                  <Dropdown.Item><a href="/sidekiq">Sidekiq</a></Dropdown.Item>
+                  <Dropdown.Item><a href="/graphiql">GraphIQL</a></Dropdown.Item>
+                  <Dropdown.Item><a href="/admin">Admin Editor</a></Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Menu.Menu>
           </Container>
         </Menu>
       </Segment>;

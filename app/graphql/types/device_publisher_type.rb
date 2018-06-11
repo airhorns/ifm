@@ -24,7 +24,7 @@ module Types
       when "DeviceComprehensions::MacAddress", "DeviceComprehensions::IpAddress"
         "sitemap"
       when "DeviceComprehensions::BatteryPercentage"
-        "battery-full"
+        "battery full"
       when "DeviceComprehensions::Voltage", "DeviceComprehensions::Power", "DeviceComprehensions::Current"
         "bolt"
       else

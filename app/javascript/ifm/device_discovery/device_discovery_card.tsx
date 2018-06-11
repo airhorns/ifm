@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Header, Item, Table } from "semantic-ui-react";
+import { Header, Item, Table, Label, Icon } from "semantic-ui-react";
 import { GetDeviceDiscoveryLogs } from "../types";
 
 interface IDeviceDiscoveryCard {
@@ -17,12 +17,24 @@ export class DeviceDiscoveryCard extends React.Component<IDeviceDiscoveryCard, {
       </Table.Row>;
     });
 
+    let label;
+    if (this.props.log.enlistedConfiguration) {
+      label = <Label color="green">
+        <Icon name="external alternate" /> Enlisted as <Link to={`/devices/${this.props.log.enlistedConfiguration.id}`}>{this.props.log.enlistedConfiguration.humanName}</Link>
+      </Label>;
+    } else {
+      label = <Label color="purple">
+        <Icon name="external alternate" /> Not enlisted
+      </Label>;
+    }
+
     return <Item>
       <Item.Image size="tiny" src={this.props.log.imageUrl} />
 
       <Item.Content>
         <Item.Header>{this.props.log.deviceName} @ {this.props.log.dataAddress}</Item.Header>
         <Item.Meta>
+          {label}
           <span className="lastSeen">Last seen {this.props.log.lastSeen}</span>
         </Item.Meta>
         {this.props.dataTable && <Item.Description>

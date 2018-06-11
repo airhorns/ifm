@@ -19,6 +19,10 @@ module Types
       description "Get the details of the current farm"
     end
 
+    field :device_configurations, [DeviceConfigurationType], null: true do
+      description "Get all the configured devices as DeviceConfiguration objects"
+    end
+
     def device_discovery_logs(dismissed:)
       scope = context[:current_farm].device_discovery_logs
       if dismissed
@@ -38,6 +42,10 @@ module Types
 
     def farm
       context[:current_farm]
+    end
+
+    def device_configurations
+      context[:current_farm].device_configurations
     end
 
     private

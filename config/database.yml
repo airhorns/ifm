@@ -1,8 +1,8 @@
 development:
-  url: <%= ENV['DATABASE_URL'] %>
+  url: <%= ENV['DEV_DATABASE_URL'] %>
 
 test:
-  url: <%= ENV['DATABASE_URL'] %>
+  url: <%= ENV['TEST_DATABASE_URL'] %>
 
 production:
   url: <%= ENV['DATABASE_URL'] %>
