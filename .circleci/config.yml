@@ -15,33 +15,7 @@ jobs:
       - setup_remote_docker
         docker_layer_caching: true
 
-      # build and push Docker image
+      # build and start docker images
       - run: |
           TAG=0.1.$CIRCLE_BUILD_NUM
-          docker build -t airhorns/ifm:$TAG .
-          docker login -u $DOCKER_USER -p $DOCKER_PASS
-          docker push airhorns/ifm:$TAG
-
-      # Database setup
-      - run: bundle exec rake db:create
-      - run: bundle exec rake db:schema:load
-
-      # run tests!
-      - run:
-          name: run tests
-          command: |
-            mkdir /tmp/test-results
-            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
-
-            bundle exec rspec --format progress \
-                            --format RspecJunitFormatter \
-                            --out /tmp/test-results/rspec.xml \
-                            --format progress \
-                            $TEST_FILES
-
-      # collect reports
-      - store_test_results:
-          path: /tmp/test-results
-      - store_artifacts:
-          path: /tmp/test-results
-          destination: test-results
+          docker-compose --build up -f docker-compose.circle.yml -f ../docker-compose.yml
