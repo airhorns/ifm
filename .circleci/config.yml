@@ -13,6 +13,19 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
 
+      # Dirty hack and for this I am sorry. docker-compose lets you override various options with a second yaml file passed with the
+      # -f option, so we're using that to customize the compose setup for circle. This means that in development, the root level
+      # docker-compose.yml file is used and everything looks normal, and then for this script that runs on circle special stuff can happen.
+      # Sadly, I was unable to get around a bug on circle where the entrypoint wasn't being found when running containers. I isolated the issue
+      # to happening because the entrypoint is in a mounted volume on circle, and disabling volumes on circle fixed this issue. Since circle
+      # is responsible for building production docker containers, where we don't want to have to mount anything in via volumes, we can get
+      # around the bug and build simpler containers by just not using volume mounts on circle. Sadly, docker-compose doesn't let you
+      # override volume mounts, you can only add to them. So, to keep the normal docker-compose file the one for development, and to
+      # get rid of these volumes, we use a dirty hack and rewrite the root file to not have any volumes to override in the first place.
+      # I am sorry.
+      - run: |
+          ruby .circleci/remove-docker-compose-volumes.rb docker-compose.yml
+
       # build and start docker images
       - run: |
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin

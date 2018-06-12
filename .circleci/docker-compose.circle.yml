@@ -6,13 +6,7 @@ services:
     command: sh -c "exit 0"
   jobs:
     command: sh -c "exit 0"
-    volumes:
-      - ~/repo:/app:delegated
   web:
     command: sh -c "exit 0"
-    volumes:
-      - ~/repo:/app:delegated
   webpack-dev-server:
     command: sh -c "exit 0"
-    volumes:
-      - ~/repo:/app:delegated

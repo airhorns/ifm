@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateDeviceControllerConfigurations < ActiveRecord::Migration[5.2]
   def change
     create_table :device_controller_configurations do |t|
