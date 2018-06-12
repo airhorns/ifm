@@ -1,4 +1,11 @@
-all_farm_dispatcher:
+frequent_all_farm_dispatcher:
   class: AllFarmDispatcher
+  args: ['frequent']
   cron: "* * * * *"
+  queue: "default"
+
+rare_all_farm_dispatcher:
+  class: AllFarmDispatcher
+  args: ['rare']
+  cron: "* * * 0 *"
   queue: "default"

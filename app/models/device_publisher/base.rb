@@ -24,6 +24,14 @@ module DevicePublisher
       end
     end
 
+    def static?
+      false
+    end
+
+    def mqtt?
+      false
+    end
+
     def cached_value
       raise NotImplementedError
     end

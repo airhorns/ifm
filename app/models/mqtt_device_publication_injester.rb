@@ -11,8 +11,10 @@ class MqttDevicePublicationInjester
 
     @farm.device_configurations.each do |device_configuration|
       device_configuration.device_instance.publishers.values.each do |publisher|
-        @topic_map[publisher.absolute_mqtt_topic] = publisher
-        @topic_subscriptions << publisher.mqtt_topic_pattern
+        if publisher.mqtt?
+          @topic_map[publisher.absolute_mqtt_topic] = publisher
+          @topic_subscriptions << publisher.mqtt_topic_pattern
+        end
       end
     end
   end

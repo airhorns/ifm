@@ -7,6 +7,10 @@ module DevicePublisher
       @mqtt_key = field.to_s
     end
 
+    def mqtt?
+      true
+    end
+
     def cached_value
       if topic_state = device.configuration.farm.mqtt_topic_states.where(topic: absolute_mqtt_topic).first
         comprehend(topic_state.contents)

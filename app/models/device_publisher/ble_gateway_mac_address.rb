@@ -2,8 +2,16 @@
 
 module DevicePublisher
   class BLEGatewayMacAddress < Base
-    def cached_value
+    def static?
+      true
+    end
+
+    def get
       @device.mqtt_key.split('/')[-1]
+    end
+
+    def cached_value
+      get
     end
   end
 end
