@@ -6,16 +6,26 @@ version: 2
 jobs:
   build:
     docker:
-       - image: circleci/cci-demo-docker-primary:0.0.2
-
+      - image: circleci/ruby:2.5-node
     working_directory: ~/repo
-
     steps:
       - checkout
-      - setup_remote_docker
-        docker_layer_caching: true
+      - setup_remote_docker:
+          docker_layer_caching: true
 
       # build and start docker images
       - run: |
-          TAG=0.1.$CIRCLE_BUILD_NUM
-          docker-compose --build up -f docker-compose.circle.yml -f ../docker-compose.yml
+          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
+          docker-compose -f docker-compose.yml -f docker-compose.circle.yml up --build --detach
+          docker-compose ps
+
+      - run: docker-compose run web bin/rails test
+
+      - run: docker push airhorns/ifm:$CIRCLE_SHA1
+
+      - deploy:
+          name: Deploy Master to GKE
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              docker run airhorns/ifm:$CIRCLE_SHA1 config/deploy/deploy.sh
+            fi

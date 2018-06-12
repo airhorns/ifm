@@ -1,0 +1,78 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ../../docker-compose.yml
+    kompose.version: 1.14.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web
+  name: web
+spec:
+  ports:
+  - name: "3000"
+    port: 3000
+    targetPort: 3000
+  selector:
+    io.kompose.service: web
+status:
+  loadBalancer: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ../../docker-compose.yml
+    kompose.version: 1.14.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web
+  name: web
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: web
+    spec:
+      containers:
+      - args:
+        - bundle
+        - exec
+        - rails
+        - s
+        - -p
+        - "3000"
+        - -b
+        - 0.0.0.0
+        env:
+        - name: DB_POOL
+          value: "5"
+        - name: DEV_DATABASE_URL
+          value: postgres://ifm@postgres/ifm_development
+        - name: INFLUXDB_URL
+          value: http://influxdb:8086/ifm_development
+        - name: MQTT_URL
+          value: mqtt://peacxxic:rfLeHoJBFMAp@m10.cloudmqtt.com:13796
+        - name: RACK_ENV
+          value: development
+        - name: RAILS_ENV
+          value: development
+        - name: REDIS_URL
+          value: redis://redis:6379/1
+        - name: RELOAD_CODE
+          value: "false"
+        - name: TEST_DATABASE_URL
+          value: postgres://ifm@postgres/ifm_test
+        image: web
+        name: web
+        ports:
+        - containerPort: 3000
+        resources: {}
+        stdin: true
+        tty: true
+      restartPolicy: Always
+status: {}

@@ -14,6 +14,20 @@ export class GetDeviceConfigurationQuery extends Query<GetDeviceConfiguration.Qu
         humanName
         deviceName
         lastSeen
+        publishers {
+          humanName
+          humanValue
+          comprehensionHumanName
+          comprehensionUnit
+          icon
+        }
+        controllers {
+          field
+          humanName
+          humanState
+          controlStrategyHumanName
+          icon
+        }
         farmZone {
           name
         }

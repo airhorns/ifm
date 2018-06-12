@@ -1,0 +1,12 @@
+version: '3'
+
+# Override the containers not needed for testing to exit 0.
+services:
+  webpack-dev-server:
+    command: sh -c "exit 0"
+  pgadmin:
+    command: sh -c "exit 0"
+  jobs:
+    command: sh -c "exit 0"
+  web:
+    command: sh -c "exit 0"

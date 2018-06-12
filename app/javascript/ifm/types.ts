@@ -1,5 +1,5 @@
 /* tslint:disable */
-/** Generated in 2018-06-11T20:10:27+00:00 */
+/** Generated in 2018-06-12T16:26:21+00:00 */
 
 export type Json = any;
 
@@ -21,6 +21,7 @@ export interface Query {
 }
 
 export interface DeviceConfiguration {
+  controllers: DeviceController[];
   data?: Json | null;
   dataAddress: string;
   deviceClass: string;
@@ -31,6 +32,15 @@ export interface DeviceConfiguration {
   id: string;
   imageUrl: string;
   lastSeen: DateTime;
+  publishers: DevicePublisher[];
+}
+
+export interface DeviceController {
+  controlStrategyHumanName: string;
+  field: string;
+  humanName: string;
+  humanState: string;
+  icon: string;
 }
 
 export interface DeviceDiscoveryLog {
@@ -51,18 +61,12 @@ export interface ProposedDeviceConfiguration {
   publishers: DevicePublisher[];
 }
 
-export interface DeviceController {
-  controlStrategyHumanName: string;
-  field: string;
-  humanName: string;
-  icon: string;
-}
-
 export interface DevicePublisher {
   comprehensionHumanName: string;
   comprehensionUnit?: string | null;
   field: string;
   humanName: string;
+  humanValue: string;
   icon: string;
 }
 
@@ -101,7 +105,7 @@ export interface EnlistDeviceMutationArgs {
   deviceDiscoveryLogId: string;
   deviceNickname: string;
   farmZoneId: string;
-  enlistControls: EnlistControl[];
+  enlistControls?: EnlistControl[] | null;
 }
 
 export enum DiscoveryStateFilter {
@@ -238,7 +242,27 @@ export namespace GetDeviceConfigurations {
     humanName: string;
     deviceName: string;
     lastSeen: DateTime;
+    publishers: Publishers[];
+    controllers: Controllers[];
     farmZone: FarmZone;
+  };
+
+  export type Publishers = {
+    __typename?: "DevicePublisher";
+    humanName: string;
+    humanValue: string;
+    comprehensionHumanName: string;
+    comprehensionUnit?: string | null;
+    icon: string;
+  };
+
+  export type Controllers = {
+    __typename?: "DeviceController";
+    field: string;
+    humanName: string;
+    humanState: string;
+    controlStrategyHumanName: string;
+    icon: string;
   };
 
   export type FarmZone = {
@@ -263,7 +287,27 @@ export namespace GetDeviceConfiguration {
     humanName: string;
     deviceName: string;
     lastSeen: DateTime;
+    publishers: Publishers[];
+    controllers: Controllers[];
     farmZone: FarmZone;
+  };
+
+  export type Publishers = {
+    __typename?: "DevicePublisher";
+    humanName: string;
+    humanValue: string;
+    comprehensionHumanName: string;
+    comprehensionUnit?: string | null;
+    icon: string;
+  };
+
+  export type Controllers = {
+    __typename?: "DeviceController";
+    field: string;
+    humanName: string;
+    humanState: string;
+    controlStrategyHumanName: string;
+    icon: string;
   };
 
   export type FarmZone = {

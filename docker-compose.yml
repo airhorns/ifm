@@ -72,26 +72,26 @@ services:
       INFLUXDB_URL: http://influxdb:8086
       LOG_LEVEL: error
 
-  web: &app_base
+  jobs: &app_base
     build: .
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
-    stdin_open: true
-    tty: true
+    command: bundle exec sidekiq -c 25 -q default
     volumes:
       - .:/app:delegated
       - ~/Code:/root/Code:delegated # useful for linking other gems
       - app-gems:/usr/local/bundle:delegated
-    ports:
-      - 3000:3000
     depends_on:
       - postgres
       - influxdb
+    logging:
+      options:
+        max-size: "20k"
+        max-file: "1"
     environment: &app_environment
       DEV_DATABASE_URL: postgres://ifm@postgres/ifm_development
       TEST_DATABASE_URL: postgres://ifm@postgres/ifm_test
-      DB_POOL: 5
+      DB_POOL: 30
       INFLUXDB_URL: http://influxdb:8086/ifm_development
-      RELOAD_CODE: 'true'
+      RELOAD_CODE: 'false'
       REDIS_URL: redis://redis:6379/1
       MQTT_URL: mqtt://peacxxic:rfLeHoJBFMAp@m10.cloudmqtt.com:13796
       RACK_ENV: development
@@ -103,24 +103,15 @@ services:
     ports:
       - 3035:3035
 
-  jobs:
+  web:
     <<: *app_base
-    command: sidekiq -c 25 -q default
-    ports: []
+    image: airhorns/ifm
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    stdin_open: true
+    tty: true
+    ports:
+      - 3000:3000
     environment:
       <<: *app_environment
-      DB_POOL: 30
-      RELOAD_CODE: 'false'
-
-  test:
-    <<: *app_base
-    command: bin/rails test
-    ports: []
-    depends_on:
-      - postgres
-    environment:
-      <<: *app_environment
-      REDIS_URL: redis://redis:6379/15
-      MQTT_URL: mqtt://mqtt
-      RACK_ENV: test
-      RAILS_ENV: test
+      DB_POOL: 5
+      RELOAD_CODE: 'true'

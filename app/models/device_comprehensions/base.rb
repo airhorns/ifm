@@ -6,6 +6,10 @@ module DeviceComprehensions
       value
     end
 
+    def self.format(value)
+      value.to_s
+    end
+
     def self.unit_string
       nil
     end

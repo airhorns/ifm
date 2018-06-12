@@ -6,6 +6,10 @@ module DeviceComprehensions
       Float(value)
     end
 
+    def self.format(value)
+      value.round(1).to_s
+    end
+
     def self.human_name
       if self == DeviceComprehensions::Numeric
         "Generic numeric"

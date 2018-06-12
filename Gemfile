@@ -18,13 +18,16 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'sidekiq', '~> 5.1.3', require: ['sidekiq', 'sidekiq/web']
 gem 'sidecloq', '~> 0.4.1', require: ['sidecloq', 'sidecloq/web']
-gem 'sidekiq-daemon', git: "https://github.com/airhorns/sidekiq-daemon.git", ref: "f5113ae1f5a7fec9fe8af55718ddd7466aa2da22"
+gem 'sidekiq-daemon', git: "https://github.com/airhorns/sidekiq-daemon.git", ref: "a9f07b325cccbdd273b9d0fb1630df97e93f4dc5"
 gem "mlanett-redis-lock", git: "https://github.com/mlanett/redis-lock.git"
 
 gem 'mqtt', '~> 0.5.0'
 gem 'influxdb', '~> 0.5.3'
 gem 'administrate', '~> 0.10.0'
 gem 'graphql', '~> 1.8.2'
+
+gem 'kubernetes-deploy'
+gem 'ejson'
 
 group :development, :test do
   gem 'byebug'

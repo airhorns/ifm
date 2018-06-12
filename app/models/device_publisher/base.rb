@@ -24,6 +24,10 @@ module DevicePublisher
       end
     end
 
+    def cached_value
+      raise NotImplementedError
+    end
+
     def comprehend(raw_value)
       comprehension.comprehend(raw_value)
     rescue ArgumentError

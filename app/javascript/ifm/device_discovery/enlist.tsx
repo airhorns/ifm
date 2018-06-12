@@ -6,7 +6,7 @@ import { Query, Mutation } from "react-apollo";
 import { Header, Segment, Item, List, Form, Dropdown } from "semantic-ui-react";
 import { GetEnlist, SendEnlist, EnlistControl } from "../types";
 import { DeviceDiscoveryCard } from "./device_discovery_card";
-import { DeviceIOSegments } from "../devices/device_io_segments";
+import { DeviceDiscoveryIOSegments } from "./device_discovery_io_segments";
 
 class EnlistQuery extends Query<GetEnlist.Query, GetEnlist.Variables> {
   public static query = gql`
@@ -125,7 +125,7 @@ export class DeviceDiscoveryEnlist extends React.Component<IDeviceDiscoveryEnlis
                   enlist({variables});
                 }}>
                   <Segment.Group>
-                    <DeviceIOSegments
+                    <DeviceDiscoveryIOSegments
                        deviceConfiguration={deviceDiscoveryLog.proposedConfiguration}
                        contentForControllerList={(controller) => {
                          return <List.Content floated="right">

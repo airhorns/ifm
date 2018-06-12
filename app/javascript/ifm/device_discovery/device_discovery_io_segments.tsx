@@ -4,7 +4,6 @@ import { Json } from "../types";
 
 interface IDeviceController {
   humanName: string;
-  humanState: string;
   field: string;
   controlStrategyHumanName: string;
   icon: string;
@@ -12,7 +11,6 @@ interface IDeviceController {
 
 interface IDevicePublisher {
   humanName: string;
-  humanValue: string;
   comprehensionHumanName: string;
   comprehensionUnit?: string | null;
   icon: string;
@@ -24,24 +22,29 @@ interface IDeviceIoSegmentsProps {
     controllers: IDeviceController[];
     publishers: IDevicePublisher[];
   };
+  contentForControllerList?: (controller: IDeviceController) => JSX.Element;
+  contentForPublisherList?: (publisher: IDevicePublisher) => JSX.Element;
 }
 
-export class DeviceIOSegments extends React.Component<IDeviceIoSegmentsProps, {}> {
+export class DeviceDiscoveryIOSegments extends React.Component<IDeviceIoSegmentsProps, {}> {
   public render() {
     const publisherItems = this.props.deviceConfiguration.publishers.map((publisher) => {
       return <List.Item key={publisher.humanName}>
+        { this.props.contentForPublisherList && this.props.contentForPublisherList(publisher) }
         <List.Icon name={publisher.icon as any} size="large" verticalAlign="middle" />
         <List.Content>
-          <List.Header>{publisher.humanName}: {publisher.humanValue} {publisher.comprehensionUnit && publisher.comprehensionUnit}</List.Header>
+          <List.Header>{publisher.humanName}</List.Header>
+          <List.Description>interpreted as {publisher.comprehensionHumanName} {publisher.comprehensionUnit && ` in ${publisher.comprehensionUnit}`}</List.Description>
         </List.Content>
       </List.Item>;
     });
 
     const controllerItems = this.props.deviceConfiguration.controllers.map((controller) => {
       return <List.Item key={controller.humanName}>
+        { this.props.contentForControllerList && this.props.contentForControllerList(controller) }
         <List.Icon name={controller.icon as any} size="large" verticalAlign="middle" />
         <List.Content>
-          <List.Header>{controller.humanName}: {controller.humanState}</List.Header>
+          <List.Header>{controller.humanName}</List.Header>
           <List.Description>
             controlled via {controller.controlStrategyHumanName}
           </List.Description>
@@ -50,13 +53,13 @@ export class DeviceIOSegments extends React.Component<IDeviceIoSegmentsProps, {}
     });
 
     return <React.Fragment>
-        <Segment padded vertical>
-          <Header size="small">Publishes:</Header>
+        <Segment padded>
+          <Header size="small">This device will publish these values to the system:</Header>
           <List divided relaxed>{publisherItems}</List>
         </Segment>
-        <Segment padded vertical>
+        <Segment padded>
           {controllerItems.length === 0 && <Header size="small">This device has no controls.</Header>}
-          {controllerItems.length > 0 && <Header size="small">Controls:</Header>}
+          {controllerItems.length > 0 && <Header size="small">This device will allow control of the following:</Header>}
           {controllerItems.length > 0 && <List divided relaxed>{controllerItems}</List>}
         </Segment>
     </React.Fragment>;
