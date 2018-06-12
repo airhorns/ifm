@@ -13,28 +13,13 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
 
-    # Populate docker-dependencies-data container from circleci cache
-    # - restore_cache:
-    #     keys:
-    #       - v1-dependencies-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
-    #       - v1-dependencies-cache-{{ arch }}-{{ .Branch }}
-    #       - v1-dependencies-cache-{{ arch }}
-    # - run:
-    #     name: Restoring bundler cache into docker volumes
-    #     command: |
-    #       mkdir -p ~/dependencies-cache
-    #       docker-compose -f docker-compose.yml -f docker-compose.circle.yml up --no-start docker-dependencies-cache
-    #       docker cp ~/dependencies-cache/. docker-dependencies-cache:/backup
-    #       docker-compose -f docker-compose.yml -f docker-compose.circle.yml up --no-recreate docker-dependencies-cache
-    #       docker rm -f docker-dependencies-cache
-
       # build and start docker images
       - run: |
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
           docker-compose -f docker-compose.yml -f docker-compose.circle.yml up --build --no-start
           docker-compose ps
 
-      - run: docker-compose run web bin/rails test
+      - run: docker-compose -f docker-compose.yml -f docker-compose.circle.yml run web bin/rake db:setup && bin/rails test
 
       - run: docker push airhorns/ifm:$CIRCLE_SHA1
 
@@ -44,16 +29,3 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               docker run airhorns/ifm:$CIRCLE_SHA1 config/deploy/deploy.sh
             fi
-
-      # Back up the same volume to circle cache
-      # - run:
-      #     name: Backing up bundler cache from docker volumes
-      #     command: |
-      #       docker-compose -f docker-compose.yml -f docker-compose.circle.yml run --name docker-dependencies-cache docker-dependencies-cache backup
-      #       docker cp docker-dependencies-cache:/backup/. ~/dependencies-cache
-      #       docker rm -f docker-dependencies-cache
-      #
-      # - save_cache:
-      #     key: v1-dependencies-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
-      #     paths:
-      #       - ~/dependencies-cache

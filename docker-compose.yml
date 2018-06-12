@@ -75,6 +75,10 @@ services:
   jobs: &app_base
     build: .
     command: bundle exec sidekiq -c 25 -q default
+    volumes:
+      - .:/app:delegated
+      - ~/Code:/root/Code:delegated # useful for linking other gems
+      - app-gems:/usr/local/bundle:delegated
     depends_on:
       - postgres
       - influxdb

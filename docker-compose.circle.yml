@@ -2,20 +2,14 @@ version: '3'
 
 # Override the containers not needed for testing to exit 0.
 services:
-  # docker-dependencies-cache:
-  #   image: outstand/dockup:latest
-  #   command: restore
-  #   environment:
-  #     COMPRESS: 'false'
-  #   volumes:
-  #    - bundler-data:/source/bundler-data
-  #    - yarn-data:/source/bundler-data
-
-  webpack-dev-server:
-    command: sh -c "exit 0"
   pgadmin:
     command: sh -c "exit 0"
   jobs:
     command: sh -c "exit 0"
+    volumes: []
   web:
     command: sh -c "exit 0"
+    volumes: []
+  webpack-dev-server:
+    command: sh -c "exit 0"
+    volumes: []
