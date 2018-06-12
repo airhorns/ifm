@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: google/cloud-sdk
+      - image: airhorns/kubernetes-deploy-client:0.1.1
     working_directory: ~/repo
     steps:
       - checkout
@@ -45,7 +45,6 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               cd .circleci
-              sudo apt-get install ruby
               bundle
               echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
               gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
