@@ -26,7 +26,6 @@ gem 'influxdb', '~> 0.5.3'
 gem 'administrate', '~> 0.10.0'
 gem 'graphql', '~> 1.8.2'
 
-gem 'kubernetes-deploy'
 gem 'ejson'
 
 group :development, :test do

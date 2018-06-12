@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # This script is run by the CD platform to deploy the app.
 set -ex
-export REVISION='aaaa'
+export REVISION=${CIRCLE_SHA1}
 export KUBECONFIG=${HOME}/.kube/config
 export ENVIRONMENT=production
 
