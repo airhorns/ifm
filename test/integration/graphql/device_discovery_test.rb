@@ -72,7 +72,7 @@ module Graphql
         }
       "
       @discoverer.discover_and_save!
-      @log = DeviceDiscoveryLog.where(mqtt_key: "sensors/5CCF7F7F95C7").first
+      @log = DeviceDiscoveryLog.where(mqtt_key: "sensors/ac:23:3f:a0:3b:16").first
 
       result = IfmSchema.execute(
         mutation,
@@ -80,7 +80,7 @@ module Graphql
         variables: {
           deviceDiscoveryLogId: @log.id,
           deviceNickname: "Enlisted Doodad",
-          farmZoneId: @farm_zone.id
+          farmZoneId: @farm_zone.id,
         }
       )
 
@@ -88,7 +88,7 @@ module Graphql
       assert_equal @log.id.to_s, result['data']['enlistDevice']['deviceConfiguration']['deviceDiscoveryLog']['id']
       assert_equal @farm_zone.id.to_s, result['data']['enlistDevice']['deviceConfiguration']['farmZone']['id']
       assert_equal "Enlisted Doodad", result['data']['enlistDevice']['deviceConfiguration']['humanName']
-      assert_equal "mqtt://sensors/5CCF7F7F95C7", result['data']['enlistDevice']['deviceConfiguration']['dataAddress']
+      assert_equal "mqtt://sensors/ac:23:3f:a0:3b:16", result['data']['enlistDevice']['deviceConfiguration']['dataAddress']
     end
 
     test "enlisting devices with controllers" do
@@ -115,7 +115,7 @@ module Graphql
         }
       "
       @discoverer.discover_and_save!
-      @log = DeviceDiscoveryLog.where(mqtt_key: "sensors/BCDDC2E81300").first
+      @log = DeviceDiscoveryLog.where(mqtt_key: "sensors/5CCF7F7F95C7").first
 
       result = IfmSchema.execute(
         mutation,
@@ -124,7 +124,7 @@ module Graphql
           deviceDiscoveryLogId: @log.id,
           deviceNickname: "Enlisted Doodad with Control",
           farmZoneId: @farm_zone.id,
-          enlistControls: [{ field: "relay/0", controlNickname: "Pump relay" }]
+          enlistControls: [{ field: "relay_0", controlNickname: "Pump relay" }]
         }
       )
 
@@ -132,7 +132,36 @@ module Graphql
       assert_equal @log.id.to_s, result['data']['enlistDevice']['deviceConfiguration']['deviceDiscoveryLog']['id']
       assert_equal @farm_zone.id.to_s, result['data']['enlistDevice']['deviceConfiguration']['farmZone']['id']
       assert_equal "Enlisted Doodad with Control", result['data']['enlistDevice']['deviceConfiguration']['humanName']
-      assert_equal "mqtt://sensors/BCDDC2E81300", result['data']['enlistDevice']['deviceConfiguration']['dataAddress']
+      assert_equal "mqtt://sensors/5CCF7F7F95C7", result['data']['enlistDevice']['deviceConfiguration']['dataAddress']
+    end
+
+    test "enlisting devices with controllers shouldn't work unless a value is provided for each controller" do
+      mutation = "
+        mutation($deviceDiscoveryLogId: ID!, $deviceNickname: String!, $farmZoneId: ID!, $enlistControls: [EnlistControl!]) {
+          enlistDevice(deviceDiscoveryLogId: $deviceDiscoveryLogId, deviceNickname: $deviceNickname, farmZoneId: $farmZoneId, enlistControls: $enlistControls) {
+            deviceConfiguration {
+              id
+            }
+            errors
+          }
+        }
+      "
+      @discoverer.discover_and_save!
+      @log = DeviceDiscoveryLog.where(mqtt_key: "sensors/5CCF7F7F95C7").first
+
+      result = IfmSchema.execute(
+        mutation,
+        context: @context,
+        variables: {
+          deviceDiscoveryLogId: @log.id,
+          deviceNickname: "Enlisted Doodad with Control",
+          farmZoneId: @farm_zone.id,
+          enlistControls: []
+        }
+      )
+
+      assert_not_equal [], result['data']['enlistDevice']['errors']
+      assert_nil result['data']['deviceConfiguration']
     end
   end
 end

@@ -12,9 +12,9 @@ module Mutations
     field :device_configuration, Types::DeviceConfigurationType, null: true
     field :errors, [String], null: false
 
-    def resolve(device_discovery_log_id:, device_nickname:, farm_zone_id:)
+    def resolve(device_discovery_log_id:, device_nickname:, farm_zone_id:, enlist_controls: [])
       device_discovery_log = DeviceDiscoveryLog.find(device_discovery_log_id)
-      device_configuration = DeviceEnlister.new(context[:current_farm]).enlist(device_discovery_log, device_nickname, farm_zone_id)
+      device_configuration = DeviceEnlister.new(context[:current_farm]).enlist(device_discovery_log, device_nickname, farm_zone_id, enlist_controls)
 
       if device_configuration.save
         # Successful creation, return the created object with no errors
