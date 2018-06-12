@@ -16,10 +16,10 @@ jobs:
       # build and start docker images
       - run: |
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
-          docker-compose -f docker-compose.yml -f docker-compose.circle.yml up --build --no-start
+          docker-compose -f docker-compose.yml -f .circleci/docker-compose.circle.yml up --build --no-start
           docker-compose ps
 
-      - run: docker-compose -f docker-compose.yml -f docker-compose.circle.yml run web bin/rake db:setup && bin/rails test
+      - run: docker-compose -f docker-compose.yml -f .circleci/docker-compose.circle.yml run web bin/rake db:setup && bin/rails test
 
       - run: docker push airhorns/ifm:$CIRCLE_SHA1
 

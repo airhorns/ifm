@@ -84,8 +84,8 @@ services:
       - influxdb
     logging:
       options:
-        max-size: "50k"
-        max-file: "2"
+        max-size: "200k"
+        max-file: "3"
     environment: &app_environment
       DEV_DATABASE_URL: postgres://ifm@postgres/ifm_development
       TEST_DATABASE_URL: postgres://ifm@postgres/ifm_test
