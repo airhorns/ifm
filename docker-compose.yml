@@ -45,6 +45,7 @@ services:
       - 1883:1883
       - 9001:9001
     volumes:
+      - ./config/mosquitto.dev.conf:/mosquitto/config/mosquitto.conf:delegated
       - mqtt-data:/mosquitto/data:delegated
 
   influxdb:
@@ -93,7 +94,7 @@ services:
       INFLUXDB_URL: http://influxdb:8086/ifm_development
       RELOAD_CODE: 'false'
       REDIS_URL: redis://redis:6379/1
-      MQTT_URL: mqtt://peacxxic:rfLeHoJBFMAp@m10.cloudmqtt.com:13796
+      MQTT_URL: mqtt://mqtt:1883
       RACK_ENV: development
       RAILS_ENV: development
 
@@ -114,3 +115,10 @@ services:
     command: bin/webpack-dev-server
     ports:
       - 3035:3035
+
+  production-mqtt-mirror:
+    <<: *app_base
+    command: bin/rake mqtt:mirror_production[sensors/#]
+    environment:
+      <<: *app_environment
+      PRODUCTION_MQTT_URL: mqtt://peacxxic:rfLeHoJBFMAp@m10.cloudmqtt.com:13796

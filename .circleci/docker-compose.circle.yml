@@ -11,3 +11,5 @@ services:
     command: sh -c "exit 0"
   webpack-dev-server:
     command: sh -c "exit 0"
+  production-mqtt-mirror:
+    command: sh -c "exit 0"

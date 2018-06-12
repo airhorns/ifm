@@ -9,5 +9,4 @@ COPY yarn.lock /app/yarn.lock
 RUN bundle install -j 20
 RUN yarn
 COPY . /app/
-RUN ls -lA /app && ls -lA /app/bin
 ENTRYPOINT ["/app/bin/docker-entrypoint"]
