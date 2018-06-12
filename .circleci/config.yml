@@ -36,7 +36,9 @@ jobs:
           docker-compose -f docker-compose.yml -f .circleci/docker-compose.circle.yml run web bin/rake db:setup
           docker-compose -f docker-compose.yml -f .circleci/docker-compose.circle.yml run web bin/rails test
 
-      - run: docker push airhorns/ifm:$CIRCLE_SHA1
+      - run: |
+          docker tag airhorns/ifm airhorns/ifm:$CIRCLE_SHA1
+          docker push airhorns/ifm:$CIRCLE_SHA1
 
       - deploy:
           name: Deploy Master to GKE

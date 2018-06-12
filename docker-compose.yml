@@ -99,7 +99,6 @@ services:
 
   web:
     <<: *app_base
-    image: airhorns/ifm
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
     stdin_open: true
     tty: true

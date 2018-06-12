@@ -48,8 +48,6 @@ module Devices
       @tags ||= { device: self.class.file_key, name: configuration.human_name }
     end
 
-    private
-
     def mqtt_key
       @mqtt_key ||= if configuration.data_address.start_with?('mqtt')
         configuration.data_address.sub("mqtt://", '')
