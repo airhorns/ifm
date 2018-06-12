@@ -32,7 +32,9 @@ jobs:
           docker-compose -f docker-compose.yml -f .circleci/docker-compose.circle.yml up --build --no-start
           docker-compose ps
 
-      - run: docker-compose -f docker-compose.yml -f .circleci/docker-compose.circle.yml run web bin/rake db:setup && bin/rails test
+      - run: |
+          docker-compose -f docker-compose.yml -f .circleci/docker-compose.circle.yml run web bin/rake db:setup
+          docker-compose -f docker-compose.yml -f .circleci/docker-compose.circle.yml run web bin/rails test
 
       - run: docker push airhorns/ifm:$CIRCLE_SHA1
 
