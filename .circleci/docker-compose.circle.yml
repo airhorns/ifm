@@ -1,4 +1,4 @@
-version: '3'
+version: '3.2'
 
 # Override the containers not needed for testing to exit 0.
 services:

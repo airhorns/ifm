@@ -39,7 +39,7 @@ class DeviceEnlister
       DeviceControllerConfiguration.new(
         farm: farm,
         device_controller_field: enlist_control.field,
-        human_name: enlist_control.control_nickname,
+        nickname: enlist_control.control_nickname,
         enabled: enlist_control.enabled
       )
     end

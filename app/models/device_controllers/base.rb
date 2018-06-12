@@ -10,8 +10,14 @@ module DeviceControllers
       @config = config
     end
 
+    def nickname
+      if @device.configuration.persisted?
+        @device.configuration.device_controller_configurations.detect { |config| config.device_controller_field == @field.to_s }.nickname
+      end
+    end
+
     def human_name
-      @device.configuration.config['controller_nicknames'].try(:[], field.to_s) || @field.to_s.humanize
+      @field.to_s.humanize
     end
 
     def mqtt_send(topic, contents)

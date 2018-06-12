@@ -27,6 +27,7 @@ export class GetDeviceConfigurationsQuery extends Query<GetDeviceConfigurations.
           }
           controllers {
             field
+            nickname
             humanName
             humanState
             controlStrategyHumanName

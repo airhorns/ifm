@@ -1,5 +1,5 @@
 /* tslint:disable */
-/** Generated in 2018-06-12T17:57:38+00:00 */
+/** Generated in 2018-06-12T20:04:19+00:00 */
 
 export type Json = any;
 
@@ -42,6 +42,7 @@ export interface DeviceController {
   humanName: string;
   humanState: string;
   icon: string;
+  nickname: string;
 }
 
 export interface DeviceDiscoveryLog {
@@ -261,6 +262,7 @@ export namespace GetDeviceConfigurations {
   export type Controllers = {
     __typename?: "DeviceController";
     field: string;
+    nickname: string;
     humanName: string;
     humanState: string;
     controlStrategyHumanName: string;
@@ -306,6 +308,7 @@ export namespace GetDeviceConfiguration {
   export type Controllers = {
     __typename?: "DeviceController";
     field: string;
+    nickname: string;
     humanName: string;
     humanState: string;
     controlStrategyHumanName: string;

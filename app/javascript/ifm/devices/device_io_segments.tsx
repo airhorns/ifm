@@ -3,6 +3,7 @@ import { Header, Segment, List } from "semantic-ui-react";
 import { Json } from "../types";
 
 interface IDeviceController {
+  nickname: string;
   humanName: string;
   humanState: string;
   field: string;
@@ -41,9 +42,9 @@ export class DeviceIOSegments extends React.Component<IDeviceIoSegmentsProps, {}
       return <List.Item key={controller.humanName}>
         <List.Icon name={controller.icon as any} size="large" verticalAlign="middle" />
         <List.Content>
-          <List.Header>{controller.humanName}: {controller.humanState}</List.Header>
+          <List.Header>{controller.nickname}: {controller.humanState}</List.Header>
           <List.Description>
-            controlled via {controller.controlStrategyHumanName}
+            {controller.controlStrategyHumanName} control on {controller.humanName}
           </List.Description>
         </List.Content>
       </List.Item>;
