@@ -22,7 +22,6 @@ namespace :mqtt do
 
     production.subscribe(args[:pattern])
     production.get do |topic, contents|
-      puts "Mirror #{contents} to #{topic}"
       local.publish(topic, contents)
     end
   end
