@@ -1,5 +1,5 @@
 /* tslint:disable */
-/** Generated in 2018-06-12T16:26:21+00:00 */
+/** Generated in 2018-06-12T17:57:38+00:00 */
 
 export type Json = any;
 
@@ -29,6 +29,7 @@ export interface DeviceConfiguration {
   deviceName: string;
   farmZone: FarmZone;
   humanName: string;
+  humanNameWithZone: string;
   id: string;
   imageUrl: string;
   lastSeen: DateTime;
@@ -90,7 +91,7 @@ export interface EnlistDevicePayload {
 export interface EnlistControl {
   field: string;
   controlNickname: string;
-  enabled: boolean;
+  enabled?: boolean | null;
 }
 export interface DeviceConfigurationQueryArgs {
   id: string;
@@ -161,6 +162,7 @@ export namespace GetEnlist {
     __typename?: "DeviceConfiguration";
     id: string;
     humanName: string;
+    humanNameWithZone: string;
     deviceName: string;
   };
 

@@ -8,5 +8,9 @@ services:
     command: sh -c "exit 0"
   jobs:
     command: sh -c "exit 0"
+    volumes:
+      - ~/repo:/app
   web:
     command: sh -c "exit 0"
+    volumes:
+      - ~/repo:/app

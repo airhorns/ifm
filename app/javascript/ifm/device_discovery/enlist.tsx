@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as _ from "lodash";
 import gql from "graphql-tag";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
 import { Header, Segment, Item, List, Form, Dropdown } from "semantic-ui-react";
 import { GetEnlist, SendEnlist, EnlistControl } from "../types";
@@ -34,6 +34,7 @@ class EnlistQuery extends Query<GetEnlist.Query, GetEnlist.Variables> {
         enlistedConfiguration {
           id
           humanName
+          humanNameWithZone
           deviceName
         }
       }
@@ -45,7 +46,7 @@ class EnlistQuery extends Query<GetEnlist.Query, GetEnlist.Variables> {
   `;
 }
 
-class EnlistMutation extends Mutation<SendEnlist.EnlistDevice, SendEnlist.Variables> {
+class EnlistMutation extends Mutation<SendEnlist.Mutation, SendEnlist.Variables> {
   public static mutation = gql`
   mutation sendEnlist($deviceDiscoveryLogId: ID!, $deviceNickname: String!, $farmZoneId: ID!, $enlistControls: [EnlistControl!]!) {
     enlistDevice(
@@ -111,25 +112,39 @@ export class DeviceDiscoveryEnlist extends React.Component<IDeviceDiscoveryEnlis
           const deviceDiscoveryLog = data.deviceDiscoveryLog;
           const zones = data.farmZones.map((zone) => ({ text: zone.name, value: zone.id }));
 
+          if (data.deviceDiscoveryLog.enlistedConfiguration) {
+            return <Segment>
+              <Header as="h1">This {data.deviceDiscoveryLog.enlistedConfiguration.deviceName} is already enlisted.</Header>
+              <p>View this device: <Link to={`/devices/${data.deviceDiscoveryLog.enlistedConfiguration.id}`}>
+                  {data.deviceDiscoveryLog.enlistedConfiguration.humanNameWithZone}
+                </Link>
+              </p>
+            </Segment>;
+          }
+
           return <React.Fragment>
             <Header as="h1">Enlisting:</Header>
             <Segment padded><Item.Group><DeviceDiscoveryCard log={deviceDiscoveryLog}/></Item.Group></Segment>
             <EnlistMutation mutation={EnlistMutation.mutation}>{
               (enlist, result) => {
-                if (result.data && result.data.deviceConfiguration) {
-                  return <Redirect to={`/devices/${result.data.deviceConfiguration.id}`} />;
+                if (result.data && result.data.enlistDevice && result.data.enlistDevice.deviceConfiguration) {
+                  return <Redirect to={`/devices/${result.data.enlistDevice.deviceConfiguration.id}`} />;
                 }
+
                 return <Form loading={result.loading} onSubmit={(e) => {
                   e.preventDefault();
                   const variables = this.state as SendEnlist.Variables;
                   enlist({variables});
                 }}>
                   <Segment.Group>
+                    {result.data && result.data.enlistDevice && result.data.enlistDevice.errors && <Segment>
+                      {result.data.enlistDevice.errors.map((e) => <p>{e}</p>)}
+                    </Segment>}
                     <DeviceDiscoveryIOSegments
                        deviceConfiguration={deviceDiscoveryLog.proposedConfiguration}
                        contentForControllerList={(controller) => {
                          return <List.Content floated="right">
-                           <Form.Input required name={controller.field} label={`${controller.humanName} Nickname`} onchange={this.handleControlChange}/>
+                           <Form.Input required name={controller.field} label={`${controller.humanName} Nickname`} onChange={this.handleControlChange}/>
                          </List.Content>;
                        }}
                      />

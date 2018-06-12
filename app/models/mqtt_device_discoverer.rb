@@ -19,7 +19,7 @@ class MqttDeviceDiscoverer
 
   def discover_and_save!
     discoveries.each do |_sensor_key, attribute_hash|
-      discovery = DeviceDiscoveryLog.find_or_initialize_by(farm_id: farm.id, mqtt_key: attribute_hash[:mqtt_key])
+      discovery = DeviceDiscoveryLog.includes(device_configuration: :device_controller_configurations).find_or_initialize_by(farm_id: farm.id, mqtt_key: attribute_hash[:mqtt_key])
       discovery.assign_attributes(attribute_hash)
       if discovery.device_configuration
         discovery.device_configuration.last_seen = discovery.last_seen

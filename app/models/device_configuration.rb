@@ -9,7 +9,7 @@ class DeviceConfiguration < ApplicationRecord
   belongs_to :farm
   belongs_to :farm_zone
   has_many :device_controller_configurations, validate: true
-  has_one :device_discovery_log
+  has_one :device_discovery_log, dependent: :nullify
 
   def device_instance
     @device_instance ||= device_class.constantize.new(farm, self)
