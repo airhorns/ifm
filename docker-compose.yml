@@ -72,19 +72,9 @@ services:
       INFLUXDB_URL: http://influxdb:8086
       LOG_LEVEL: error
 
-  webpack-dev-server:
-    <<: *app_base
-    command: bin/webpack-dev-server
-    ports:
-      - 3035:3035
-
   jobs: &app_base
     build: .
     command: bundle exec sidekiq -c 25 -q default
-    volumes:
-      - .:/app:delegated
-      - ~/Code:/root/Code:delegated # useful for linking other gems
-      - app-gems:/usr/local/bundle:delegated
     depends_on:
       - postgres
       - influxdb
@@ -115,3 +105,9 @@ services:
       <<: *app_environment
       DB_POOL: 5
       RELOAD_CODE: 'true'
+
+  webpack-dev-server:
+    <<: *app_base
+    command: bin/webpack-dev-server
+    ports:
+      - 3035:3035

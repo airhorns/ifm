@@ -31,7 +31,7 @@ jobs:
       # build and start docker images
       - run: |
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
-          docker-compose -f docker-compose.yml -f docker-compose.circle.yml up --build --detach
+          docker-compose -f docker-compose.yml -f docker-compose.circle.yml up --build --no-start
           docker-compose ps
 
       - run: docker-compose run web bin/rails test
