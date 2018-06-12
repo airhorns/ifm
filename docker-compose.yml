@@ -72,6 +72,12 @@ services:
       INFLUXDB_URL: http://influxdb:8086
       LOG_LEVEL: error
 
+  webpack-dev-server:
+    <<: *app_base
+    command: bin/webpack-dev-server
+    ports:
+      - 3035:3035
+
   jobs: &app_base
     build: .
     command: bundle exec sidekiq -c 25 -q default
@@ -84,8 +90,8 @@ services:
       - influxdb
     logging:
       options:
-        max-size: "20k"
-        max-file: "1"
+        max-size: "50k"
+        max-file: "2"
     environment: &app_environment
       DEV_DATABASE_URL: postgres://ifm@postgres/ifm_development
       TEST_DATABASE_URL: postgres://ifm@postgres/ifm_test
@@ -96,12 +102,6 @@ services:
       MQTT_URL: mqtt://peacxxic:rfLeHoJBFMAp@m10.cloudmqtt.com:13796
       RACK_ENV: development
       RAILS_ENV: development
-
-  webpack-dev-server:
-    <<: *app_base
-    command: bin/webpack-dev-server
-    ports:
-      - 3035:3035
 
   web:
     <<: *app_base
