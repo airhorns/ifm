@@ -12,7 +12,7 @@ class MqttStateInjest
     client.subscribe(*SUBSCRIPTION_PATTERNS)
     client.get do |topic, payload|
       payload = MqttHelper.sanitize_payload(payload)
-      if existing_state = MqttTopicState.where(farm_id: farm_id, topic: topic).first
+      if existing_state = get_state(farm_id, topic)
         existing_state.contents = payload
         existing_state.save!
       else
@@ -20,6 +20,16 @@ class MqttStateInjest
       end
 
       daemon_lock.renew
+    end
+  end
+
+  def get_state(farm_id, topic)
+    @cache ||= {}
+    @cache[topic] ||= MqttTopicState.where(farm_id: farm_id, topic: topic).first || :nil
+    if @cache[topic] == :nil
+      nil
+    else
+      @cache[topic]
     end
   end
 end

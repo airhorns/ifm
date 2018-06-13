@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  if Rails.env.development?
-    mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
-  end
-
   post "/graphql", to: "graphql#execute"
 
   root to: 'client_side_app#index'
@@ -17,9 +13,13 @@ Rails.application.routes.draw do
     resources :mqtt_topic_states
 
     root to: "device_configurations#index"
+
+    namespace :tools do
+      mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
+      mount Sidekiq::Web => '/sidekiq'
+    end
   end
 
-  mount Sidekiq::Web => '/sidekiq'
-
+  mount RailsDb::Engine => '/db', :as => 'rails_db'
   get '*path', to: 'client_side_app#index'
 end
