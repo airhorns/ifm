@@ -6,6 +6,7 @@ require_relative '../config/environment'
 require 'rails/test_help'
 require 'mocha/minitest'
 require 'sidekiq/testing'
+Sidekiq::Testing.fake!
 
 module ActiveSupport
   class TestCase

@@ -82,6 +82,7 @@ services:
       - app-gems:/usr/local/bundle:delegated
     depends_on:
       - postgres
+      - redis
       - influxdb
       - mqtt
     logging:
