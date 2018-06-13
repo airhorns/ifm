@@ -57,11 +57,10 @@ jobs:
           name: Deploy Master to GKE
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              cd .circleci
               echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
               gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
               gcloud config set project integrated-farm-manager
-              gcloud config set compute/zone us-central-1
+              gcloud config set compute/zone us-central-1a
               gcloud container clusters get-credentials development-tiny
-              ../config/deploy/deploy.sh
+              config/deploy/deploy.sh
             fi

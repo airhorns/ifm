@@ -39,40 +39,50 @@ spec:
         io.kompose.service: web
     spec:
       containers:
-      - args:
-        - bundle
-        - exec
-        - rails
-        - s
-        - -p
-        - "3000"
-        - -b
-        - 0.0.0.0
-        env:
-        - name: DB_POOL
-          value: "5"
-        - name: DEV_DATABASE_URL
-          value: postgres://ifm@postgres/ifm_development
-        - name: INFLUXDB_URL
-          value: http://influxdb:8086/ifm_development
-        - name: MQTT_URL
-          value: mqtt://peacxxic:rfLeHoJBFMAp@m10.cloudmqtt.com:13796
-        - name: RACK_ENV
-          value: development
-        - name: RAILS_ENV
-          value: development
-        - name: REDIS_URL
-          value: redis://redis:6379/1
-        - name: RELOAD_CODE
-          value: "false"
-        - name: TEST_DATABASE_URL
-          value: postgres://ifm@postgres/ifm_test
-        image: web
-        name: web
-        ports:
-        - containerPort: 3000
-        resources: {}
-        stdin: true
-        tty: true
-      restartPolicy: Always
-status: {}
+        - name: web
+          args:
+            - bundle
+            - exec
+            - rails
+            - s
+            - -p
+            - "3000"
+            - -b
+            - 0.0.0.0
+          env:
+          - name: DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: cloudsql-db-credentials
+                key: localproxy_database_url
+          - name: INFLUXDB_URL
+            value: http://influxdb:8086/ifm_development
+          - name: MQTT_URL
+            valueFrom:
+              secretKeyRef:
+                name: cloudmqtt-credentials
+                key: url
+          - name: RAILS_ENV
+            value: production
+          - name: REDIS_URL
+            value: redis://redis:6379/1
+          image: airhorns/ifm:<%= current_sha %>
+          ports:
+          - containerPort: 3000
+          resources: {}
+          stdin: true
+          tty: true
+          restartPolicy: Always
+        - name: cloudsql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          command: ["/cloud_sql_proxy",
+                    "-instances=integrated-farm-manager:us-central1:development-tiny-backend=tcp:3306",
+                    "-credential_file=/secrets/cloudsql/credentials.json"]
+          volumeMounts:
+            - name: cloudsql-instance-credentials
+              mountPath: /secrets/cloudsql
+              readOnly: true
+      volumes:
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: cloudsql-instance-credentials

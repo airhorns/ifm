@@ -18,33 +18,41 @@ spec:
         io.kompose.service: jobs
     spec:
       containers:
-      - args:
-        - sidekiq
-        - -c
-        - "25"
-        - -q
-        - default
-        env:
-        - name: DB_POOL
-          value: "30"
-        - name: DEV_DATABASE_URL
-          value: postgres://ifm@postgres/ifm_development
-        - name: INFLUXDB_URL
-          value: http://influxdb:8086/ifm_development
-        - name: MQTT_URL
-          value: mqtt://peacxxic:rfLeHoJBFMAp@m10.cloudmqtt.com:13796
-        - name: RACK_ENV
-          value: development
-        - name: RAILS_ENV
-          value: development
-        - name: REDIS_URL
-          value: redis://redis:6379/1
-        - name: RELOAD_CODE
-          value: "true"
-        - name: TEST_DATABASE_URL
-          value: postgres://ifm@postgres/ifm_test
-        image: airhorns/ifm:<%= current_sha %>
-        name: jobs
-        resources: {}
-      restartPolicy: Always
+        - name: jobs
+          image: airhorns/ifm:<%= current_sha %>
+          args:
+            - sidekiq
+            - -c
+            - "25"
+            - -q
+            - default
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: cloudsql-db-credentials
+                  key: localproxy_database_url
+            - name: INFLUXDB_URL
+              value: http://influxdb:8086/ifm_development
+            - name: MQTT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: cloudmqtt-credentials
+                  key: url
+            - name: RAILS_ENV
+              value: production
+            - name: REDIS_URL
+              value: redis://redis:6379/1
+          resources: {}
+          restartPolicy: Always
+        - name: cloudsql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          command: ["/cloud_sql_proxy",
+                    "-instances=integrated-farm-manager:us-central1:development-tiny-backend=tcp:3306",
+                    "-credential_file=/secrets/cloudsql/credentials.json"]
+          volumeMounts:
+            - name: cloudsql-instance-credentials
+              mountPath: /secrets/cloudsql
+              readOnly: true
+
 status: {}
