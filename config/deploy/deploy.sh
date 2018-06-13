@@ -6,7 +6,7 @@ export ENVIRONMENT=production
 
 if [[ -z "${CIRCLECI}" ]]; then
   # kubernetes-deploy is in the bundle
-  export REVISION=${REVISION:$(git rev-parse HEAD)}
+  export REVISION=${REVISION#0:$(git rev-parse HEAD)#0}
   DEPLOY_COMMAND="bundle exec kubernetes-deploy"
 else
   # kubernetes-deploy comes from the gem installed in the docker container this runs in in circle.

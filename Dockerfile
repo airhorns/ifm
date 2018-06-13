@@ -12,4 +12,8 @@ ENV BUNDLE_WITHOUT ${bundle_without}
 RUN bundle install -j 20
 RUN yarn
 COPY . /app/
+
+ARG webpack_build=""
+RUN test -z "$webpack_build" || NODE_ENV=production bin/webpack && :
+
 ENTRYPOINT ["/app/bin/docker-entrypoint"]

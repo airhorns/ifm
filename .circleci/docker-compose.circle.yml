@@ -4,9 +4,15 @@ services:
   web:
     environment:
       CIRCLECI: 'true'
-  web:
+    build:
+      args:
+        webpack_build: 'true'
+  jobs:
     environment:
       CIRCLECI: 'true'
+    build:
+      args:
+        webpack_build: 'true'
 
   mqtt:
     volumes:
