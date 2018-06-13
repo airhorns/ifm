@@ -60,7 +60,7 @@ jobs:
               echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
               gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
               gcloud config set project integrated-farm-manager
-              gcloud config set compute/zone us-central-1a
+              gcloud config set compute/zone us-central1-a
               gcloud container clusters get-credentials development-tiny
               config/deploy/deploy.sh
             fi

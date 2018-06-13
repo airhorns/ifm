@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-main
+spec:
+  backend:
+    serviceName: web
+    servicePort: 3000
+  rules:
+  - host: app.bigclear.farm
+    http:
+      paths:
+      - backend:
+          serviceName: web
+          servicePort: 3000

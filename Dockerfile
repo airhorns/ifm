@@ -6,6 +6,9 @@ COPY Gemfile /app/Gemfile
 COPY Gemfile.lock /app/Gemfile.lock
 COPY package.json /app/package.json
 COPY yarn.lock /app/yarn.lock
+
+ARG bundle_without=""
+ENV BUNDLE_WITHOUT ${bundle_without}
 RUN bundle install -j 20
 RUN yarn
 COPY . /app/

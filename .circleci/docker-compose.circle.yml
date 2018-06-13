@@ -4,6 +4,16 @@ services:
   web:
     environment:
       CIRCLECI: 'true'
+    build:
+      args:
+        bundle_without: development test
+
+  jobs:
+    environment:
+      CIRCLECI: 'true'
+    build:
+      args:
+        bundle_without: development test
 
   mqtt:
     volumes:

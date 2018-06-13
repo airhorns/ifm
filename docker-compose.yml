@@ -74,7 +74,10 @@ services:
       LOG_LEVEL: error
 
   jobs: &app_base
-    build: .
+    build:
+      context: .
+      args:
+        bundle_without: ""
     command: bundle exec sidekiq -c 25 -q default
     volumes:
       - .:/app:delegated
