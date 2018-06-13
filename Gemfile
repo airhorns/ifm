@@ -27,6 +27,7 @@ gem 'administrate', '~> 0.10.0'
 gem 'graphql', '~> 1.8.2'
 
 gem 'ejson'
+gem 'sigdump'
 
 group :development, :test do
   gem 'byebug'
