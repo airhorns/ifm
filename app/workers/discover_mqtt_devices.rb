@@ -2,6 +2,7 @@
 
 class DiscoverMqttDevices
   include Sidekiq::Worker
+  prepend TooLoudInDevelopment
 
   def perform(farm_id)
     farm = Farm.find(farm_id)

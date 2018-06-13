@@ -9,6 +9,14 @@ class MqttDevicePublicationInjesterTest < ActiveSupport::TestCase
     @sensor = @farm.device_configurations.detect { |device| device.data_address == "mqtt://sensors/BCDDC2E81300" }
   end
 
+  test "it returns false if there are no subscriptions to be had" do
+    @farm.device_configurations.destroy_all
+    @farm.reload
+    @injester = MqttDevicePublicationInjester.new(@farm)
+    @farm.mqtt_client.expects(:subscribe).never
+    assert_equal false, @injester.subscribe
+  end
+
   test "it subscribes to the patterns for all configured mqtt devices" do
     @farm.mqtt_client.expects(:subscribe).with("sensors/BCDDC2E81300/+", "sensors/aa11aa11aa11/+")
     @injester.subscribe

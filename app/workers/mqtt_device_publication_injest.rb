@@ -8,10 +8,11 @@ class MqttDevicePublicationInjest
   def perform(farm_id)
     farm = Farm.find(farm_id)
     injester = MqttDevicePublicationInjester.new(farm)
-    injester.subscribe
-    loop do
-      5.times { injester.injest_one }
-      daemon_lock.renew
+    if injester.subscribe
+      loop do
+        5.times { injester.injest_one }
+        daemon_lock.renew
+      end
     end
   end
 end

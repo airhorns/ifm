@@ -1,0 +1,21 @@
+- name: DATABASE_URL
+  valueFrom:
+    secretKeyRef:
+      name: cloudsql-db-credentials
+      key: localproxy_database_url
+- name: INFLUXDB_URL
+  value: http://influxdb:8086/ifm_development
+- name: MQTT_URL
+  valueFrom:
+    secretKeyRef:
+      name: cloudmqtt-credentials
+      key: url
+- name: RAILS_ENV
+  value: production
+- name: REDIS_URL
+  value: redis://redis:6379/1
+- name: SECRET_KEY_BASE
+  valueFrom:
+    secretKeyRef:
+      name: secrets
+      key: secret_key_base

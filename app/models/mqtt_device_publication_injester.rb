@@ -20,7 +20,12 @@ class MqttDevicePublicationInjester
   end
 
   def subscribe
-    @farm.mqtt_client.subscribe(*@topic_subscriptions.to_a.sort)
+    if !@topic_subscriptions.empty?
+      @farm.mqtt_client.subscribe(*@topic_subscriptions.to_a.sort)
+      true
+    else
+      false
+    end
   end
 
   def injest_one
