@@ -6,7 +6,7 @@ metadata:
 spec:
   ports:
   - port: 5432
-    targetPort: db-port
+    targetPort: db
   selector:
     io.kompose.service: cloudsql-proxy
 ---

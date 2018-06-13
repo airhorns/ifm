@@ -1,15 +1,18 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: ingress-main
+  name: fanout-ingerss
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: web-static-ip
 spec:
-  backend:
-    serviceName: web
-    servicePort: 3000
   rules:
-  - host: app.bigclear.farm
-    http:
+  - http:
       paths:
-      - backend:
+      - path: /*
+        backend:
           serviceName: web
           servicePort: 3000
+      - path: /chronograph/*
+        backend:
+          serviceName: chronograph
+          servicePort: 8888
