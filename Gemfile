@@ -24,6 +24,7 @@ gem "mlanett-redis-lock", git: "https://github.com/mlanett/redis-lock.git"
 gem 'mqtt', '~> 0.5.0'
 gem 'influxdb', '~> 0.5.3'
 gem 'graphql', '~> 1.8.2'
+gem 'graphiql-rails', ' ~> 1.4.10'
 
 gem 'ejson'
 gem 'sigdump'
@@ -51,5 +52,3 @@ group :test do
   gem 'timecop'
   gem 'mocha'
 end
-
-gem 'graphiql-rails', group: :development

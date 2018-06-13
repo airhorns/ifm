@@ -339,7 +339,7 @@ DEPENDENCIES
   capybara (>= 2.15, < 4.0)
   chromedriver-helper
   ejson
-  graphiql-rails
+  graphiql-rails (~> 1.4.10)
   graphql (~> 1.8.2)
   guard
   influxdb (~> 0.5.3)

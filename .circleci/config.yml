@@ -23,25 +23,35 @@ jobs:
       # override volume mounts, you can only add to them. So, to keep the normal docker-compose file the one for development, and to
       # get rid of these volumes, we use a dirty hack and rewrite the root file to not have any volumes to override in the first place.
       # I am sorry.
-      - run: |
-          ruby .circleci/remove-docker-compose-volumes.rb docker-compose.yml
+      - run:
+          name: configure docker-compose
+          command: ruby .circleci/remove-docker-compose-volumes.rb docker-compose.yml
 
       # build and start docker images
-      - run: |
-          set -ex
-          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
-          docker-compose -f docker-compose.yml -f .circleci/docker-compose.circle.yml up --build --no-start
-          docker cp config/mosquitto.dev.conf repo_mqtt_1:/mosquitto/config/mosquitto.conf
-          docker-compose ps
+      - run:
+          name: build docker images
+          no_output_timeout: 2m
+          command: |
+            set -ex
+            echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
+            docker-compose -f docker-compose.yml -f .circleci/docker-compose.circle.yml up --build --no-start
+            docker cp config/mosquitto.dev.conf repo_mqtt_1:/mosquitto/config/mosquitto.conf
+            docker-compose ps
 
-      - run: |
-          set -ex
-          docker-compose -f docker-compose.yml -f .circleci/docker-compose.circle.yml run web bin/rake db:setup
-          docker-compose -f docker-compose.yml -f .circleci/docker-compose.circle.yml run web bin/rails test
+      - run:
+          name: setup database
+          no_output_timeout: 2m
+          command: docker-compose -f docker-compose.yml -f .circleci/docker-compose.circle.yml run web bin/rake db:setup
+      - run:
+          name: run tests
+          no_output_timeout: 2m
+          command: docker-compose -f docker-compose.yml -f .circleci/docker-compose.circle.yml run web bin/rails test
 
-      - run: |
-          docker tag airhorns/ifm airhorns/ifm:$CIRCLE_SHA1
-          docker push airhorns/ifm:$CIRCLE_SHA1
+      - run:
+          name: push docker image
+          command: |
+            docker tag airhorns/ifm airhorns/ifm:$CIRCLE_SHA1
+            docker push airhorns/ifm:$CIRCLE_SHA1
 
       - deploy:
           name: Deploy Master to GKE
