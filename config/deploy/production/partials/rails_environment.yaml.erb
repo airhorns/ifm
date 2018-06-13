@@ -2,7 +2,7 @@
   valueFrom:
     secretKeyRef:
       name: cloudsql-db-credentials
-      key: localproxy_database_url
+      key: database_url
 - name: INFLUXDB_URL
   value: http://influxdb:8086/ifm_development
 - name: MQTT_URL

@@ -1,7 +1,7 @@
 module TooLoudInDevelopment
   def perform(*args)
     log_level = Rails.logger.level
-    Rails.logger.level = :warn
+    Rails.logger.level = :info
     super
   ensure
     Rails.logger.level = log_level
