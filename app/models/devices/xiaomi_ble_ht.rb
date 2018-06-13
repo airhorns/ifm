@@ -4,6 +4,7 @@ module Devices
   class XiaomiBleHt < Base
     publishes :temperature, with: DevicePublisher::BLEGateway, comprehension: DeviceComprehensions::Temperature
     publishes :humidity, with: DevicePublisher::BLEGateway, comprehension: DeviceComprehensions::Humidity
+    publishes :datetime, with: DevicePublisher::BLEGateway, comprehension: DeviceComprehensions::String
     publishes :mac, with: DevicePublisher::BLEGatewayMacAddress, comprehension: DeviceComprehensions::MacAddress
 
     def self.human_name

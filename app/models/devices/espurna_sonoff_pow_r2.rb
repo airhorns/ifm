@@ -2,8 +2,10 @@
 
 module Devices
   class EspurnaSonoffPowR2 < EspurnaSonoffBasic
-    publishes :current, with: DevicePublisher::Espurna, comprehension: DeviceComprehensions::Temperature
-    publishes :voltage, with: DevicePublisher::Espurna, comprehension: DeviceComprehensions::Humidity
+    publishes :current, with: DevicePublisher::Espurna, comprehension: DeviceComprehensions::Voltage
+    publishes :voltage, with: DevicePublisher::Espurna, comprehension: DeviceComprehensions::Current
+    publishes :power, with: DevicePublisher::Espurna, comprehension: DeviceComprehensions::Power
+    publishes :energy, with: DevicePublisher::Espurna, comprehension: DeviceComprehensions::Numeric
 
     def self.human_name
       "Espurna Sonoff Pow R2"
