@@ -6,14 +6,14 @@ services:
       CIRCLECI: 'true'
     build:
       args:
-        bundle_without: development test
-
-  jobs:
+        # right now the same container is being used for production and testing, so these gems are needed in the container to run tests
+        # bundle_without: development test
+  web:
     environment:
       CIRCLECI: 'true'
     build:
       args:
-        bundle_without: development test
+        # bundle_without: development test
 
   mqtt:
     volumes:
