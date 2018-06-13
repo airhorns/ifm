@@ -8,4 +8,5 @@
 # You can also remove all the silencers if you're trying to debug a problem that might stem from framework code.
 if ENV['CIRCLECI'] || ENV["FULL_BACKTRACE"]
   Rails.backtrace_cleaner.remove_silencers!
+  Rails.backtrace_cleaner.remove_filters!
 end

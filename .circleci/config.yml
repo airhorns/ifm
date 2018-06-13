@@ -28,12 +28,14 @@ jobs:
 
       # build and start docker images
       - run: |
+          set -ex
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
           docker-compose -f docker-compose.yml -f .circleci/docker-compose.circle.yml up --build --no-start
-          docker cp config/mosquitto.dev.conf mqtt-config:/mosquitto.conf
+          docker cp config/mosquitto.dev.conf repo_mqtt_1:/mosquitto/config/mosquitto.conf
           docker-compose ps
 
       - run: |
+          set -ex
           docker-compose -f docker-compose.yml -f .circleci/docker-compose.circle.yml run web bin/rake db:setup
           docker-compose -f docker-compose.yml -f .circleci/docker-compose.circle.yml run web bin/rails test
 
