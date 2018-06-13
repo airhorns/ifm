@@ -19,3 +19,7 @@
     secretKeyRef:
       name: secrets
       key: secret_key_base
+- name: RAILS_SERVE_STATIC_FILES
+  value: "true"
+- name: RAILS_ASSET_HOST
+  value: "//cdn.bigclear.farm"

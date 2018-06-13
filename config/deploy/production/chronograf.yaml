@@ -16,16 +16,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    kompose.cmd: kompose convert -f ../../docker-compose.yml
-    kompose.version: 1.14.0 ()
   creationTimestamp: null
   labels:
     io.kompose.service: chronograf
   name: chronograf
 spec:
   ports:
-  - name: "8888"
+  - name: http
     port: 8888
     targetPort: 8888
   selector:

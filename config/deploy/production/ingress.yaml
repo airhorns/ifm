@@ -12,7 +12,7 @@ spec:
         backend:
           serviceName: web
           servicePort: 3000
-      - path: /chronograph/*
+      - path: /chronograf*
         backend:
-          serviceName: chronograph
+          serviceName: chronograf
           servicePort: 8888
