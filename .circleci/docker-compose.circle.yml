@@ -1,15 +1,9 @@
-version: '3.2'
+version: '3.6'
 
-# Override the containers not needed for testing to exit 0.
 services:
-  pgadmin:
-    command: sh -c "exit 0"
-  jobs:
-    command: sh -c "exit 0"
-  web:
-    image: airhorns/ifm
-    command: sh -c "exit 0"
-  webpack-dev-server:
-    command: sh -c "exit 0"
-  production-mqtt-mirror:
-    command: sh -c "exit 0"
+  mqtt:
+    volumes:
+      - mqtt-config:/mosquitto/config
+
+volumes:
+  mqtt-config:

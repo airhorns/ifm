@@ -30,6 +30,7 @@ jobs:
       - run: |
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
           docker-compose -f docker-compose.yml -f .circleci/docker-compose.circle.yml up --build --no-start
+          docker cp config/mosquitto.dev.conf mqtt-config:/mosquitto.conf
           docker-compose ps
 
       - run: |
