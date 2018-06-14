@@ -51,6 +51,14 @@ spec:
           env: <%= partial 'rails_environment' %>
           image: airhorns/ifm:<%= current_sha %>
           ports:
-          - containerPort: 3000
+            - containerPort: 3000
           resources: {}
+          readinessProbe:
+            httpGet:
+              path: /health_check
+              port: 3000
+            periodSeconds: 1
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 10
       restartPolicy: Always

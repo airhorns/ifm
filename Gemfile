@@ -31,6 +31,7 @@ gem 'sigdump'
 
 gem 'rails_db', '~> 2.0.1'
 gem 'administrate', '~> 0.10.0'
+gem 'health_check'
 
 group :development, :test do
   gem 'byebug'

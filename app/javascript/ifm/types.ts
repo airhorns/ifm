@@ -1,5 +1,5 @@
 /* tslint:disable */
-/** Generated in 2018-06-12T20:04:19+00:00 */
+/** Generated in 2018-06-14T15:32:34+00:00 */
 
 export type Json = any;
 
@@ -78,7 +78,10 @@ export interface FarmZone {
   name: string;
 }
 
-export interface Farm {}
+export interface Farm {
+  farmZones: FarmZone[];
+  name: string;
+}
 
 export interface Mutation {
   enlistDevice?: EnlistDevicePayload | null;
@@ -316,6 +319,25 @@ export namespace GetDeviceConfiguration {
   };
 
   export type FarmZone = {
+    __typename?: "FarmZone";
+    name: string;
+  };
+}
+export namespace GetFarm {
+  export type Variables = {};
+
+  export type Query = {
+    __typename?: "Query";
+    farm?: Farm | null;
+  };
+
+  export type Farm = {
+    __typename?: "Farm";
+    name: string;
+    farmZones: FarmZones[];
+  };
+
+  export type FarmZones = {
     __typename?: "FarmZone";
     name: string;
   };

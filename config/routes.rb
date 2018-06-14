@@ -21,5 +21,6 @@ Rails.application.routes.draw do
   end
 
   mount RailsDb::Engine => '/db', :as => 'rails_db'
+  health_check_routes
   get '*path', to: 'client_side_app#index'
 end
