@@ -12,6 +12,6 @@ spec:
         - db:create
         - db:migrate
       env: <%= partial 'rails_environment' %>
-      image: airhorns/ifm:<%= current_sha %>
+      image: gcr.io/integrated-farm-manager/ifm:<%= current_sha %>
       resources: {}
   restartPolicy: Never

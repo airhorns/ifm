@@ -49,7 +49,7 @@ spec:
             - -b
             - 0.0.0.0
           env: <%= partial 'rails_environment' %>
-          image: airhorns/ifm:<%= current_sha %>
+          image: gcr.io/integrated-farm-manager/ifm:<%= current_sha %>
           ports:
             - containerPort: 3000
           resources: {}

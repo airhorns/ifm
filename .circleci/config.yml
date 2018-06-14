@@ -47,20 +47,20 @@ jobs:
           no_output_timeout: 2m
           command: docker-compose -f docker-compose.yml -f .circleci/docker-compose.circle.yml run web bin/rails test
 
-      - run:
-          name: push docker image
-          command: |
-            docker tag airhorns/ifm airhorns/ifm:$CIRCLE_SHA1
-            docker push airhorns/ifm:$CIRCLE_SHA1
-
       - deploy:
           name: Deploy Master to GKE
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
+
               echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
               gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
               gcloud config set project integrated-farm-manager
               gcloud config set compute/zone us-central1-a
               gcloud container clusters get-credentials development-tiny
+              gcloud auth configure-docker
+
+              docker tag integrated-farm-manager/ifm gcr.io/integrated-farm-manager/ifm:$CIRCLE_SHA1
+              gcloud docker push gcr.io/integrated-farm-manager/ifm:$CIRCLE_SHA1
+
               config/deploy/deploy.sh
             fi
