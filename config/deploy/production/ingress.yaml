@@ -5,14 +5,18 @@ metadata:
   annotations:
     kubernetes.io/ingress.global-static-ip-name: web-static-ip
 spec:
+  tls:
+    - secretName: tls-bigclear-farm-production
   rules:
-  - http:
+  - host: chronograf.app.bigclear.farm
+    http:
       paths:
-      - path: /*
-        backend:
-          serviceName: web
-          servicePort: 3000
-      - path: /chronograf*
-        backend:
-          serviceName: chronograf
-          servicePort: 8888
+        - backend:
+            serviceName: chronograf
+            servicePort: 8888
+  - host: app.bigclear.farm
+    http:
+      paths:
+        - backend:
+            serviceName: web
+            servicePort: 3000
