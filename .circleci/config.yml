@@ -50,6 +50,7 @@ jobs:
       - deploy:
           name: push container and deploy master to GKE
           command: |
+            set -ex
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
 
               echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
@@ -57,7 +58,7 @@ jobs:
               gcloud config set project integrated-farm-manager
               gcloud config set compute/zone us-central1-a
               gcloud container clusters get-credentials development-tiny
-              gcloud auth configure-docker
+              gcloud auth configure-docker --quiet
 
               docker tag integrated-farm-manager/ifm gcr.io/integrated-farm-manager/ifm:$CIRCLE_SHA1
               gcloud docker push gcr.io/integrated-farm-manager/ifm:$CIRCLE_SHA1
