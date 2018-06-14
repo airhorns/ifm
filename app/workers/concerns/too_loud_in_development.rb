@@ -3,12 +3,14 @@
 module TooLoudInDevelopment
   def perform(*args)
     unless Rails.env.production?
-      log_level = Rails.logger.level
+      rails_log_level = Rails.logger.level
+      sidekiq_log_level = Sidekiq.logger.level
       Rails.logger.level = :warn
       Sidekiq.logger.level = :warn
     end
     super
   ensure
-    Rails.logger.level = log_level
+    Sidekiq.logger.level = sidekiq_log_level
+    Rails.logger.level = rails_log_level
   end
 end
