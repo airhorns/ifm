@@ -10,9 +10,11 @@ spec:
     kind: ClusterIssuer
   dnsNames:
     - "*.bigclear.farm"
+    - "*.app.bigclear.farm"
   acme:
     config:
     - dns01:
         provider: ifm-clouddns
       domains:
       - "*.bigclear.farm"
+      - "*.app.bigclear.farm"
