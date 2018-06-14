@@ -61,7 +61,7 @@ jobs:
               gcloud auth configure-docker --quiet
 
               docker tag integrated-farm-manager/ifm gcr.io/integrated-farm-manager/ifm:$CIRCLE_SHA1
-              gcloud docker push gcr.io/integrated-farm-manager/ifm:$CIRCLE_SHA1
+              docker push gcr.io/integrated-farm-manager/ifm:$CIRCLE_SHA1
 
               config/deploy/deploy.sh
             fi
