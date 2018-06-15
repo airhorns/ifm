@@ -18,7 +18,7 @@ export class Header extends React.Component<{}, {}> {
         style={{ padding: "0.25em 0em" }}
         vertical
       >
-        <Menu inverted pointing size="large">
+        <Menu inverted pointing secondary size="large">
           <Container>
             <Menu.Item>
               <Link to="/">
@@ -30,12 +30,16 @@ export class Header extends React.Component<{}, {}> {
               <Link to="/devices">Devices</Link>
             </Menu.Item>
             <Menu.Menu position="right">
+              <Dropdown item text="Settings">
+                <Dropdown.Menu>
+                  <Dropdown.Item><Link to="/settings/farm">Farm Settings</Link></Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
               <Dropdown item text="Admin">
                 <Dropdown.Menu>
-                  <Dropdown.Header>Admin</Dropdown.Header>
                   <Dropdown.Item><a href="/admin/tools/sidekiq">Sidekiq</a></Dropdown.Item>
                   <Dropdown.Item><a href="/admin/tools/graphiql">GraphIQL</a></Dropdown.Item>
-                  <Dropdown.Item><a href="/db">SQL Queries</a></Dropdown.Item>
+                  <Dropdown.Item><a href="/admin/tools/db">SQL Queries</a></Dropdown.Item>
                   <Dropdown.Item><a href="/admin/">Admin Editor</a></Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>

@@ -17,10 +17,10 @@ Rails.application.routes.draw do
     namespace :tools do
       mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
       mount Sidekiq::Web => '/sidekiq'
+      mount RailsDb::Engine, at: "/rails_db", as: 'rails_db'
     end
   end
 
-  mount RailsDb::Engine => '/db', :as => 'rails_db'
   health_check_routes
   get '*path', to: 'client_side_app#index'
 end

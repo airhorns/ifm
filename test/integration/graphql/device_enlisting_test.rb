@@ -3,7 +3,7 @@
 require 'test_helper'
 
 module Graphql
-  class DeviceDiscoveryTest < ActiveSupport::TestCase
+  class DeviceEnlistingTest < ActiveSupport::TestCase
     setup do
       @farm = farms(:bct)
       @farm_zone = farm_zones(:bct_aisle_1)

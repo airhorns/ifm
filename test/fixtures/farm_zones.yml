@@ -11,3 +11,7 @@ bct_seedling_rack:
 bct_aisle_1:
   farm: bct
   name: Aisle 1
+
+bct_empty:
+  farm: bct
+  name: Empty Zone

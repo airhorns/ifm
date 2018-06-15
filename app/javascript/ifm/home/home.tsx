@@ -9,6 +9,7 @@ export class GetFarmQuery extends Query<GetFarm.Query, GetFarm.Variables> {
     query getFarm {
       farm {
         name
+        dashboardHost
         farmZones {
           name
         }
@@ -25,7 +26,7 @@ export class Home extends React.Component<{}, {}> {
         if (error) { return `Error! ${error.message}`; }
         if (data && data.farm) {
           const zones = data.farm.farmZones.map((zone) => {
-            return <Segment padded>
+            return <Segment padded key={zone.name}>
               <Header small>{zone.name}</Header>
               ...
             </Segment>;
@@ -33,6 +34,9 @@ export class Home extends React.Component<{}, {}> {
 
           return <React.Fragment>
             <Header>{data.farm.name} Home</Header>
+            <Segment padded>
+              <a href={data.farm.dashboardHost}>Dashboards</a>
+            </Segment>
             {zones}
           </React.Fragment>;
         }

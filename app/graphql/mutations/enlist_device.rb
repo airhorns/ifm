@@ -25,7 +25,7 @@ module Mutations
       else
         # Failed save, return the errors to the client
         {
-          comment: nil,
+          device_configuration: nil,
           errors: device_configuration.errors.full_messages
         }
       end
