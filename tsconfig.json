@@ -12,12 +12,6 @@
     "noImplicitAny": true,
     "noFallthroughCasesInSwitch": true,
     "strictNullChecks": true,
-    "paths": {
-        "*": [
-            "node_modules/*",
-            "app/javascript/types/*"
-        ]
-    },
   },
   "exclude": [
     "node_modules",
