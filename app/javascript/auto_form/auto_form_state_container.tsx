@@ -110,7 +110,6 @@ export class AutoFormStateContainer<QueryData extends object, MutationVariables 
   private prepareMutationVariables(): MutationVariables {
     const key = this.inputRootFieldName();
     const variables = _.cloneDeep((this.state.formState as any)[key]);
-
     // The queryData that got set as the formState to start has some fields in it that the mutation doesn't define, like __type.
     // Gotta get rid of those before sending off the variables.
     return {
