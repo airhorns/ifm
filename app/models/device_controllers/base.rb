@@ -12,7 +12,7 @@ module DeviceControllers
 
     def nickname
       if @device.configuration.persisted?
-        @device.configuration.device_controller_configurations.detect { |config| config.device_controller_field == @field.to_s }.nickname
+        device_controller_configuration.nickname
       end
     end
 
@@ -22,6 +22,10 @@ module DeviceControllers
 
     def mqtt_send(topic, contents)
       @device.farm.mqtt_client.publish(@device.absolute_mqtt_topic(topic), contents)
+    end
+
+    def device_controller_configuration
+      @device.configuration.device_controller_configurations.detect { |config| config.device_controller_field == @field.to_s }
     end
   end
 end

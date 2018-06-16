@@ -1,0 +1,9 @@
+controller:
+  publishService:
+    enabled: true
+  service:
+    loadBalancerIP: 35.232.61.172
+  stats:
+    enabled: true
+rbac:
+  create: true

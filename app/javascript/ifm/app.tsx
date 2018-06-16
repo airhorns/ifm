@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { AppContainer } from "./app_container/app_container";
 import { DevicesIndex } from "./devices/index";
-import { DevicesShow } from "./devices/show";
+import { DevicesEdit } from "./devices/edit";
 import { DeviceDiscoveryIndex } from "./device_discovery/index";
 import { DeviceDiscoveryEnlist } from "./device_discovery/enlist";
 import { FarmSettings } from "./settings/farm";
@@ -60,7 +60,7 @@ export class App extends React.Component<{}, {}> {
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/devices" exact component={DevicesIndex} />
-              <Route path="/devices/:id" render={({match}) => <DevicesShow id={match.params.id}/>}/>
+              <Route path="/devices/:id/edit" render={({match}) => <DevicesEdit id={match.params.id}/>}/>
               <Route path="/device_discovery" exact component={DeviceDiscoveryIndex} />
               <Route path="/device_discovery/:id/enlist" render={({match}) => <DeviceDiscoveryEnlist id={match.params.id}/>}/>
               <Route path="/settings/farm" exact component={FarmSettings} />

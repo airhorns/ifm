@@ -4,7 +4,7 @@ import omitDeep from "omit-deep-lodash";
 import { DocumentNode, OperationDefinitionNode, FieldNode } from "graphql";
 
 import { MutationResult } from "react-apollo";
-import { Form, Input, InputProps, Dropdown, DropdownProps, FormFieldProps, FormInputProps } from "semantic-ui-react";
+import { Form, Input, InputProps, Dropdown, DropdownProps, FormFieldProps, FormInputProps, Message } from "semantic-ui-react";
 import { AutoInputFactory, AutoFormInput, TrustedFormInputType } from "./form_components";
 import { AutoFormNestedFields, NestedFieldsFactory } from "./nested_fields";
 import { AutoSubmit, AutoSubmitFactory } from "./auto_submit";
@@ -27,6 +27,7 @@ export interface IAutoFormStateContainerProps<QueryData extends object, Mutation
   queryDocument: DocumentNode;
   queryData: QueryData;
   loading: boolean;
+  success: boolean;
   mutationResult: MutationResult<MutationVariables>;
   submit: (variables: MutationVariables) => void;
   children: (form: AutoFormStateContainer<QueryData, MutationVariables>, data: QueryData) => React.ReactNode;
@@ -45,6 +46,7 @@ export class AutoFormStateContainer<QueryData extends object, MutationVariables 
   public Field: AutoFormInput<FormFieldProps>;
   public Dropdown: AutoFormInput<DropdownProps>;
   public AutoSubmit: AutoSubmit;
+  public Message = Message;
 
   public NestedFields: AutoFormNestedFields<QueryData>;
 
@@ -85,7 +87,7 @@ export class AutoFormStateContainer<QueryData extends object, MutationVariables 
   public submit = () => this.props.submit(this.prepareMutationVariables());
 
   public render() {
-    return <Form loading={this.props.loading} onSubmit={this.submit}>
+    return <Form loading={this.props.loading} success={this.props.success} onSubmit={this.submit}>
       {this.props.children(this, this.props.queryData)}
     </Form>;
   }

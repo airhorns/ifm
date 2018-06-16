@@ -3,6 +3,8 @@
 class MqttDevicePublicationInjest
   include Sidekiq::Worker
   include SidekiqDaemon::Worker
+  include TooLoudInDevelopment
+
   sidekiq_options retries: 0
 
   def perform(farm_id)

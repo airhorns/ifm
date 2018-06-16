@@ -37,11 +37,11 @@ export class GetDeviceConfigurationQuery extends Query<GetDeviceConfiguration.Qu
   `;
 }
 
-interface IDevicesShowProps {
+interface IDevicesEditProps {
   id: string;
 }
 
-export class DevicesShow extends React.Component<IDevicesShowProps, {}> {
+export class DevicesEdit extends React.Component<IDevicesEditProps, {}> {
   public render() {
     return <GetDeviceConfigurationQuery query={GetDeviceConfigurationQuery.query} variables={{id: this.props.id }}>
       {({ loading, error, data }) => {

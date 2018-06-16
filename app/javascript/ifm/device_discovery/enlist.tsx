@@ -4,7 +4,7 @@ import gql from "graphql-tag";
 import { Link, Redirect } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
 import { Header, Segment, Item, List, Form, Dropdown } from "semantic-ui-react";
-import { GetEnlist, SendEnlist, EnlistControl } from "../types";
+import { GetEnlist, SendEnlist, EnlistControlInput } from "../types";
 import { DeviceDiscoveryCard } from "./device_discovery_card";
 import { DeviceDiscoveryIOSegments } from "./device_discovery_io_segments";
 
@@ -48,7 +48,7 @@ class EnlistQuery extends Query<GetEnlist.Query, GetEnlist.Variables> {
 
 class EnlistMutation extends Mutation<SendEnlist.Mutation, SendEnlist.Variables> {
   public static mutation = gql`
-  mutation sendEnlist($deviceDiscoveryLogId: ID!, $deviceNickname: String!, $farmZoneId: ID!, $enlistControls: [EnlistControl!]!) {
+  mutation sendEnlist($deviceDiscoveryLogId: ID!, $deviceNickname: String!, $farmZoneId: ID!, $enlistControls: [EnlistControlInput!]!) {
     enlistDevice(
       deviceDiscoveryLogId: $deviceDiscoveryLogId,
       deviceNickname: $deviceNickname,
@@ -73,7 +73,7 @@ interface IDeviceDiscoveryEnlistState {
   deviceDiscoveryLogId?: string;
   deviceNickname?: string;
   farmZoneId?: string;
-  enlistControls?: EnlistControl[];
+  enlistControls?: EnlistControlInput[];
 }
 
 export class DeviceDiscoveryEnlist extends React.Component<IDeviceDiscoveryEnlistProps, IDeviceDiscoveryEnlistState> {
@@ -91,7 +91,7 @@ export class DeviceDiscoveryEnlist extends React.Component<IDeviceDiscoveryEnlis
     const {name, value} = input;
     this.setState((previousState, ___) => {
       let controls = previousState.enlistControls;
-      const existingControl = _.find(controls, (control: EnlistControl) => control.field === name);
+      const existingControl = _.find(controls, (control: EnlistControlInput) => control.field === name);
 
       if (existingControl) {
         existingControl.controlNickname = value;

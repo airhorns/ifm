@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   name: ingress-fanout
   annotations:
+    kubernetes.io/ingress.class: nginx
     kubernetes.io/ingress.global-static-ip-name: web-static-ip
 spec:
   tls:

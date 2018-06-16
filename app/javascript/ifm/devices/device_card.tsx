@@ -29,7 +29,7 @@ export class DeviceCard extends React.Component<IDeviceCardProps, IDeviceCardSta
 
       <Item.Content>
         <Item.Header>
-          <Link to={`/devices/${this.props.deviceConfiguration.id}`}>{this.props.deviceConfiguration.humanName}</Link>
+          <Link to={`/devices/${this.props.deviceConfiguration.id}/edit`}>{this.props.deviceConfiguration.humanName}</Link>
         </Item.Header>
         <Item.Meta>
           <Label color="green">

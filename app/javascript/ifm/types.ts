@@ -1,5 +1,5 @@
 /* tslint:disable */
-/** Generated in 2018-06-16T00:07:24+00:00 */
+/** Generated in 2018-06-16T17:31:09+00:00 */
 
 export type Json = any;
 
@@ -93,7 +93,7 @@ export interface UpdateFarmPayload {
   farm?: Farm | null;
 }
 
-export interface EnlistControl {
+export interface EnlistControlInput {
   field: string;
   controlNickname: string;
   enabled?: boolean | null;
@@ -131,7 +131,7 @@ export interface EnlistDeviceMutationArgs {
   deviceDiscoveryLogId: string;
   deviceNickname: string;
   farmZoneId: string;
-  enlistControls?: EnlistControl[] | null;
+  enlistControls?: EnlistControlInput[] | null;
 }
 export interface UpdateFarmMutationArgs {
   input: UpdateFarmInput;
@@ -205,7 +205,7 @@ export namespace SendEnlist {
     deviceDiscoveryLogId: string;
     deviceNickname: string;
     farmZoneId: string;
-    enlistControls: EnlistControl[];
+    enlistControls: EnlistControlInput[];
   };
 
   export type Mutation = {
@@ -250,22 +250,17 @@ export namespace GetDeviceDiscoveryLogs {
     deviceName: string;
   };
 }
-export namespace GetDeviceConfigurations {
-  export type Variables = {};
+export namespace GetDeviceConfiguration {
+  export type Variables = {
+    id: string;
+  };
 
   export type Query = {
     __typename?: "Query";
-    farmZones: FarmZones[];
+    deviceConfiguration: DeviceConfiguration;
   };
 
-  export type FarmZones = {
-    __typename?: "FarmZone";
-    name: string;
-    id: string;
-    deviceConfigurations: DeviceConfigurations[];
-  };
-
-  export type DeviceConfigurations = {
+  export type DeviceConfiguration = {
     __typename?: "DeviceConfiguration";
     id: string;
     imageUrl: string;
@@ -301,17 +296,22 @@ export namespace GetDeviceConfigurations {
     name: string;
   };
 }
-export namespace GetDeviceConfiguration {
-  export type Variables = {
-    id: string;
-  };
+export namespace GetDeviceConfigurations {
+  export type Variables = {};
 
   export type Query = {
     __typename?: "Query";
-    deviceConfiguration: DeviceConfiguration;
+    farmZones: FarmZones[];
   };
 
-  export type DeviceConfiguration = {
+  export type FarmZones = {
+    __typename?: "FarmZone";
+    name: string;
+    id: string;
+    deviceConfigurations: DeviceConfigurations[];
+  };
+
+  export type DeviceConfigurations = {
     __typename?: "DeviceConfiguration";
     id: string;
     imageUrl: string;

@@ -33,7 +33,7 @@ class MqttDevicePublicationInjester
     if publisher = @topic_map[topic]
       publisher.publish(message)
     else
-      Rails.logger.info("Unknown topic for publication injestor: #{topic} with message #{message}")
+      Rails.logger.debug("Unknown topic for publication injestor: #{topic} with message #{message}")
     end
   end
 

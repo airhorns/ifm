@@ -67,6 +67,7 @@ export class AutoForm<QueryData extends object, QueryVariables, MutationData, Mu
 
         return <AutoFormStateContainer
           loading={this.state.reloading || queryResult.loading || result.loading}
+          success={result.called && !!result.data}
           queryDocument={this.props.query.query}
           queryData={queryResult.data}
           mutationResult={result}

@@ -41,6 +41,7 @@ export class FarmSettings extends React.Component<{}, {}> {
       {(form) => {
         return <React.Fragment>
           <Header>Edit Farm</Header>
+          <form.Message success>Farm successfully updated!</form.Message>
           <Segment.Group>
             <Segment>
               <Header size="small">Farm Details</Header>

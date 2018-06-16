@@ -93,7 +93,7 @@ module Graphql
 
     test "enlisting devices with controllers" do
       mutation = "
-        mutation($deviceDiscoveryLogId: ID!, $deviceNickname: String!, $farmZoneId: ID!, $enlistControls: [EnlistControl!]) {
+        mutation($deviceDiscoveryLogId: ID!, $deviceNickname: String!, $farmZoneId: ID!, $enlistControls: [EnlistControlInput!]) {
           enlistDevice(deviceDiscoveryLogId: $deviceDiscoveryLogId, deviceNickname: $deviceNickname, farmZoneId: $farmZoneId, enlistControls: $enlistControls) {
             deviceConfiguration {
               id
@@ -137,7 +137,7 @@ module Graphql
 
     test "enlisting devices with controllers shouldn't work unless a value is provided for each controller" do
       mutation = "
-        mutation($deviceDiscoveryLogId: ID!, $deviceNickname: String!, $farmZoneId: ID!, $enlistControls: [EnlistControl!]) {
+        mutation($deviceDiscoveryLogId: ID!, $deviceNickname: String!, $farmZoneId: ID!, $enlistControls: [EnlistControlInput!]) {
           enlistDevice(deviceDiscoveryLogId: $deviceDiscoveryLogId, deviceNickname: $deviceNickname, farmZoneId: $farmZoneId, enlistControls: $enlistControls) {
             deviceConfiguration {
               id

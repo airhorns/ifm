@@ -7,7 +7,7 @@ module Mutations
     argument :device_discovery_log_id, ID, required: true
     argument :device_nickname, String, required: true
     argument :farm_zone_id, ID, required: true
-    argument :enlist_controls, [Types::EnlistControl], required: false
+    argument :enlist_controls, [Types::EnlistControlInput], required: false
 
     field :device_configuration, Types::DeviceConfigurationType, null: true
     field :errors, [String], null: false
