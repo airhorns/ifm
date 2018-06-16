@@ -18,7 +18,7 @@ module Devices
     publishes :host, with: DevicePublisher::Espurna, comprehension: DeviceComprehensions::String
 
     def self.discover(known_data)
-      known_data['app'] == 'ESPURNA ' && known_data['board'] == 'ITEAD_SONOFF_BASIC'
+      known_data['app'] == 'ESPURNA' && known_data['board'] == 'ITEAD_SONOFF_BASIC'
     end
   end
 end

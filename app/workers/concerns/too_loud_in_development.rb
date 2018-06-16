@@ -10,7 +10,9 @@ module TooLoudInDevelopment
     end
     super
   ensure
-    Sidekiq.logger.level = sidekiq_log_level
-    Rails.logger.level = rails_log_level
+    unless Rails.env.production?
+      Sidekiq.logger.level = sidekiq_log_level
+      Rails.logger.level = rails_log_level
+    end
   end
 end

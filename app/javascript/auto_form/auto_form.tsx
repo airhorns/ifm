@@ -17,8 +17,17 @@ export interface IAutoFormProps<QueryData extends object, QueryVariables, Mutati
   children: (form: AutoFormStateContainer<QueryData, MutationVariables>, data: QueryData) => React.ReactNode;
 }
 
+export interface IAutoFormState {
+  reloading: boolean;
+}
+
 export class AutoForm<QueryData extends object, QueryVariables, MutationData, MutationVariables extends IInputMutationVariables>
-  extends React.Component<IAutoFormProps<QueryData, QueryVariables, MutationData, MutationVariables>, {}> {
+  extends React.Component<IAutoFormProps<QueryData, QueryVariables, MutationData, MutationVariables>, IAutoFormState> {
+
+  public constructor(props: IAutoFormProps<QueryData, QueryVariables, MutationData, MutationVariables>) {
+    super(props);
+    this.state = { reloading: false };
+  }
 
   // Function called by the <Query> node with the current state of the system
   public queryRenderProp = (queryResult: QueryResult<QueryData, QueryVariables>) => {
@@ -51,8 +60,13 @@ export class AutoForm<QueryData extends object, QueryVariables, MutationData, Mu
           throw new Error("Unexpected undefined queryData");
         }
 
+        // When the mutation has come back successfully, fire the query again to refresh the form.
+        if (result.called && !result.loading && !result.error) {
+          queryResult.refetch(this.props.variables).then(() => this.setState({reloading: false}));
+        }
+
         return <AutoFormStateContainer
-          loading={queryResult.loading || result.loading}
+          loading={this.state.reloading || queryResult.loading || result.loading}
           queryDocument={this.props.query.query}
           queryData={queryResult.data}
           mutationResult={result}

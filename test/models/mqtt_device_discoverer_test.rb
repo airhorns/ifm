@@ -9,8 +9,8 @@ class MqttDeviceDiscovererTest < ActiveSupport::TestCase
   end
 
   test "it finds the three devices in the fixtures" do
-    assert_equal Devices::MinewS1, @discoverer.discoveries["sensors/ac:23:3f:a0:3b:16"][:device_class]
-    assert_equal Devices::EspurnaSonoffTh, @discoverer.discoveries["sensors/BCDDC2E81300"][:device_class]
+    assert_equal Devices::MinewS1, @discoverer.discoveries[:discoveries]["sensors/ac:23:3f:a0:3b:16"][:device_class]
+    assert_equal Devices::EspurnaSonoffTh, @discoverer.discoveries[:discoveries]["sensors/BCDDC2E81300"][:device_class]
   end
 
   test "it creates discovery logs for all devices on the mqtt bus" do

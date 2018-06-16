@@ -18,7 +18,7 @@ class MqttDeviceDiscoverer
   end
 
   def discover_and_save!
-    discoveries.each do |_sensor_key, attribute_hash|
+    discoveries[:discoveries].each do |_sensor_key, attribute_hash|
       discovery = DeviceDiscoveryLog.includes(device_configuration: :device_controller_configurations).find_or_initialize_by(farm_id: farm.id, mqtt_key: attribute_hash[:mqtt_key])
       discovery.assign_attributes(attribute_hash)
       if discovery.device_configuration
@@ -39,12 +39,12 @@ class MqttDeviceDiscoverer
       end
     end
 
-    attributes.each_with_object({}) do |(sensor_key, attribute_hash), discoveries|
-      DEVICES.detect do |device_class|
-        if device_class.discover(attribute_hash[:data])
-          attribute_hash[:device_class] = device_class
-          discoveries[sensor_key] = attribute_hash
-        end
+    attributes.each_with_object(discoveries: {}, unknown: {}) do |(sensor_key, attribute_hash), result|
+      if device_class = DEVICES.detect { |klass| klass.discover(attribute_hash[:data]) }
+        attribute_hash[:device_class] = device_class
+        result[:discoveries][sensor_key] = attribute_hash
+      else
+        result[:unknown][sensor_key] = attribute_hash
       end
     end
   end
