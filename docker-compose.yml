@@ -19,6 +19,7 @@ services:
     image: postgres
     volumes:
        - postgres-data:/var/lib/postgresql/data:delegated
+    restart: on-failure
     environment:
       POSTGRES_USER: ifm
       POSTGRES_DB: ifm
@@ -27,6 +28,7 @@ services:
     image: dpage/pgadmin4
     ports:
       - 3001:80
+    restart: on-failure
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@bigclear.farm
       PGADMIN_DEFAULT_PASSWORD: bigclear1
@@ -37,6 +39,7 @@ services:
       - 6379:6379
     volumes:
       - redis-data:/var/lib/redis:delegated
+    restart: on-failure
     command: redis-server --appendonly yes
 
   mqtt:
@@ -44,6 +47,7 @@ services:
     ports:
       - 1883:1883
       - 9001:9001
+    restart: on-failure
     volumes:
       - ./config/mosquitto.dev.conf:/mosquitto/config/mosquitto.conf:delegated
       - mqtt-data:/mosquitto/data:delegated
@@ -54,6 +58,7 @@ services:
       - 8086:8086
     volumes:
       - influx-data:/var/lib/influxdb
+    restart: on-failure
     environment:
       INFLUXDB_DB: ifm_development
       INFLUXDB_HTTP_LOG_ENABLED: "false"
@@ -69,6 +74,7 @@ services:
       - 8888:8888
     depends_on:
       - influxdb
+    restart: on-failure
     environment:
       INFLUXDB_URL: http://influxdb:8086
       LOG_LEVEL: error
@@ -79,6 +85,7 @@ services:
       args:
         bundle_without: ""
     command: bundle exec sidekiq -c 25 -q default
+    restart: on-failure
     volumes:
       - .:/app:delegated
       - ~/Code:/root/Code:delegated # useful for linking other gems
