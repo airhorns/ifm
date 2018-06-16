@@ -13,8 +13,8 @@ export interface IAutoFormInputRequiredProps {
 
 export type AutoFormInput<Props> = React.ComponentType<Props & IAutoFormInputRequiredProps>;
 
-export const autoInputFactory = <Props extends IAutoFormWrappeeRequiredProps>(
-  form: AutoFormStateContainer<any, any, any>,
+export const AutoInputFactory = <Props extends IAutoFormWrappeeRequiredProps>(
+  form: AutoFormStateContainer<any, any>,
   InputComponent: React.ComponentType<Props> | TrustedFormInputType,
 ): AutoFormInput<Props> => {
   return class ExtendedAutoFormInput extends React.Component<Props & IAutoFormInputRequiredProps> {

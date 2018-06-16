@@ -82,7 +82,7 @@ module Graphql
         context: @context,
         variables: {
           input: {
-            updateFarmZones: [{ id: @farm_zone.id, name: "Aisle 1 modified" }]
+            farmZones: [{ id: @farm_zone.id, name: "Aisle 1 modified" }]
           }
         }
       )
@@ -115,7 +115,7 @@ module Graphql
         variables: {
           input: {
             name: "Little Clear Tests",
-            updateFarmZones: [{
+            farmZones: [{
               id: @farm_zone.id,
               name: "Aisle 1 modified"
             }],

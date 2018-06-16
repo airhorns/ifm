@@ -14,6 +14,12 @@ spec:
         - backend:
             serviceName: chronograf
             servicePort: 8888
+  - host: influxdb.app.bigclear.farm
+    http:
+      paths:
+        - backend:
+            serviceName: influxdb
+            servicePort: 8086
   - host: app.bigclear.farm
     http:
       paths:

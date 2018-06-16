@@ -2,9 +2,9 @@ import * as React from "react";
 import { Query, QueryResult, Mutation, MutationFn, MutationResult } from "react-apollo";
 import { DocumentNode } from "graphql";
 import { Segment, Dimmer, Loader, Message } from "semantic-ui-react";
-import { AutoFormStateContainer } from "./auto_form_state_container";
+import { AutoFormStateContainer, IInputMutationVariables } from "./auto_form_state_container";
 
-export interface IAutoFormProps<QueryData, QueryVariables, MutationData, MutationVariables> {
+export interface IAutoFormProps<QueryData extends object, QueryVariables, MutationData, MutationVariables extends IInputMutationVariables> {
   query: {
     query: DocumentNode;
     new(props: any, context?: any): Query<QueryData, QueryVariables>;
@@ -14,17 +14,15 @@ export interface IAutoFormProps<QueryData, QueryVariables, MutationData, Mutatio
     new(props: any, context?: any): Mutation<MutationData, MutationVariables>;
   };
   variables?: QueryVariables;
-  children: (form: AutoFormStateContainer<QueryData, QueryVariables, MutationVariables>, data?: QueryData) => React.ReactNode;
+  children: (form: AutoFormStateContainer<QueryData, MutationVariables>, data: QueryData) => React.ReactNode;
 }
 
-export class AutoForm<QueryData, QueryVariables, MutationData, MutationVariables>
+export class AutoForm<QueryData extends object, QueryVariables, MutationData, MutationVariables extends IInputMutationVariables>
   extends React.Component<IAutoFormProps<QueryData, QueryVariables, MutationData, MutationVariables>, {}> {
 
   // Function called by the <Query> node with the current state of the system
   public queryRenderProp = (queryResult: QueryResult<QueryData, QueryVariables>) => {
-    const {loading, data, error} = queryResult;
-
-    if (loading) {
+    if (queryResult.loading) {
       return <Segment>
         <Dimmer active inverted>
           <Loader inverted>Loading</Loader>
@@ -32,7 +30,7 @@ export class AutoForm<QueryData, QueryVariables, MutationData, MutationVariables
       </Segment>;
     }
 
-    if (error || !data) {
+    if (queryResult.error || !queryResult.data) {
       return <Segment>
         <Message negative>
           <Message.Header>There was an error communicating with the server.</Message.Header>
@@ -46,10 +44,21 @@ export class AutoForm<QueryData, QueryVariables, MutationData, MutationVariables
       variables: this.props.variables,
       children: (mutateFunction: MutationFn<MutationData, MutationVariables>, result: MutationResult<MutationVariables>) => {
         const submit = (mutationVariables: MutationVariables) => {
-          mutateFunction(mutationVariables);
+          mutateFunction({variables: mutationVariables});
         };
 
-        return <AutoFormStateContainer queryResult={queryResult} mutationResult={result} submit={submit} children={this.props.children} />;
+        if (typeof queryResult.data === "undefined") {
+          throw new Error("Unexpected undefined queryData");
+        }
+
+        return <AutoFormStateContainer
+          loading={queryResult.loading || result.loading}
+          queryDocument={this.props.query.query}
+          queryData={queryResult.data}
+          mutationResult={result}
+          submit={submit}
+          children={this.props.children}
+        />;
       },
     });
   }

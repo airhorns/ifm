@@ -1,5 +1,5 @@
 /* tslint:disable */
-/** Generated in 2018-06-15T00:46:03+00:00 */
+/** Generated in 2018-06-16T00:07:24+00:00 */
 
 export type Json = any;
 
@@ -100,13 +100,23 @@ export interface EnlistControl {
 }
 
 export interface UpdateFarmInput {
-  name: string;
-  farmZones?: CreateOrUpdateFarmZoneInput[] | null;
+  name?: string | null;
+  createFarmZones?: CreateFarmZoneInput[] | null;
+  farmZones?: UpdateFarmZoneInput[] | null;
+  deleteFarmZones?: DeleteFarmZoneInput[] | null;
 }
 
-export interface CreateOrUpdateFarmZoneInput {
-  id?: string | null;
+export interface CreateFarmZoneInput {
   name: string;
+}
+
+export interface UpdateFarmZoneInput {
+  id: string;
+  name?: string | null;
+}
+
+export interface DeleteFarmZoneInput {
+  id: string;
 }
 export interface DeviceConfigurationQueryArgs {
   id: string;

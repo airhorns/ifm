@@ -9,7 +9,7 @@ export interface INestedFieldsProps<QueryData> {
   children: (fields: React.Component<INestedFieldsProps<QueryData>, {}>, data: any, index?: number) => React.ReactNode;
 }
 
-export const NestedFieldsFactory = <QueryData extends any>(form: AutoFormStateContainer<any, any, any>) => {
+export const NestedFieldsFactory = <QueryData extends any>(form: AutoFormStateContainer<any, any>) => {
   return class NestedFields extends React.Component<INestedFieldsProps<QueryData>, {}> {
 
     constructor(props: INestedFieldsProps<QueryData>) {

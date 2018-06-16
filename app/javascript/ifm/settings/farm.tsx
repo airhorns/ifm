@@ -22,7 +22,7 @@ export class GetFarmSettingsQuery extends Query<GetFarmSettings.Query, GetFarmSe
 class UpdateFarmMutation extends Mutation<UpdateFarm.Mutation, UpdateFarm.Variables> {
   public static mutation = gql`
   mutation updateFarm($input: UpdateFarmInput!) {
-    updateFarm(input: input) {
+    updateFarm(input: $input) {
       farm {
         name
         farmZones {
@@ -54,7 +54,10 @@ export class FarmSettings extends React.Component<{}, {}> {
               <form.NestedFields name="farm.createFarmZones">{(_, __, index) => {
                 return <form.Input label="New farm zone name" name={`farm.createFarmZones[${index}].name`} control="input" key={index}/>;
               }}</form.NestedFields>
-              <Button onClick={(e) => { e.preventDefault(); form.addNestedFieldChild("farm.createFarmZones", {})}}>Add a zone</Button>
+              <Button onClick={(e) => { e.preventDefault(); form.addNestedFieldChild("farm.createFarmZones", {}); }}>Add a zone</Button>
+            </Segment>
+            <Segment clearing>
+              <form.AutoSubmit>Update Farm</form.AutoSubmit>
             </Segment>
           </Segment.Group>
         </React.Fragment>;

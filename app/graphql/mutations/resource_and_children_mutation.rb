@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mutations
   class ResourceAndChildrenMutation < Mutations::BaseMutation
     def resolve(input:)
@@ -37,7 +39,7 @@ module Mutations
     end
 
     def child_input_keys
-      mutatable_associations.flat_map { |key| [:"update_#{key}", :"create_#{key}", :"delete_#{key}"] }
+      mutatable_associations.flat_map { |key| [:"#{key}", :"create_#{key}", :"delete_#{key}"] }
     end
 
     def apply_root_attributes(input, root_object)
@@ -52,7 +54,7 @@ module Mutations
         existing_records = association_proxy.index_by { |record| record.id.to_s }
 
         # update existing associations, will be saved because autosave: true on the association
-        input[:"update_#{association_name}"]&.each do |update_child_input|
+        input[:"#{association_name}"]&.each do |update_child_input|
           if child_object = existing_records[update_child_input.fetch(:id)]
             child_object.assign_attributes(update_child_input)
           else
