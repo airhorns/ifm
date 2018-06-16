@@ -3,6 +3,7 @@
 set -ex
 export KUBECONFIG=${HOME}/.kube/config
 export ENVIRONMENT=production
+export CLUSTER="gke_integrated-farm-manager_us-central1-a_development-tiny"
 
 if [[ -z "${CIRCLECI}" ]]; then
   # kubernetes-deploy is in the bundle
@@ -15,4 +16,8 @@ else
   export REVISION=${CIRCLE_SHA1}
 fi
 
-eval "$DEPLOY_COMMAND --template-dir=config/deploy/$ENVIRONMENT ifm-production gke_integrated-farm-manager_us-central1-a_development-tiny"
+# deploy cluster wide resources like certificates and whatnot
+eval "$DEPLOY_COMMAND --template-dir=config/deploy/cluster --allow-protected-ns --no-prune default $CLUSTER"
+
+# deploy application to it's namespace
+eval "$DEPLOY_COMMAND --template-dir=config/deploy/$ENVIRONMENT ifm-production $CLUSTER"

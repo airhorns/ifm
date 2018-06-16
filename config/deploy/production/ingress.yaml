@@ -4,10 +4,15 @@ metadata:
   name: ingress-fanout
   annotations:
     kubernetes.io/ingress.class: nginx
-    kubernetes.io/ingress.global-static-ip-name: web-static-ip
+    nginx.ingress.kubernetes.io/client-body-buffer-size: 2M
+    nginx.ingress.kubernetes.io/proxy-body-size: 10M
 spec:
   tls:
     - secretName: tls-bigclear-farm-production
+      hosts:
+        - chronograf.app.bigclear.farm
+        - influxdb.app.bigclear.farm
+        - app.bigclear.farm
   rules:
   - host: chronograf.app.bigclear.farm
     http:
