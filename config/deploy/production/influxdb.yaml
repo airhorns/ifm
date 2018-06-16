@@ -70,6 +70,14 @@ spec:
         ports:
         - containerPort: 8086
         resources: {}
+        readinessProbe:
+          httpGet:
+            path: /ping
+            port: 8086
+          periodSeconds: 1
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 10
         volumeMounts:
         - mountPath: /var/lib/influxdb
           name: influx-data
