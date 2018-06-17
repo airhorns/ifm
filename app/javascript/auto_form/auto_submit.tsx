@@ -12,16 +12,11 @@ export type AutoSubmit = React.ComponentType<IAutoSubmitProps>;
 export const AutoSubmitFactory = (form: AutoFormStateContainer<any, any>): AutoSubmit => {
   return class AutoSubmitComponent extends React.Component<IAutoSubmitProps, {}> {
     public buttonText() {
-      const rootObjectName = _.capitalize(form.inputRootFieldName());
-      const rootObject = form.state.formState[form.inputRootFieldName()];
-      if (rootObject) {
-        if (_.isUndefined(rootObject.id)) {
-          return `Create ${rootObjectName}`;
-        } else {
-          return `Update ${rootObjectName}`;
-        }
+      const rootObjectName = form.resourceName();
+      if (_.isUndefined(form.resourceID())) {
+        return `Create ${rootObjectName}`;
       } else {
-        return `Submit ${rootObjectName}`;
+        return `Update ${rootObjectName}`;
       }
     }
 

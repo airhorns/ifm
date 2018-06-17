@@ -10,7 +10,7 @@ module Mutations
     field :errors, [String], null: false
 
     def mutatable_associations
-      []
+      [:device_controller_configurations]
     end
   end
 end

@@ -25,7 +25,7 @@ module DeviceControllers
     end
 
     def device_controller_configuration
-      @device.configuration.device_controller_configurations.detect { |config| config.device_controller_field == @field.to_s }
+      @device.configuration.device_controller_configurations.detect { |config| config.field == @field.to_s }
     end
   end
 end

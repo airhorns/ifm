@@ -9,21 +9,41 @@ export interface INestedFieldsProps<QueryData> {
   children: (fields: React.Component<INestedFieldsProps<QueryData>, {}>, data: any, index?: number) => React.ReactNode;
 }
 
+interface INestedFieldsState {
+  fieldValue: any;
+}
+
 export const NestedFieldsFactory = <QueryData extends any>(form: AutoFormStateContainer<any, any>) => {
-  return class NestedFields extends React.Component<INestedFieldsProps<QueryData>, {}> {
+  return class NestedFields extends React.Component<INestedFieldsProps<QueryData>, INestedFieldsState> {
 
     constructor(props: INestedFieldsProps<QueryData>) {
       super(props);
+      const fieldValue = form.getSeedValue(this.props.name);
+      this.state = { fieldValue };
+
+      // Populate the mutation variables with the IDs of the child/children, if it/they exist
+      if (!_.isUndefined(fieldValue)) {
+        if (_.isArray(fieldValue)) {
+          fieldValue.forEach((valueElement, index) => {
+            if (!_.isUndefined(valueElement.id)) {
+              form.setValue(`${this.props.name}[${index}].id`, valueElement.id);
+            }
+          });
+        } else {
+          if (!_.isUndefined(fieldValue.id)) {
+            form.setValue(`${this.props.name}.id`, fieldValue.id);
+          }
+        }
+      }
     }
 
     public render(): React.ReactNode {
-      const value = form.getValue(this.props.name);
-      if (_.isUndefined(value)) {
+      if (_.isUndefined(this.state.fieldValue)) {
         return null;
-      } else if (_.isArray(value)) {
-        return <React.Fragment>{value.map((valueElement, index) => this.props.children(this, valueElement, index))}</React.Fragment>;
+      } else if (_.isArray(this.state.fieldValue)) {
+        return <React.Fragment>{this.state.fieldValue.map((valueElement, index) => this.props.children(this, valueElement, index))}</React.Fragment>;
       } else {
-        return this.props.children(this, value);
+        return this.props.children(this, this.state.fieldValue);
       }
     }
   };

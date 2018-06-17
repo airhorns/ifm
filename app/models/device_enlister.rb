@@ -38,7 +38,7 @@ class DeviceEnlister
     enlist_controls.map do |enlist_control|
       DeviceControllerConfiguration.new(
         farm: farm,
-        device_controller_field: enlist_control.field,
+        field: enlist_control.field,
         nickname: enlist_control.control_nickname,
         enabled: enlist_control.enabled
       )

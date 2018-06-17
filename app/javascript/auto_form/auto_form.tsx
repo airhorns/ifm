@@ -70,6 +70,7 @@ export class AutoForm<QueryData extends object, QueryVariables, MutationData, Mu
           success={result.called && !!result.data}
           queryDocument={this.props.query.query}
           queryData={queryResult.data}
+          mutationDocument={this.props.mutation.mutation}
           mutationResult={result}
           submit={submit}
           children={this.props.children}

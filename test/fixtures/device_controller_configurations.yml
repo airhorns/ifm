@@ -2,13 +2,13 @@
 sonoff_basic_relay_0:
   farm: bct
   device_configuration: sonoff_basic
-  device_controller_field: relay_0
+  field: relay_0
   nickname: "Relay 0"
   enabled: true
 
 sonoff_th_relay_0:
   farm: bct
   device_configuration: sonoff_th
-  device_controller_field: relay_0
+  field: relay_0
   nickname: "Relay 0"
   enabled: true

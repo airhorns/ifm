@@ -18,8 +18,13 @@ export const AutoInputFactory = <Props extends IAutoFormWrappeeRequiredProps>(
   InputComponent: React.ComponentType<Props> | TrustedFormInputType,
 ): AutoFormInput<Props> => {
   return class ExtendedAutoFormInput extends React.Component<Props & IAutoFormInputRequiredProps> {
+    public constructor(props: Props & IAutoFormInputRequiredProps) {
+      super(props);
+      form.seedFormState(this.props.name);
+    }
+
     public render() {
-      return <InputComponent onChange={form.handleChange} {...this.props} defaultValue={form.getValue(this.props.name)}/>;
+      return <InputComponent onChange={form.handleChange} {...this.props} defaultValue={form.getSeedValue(this.props.name)}/>;
     }
   };
 };

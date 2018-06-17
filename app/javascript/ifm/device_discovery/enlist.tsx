@@ -115,7 +115,7 @@ export class DeviceDiscoveryEnlist extends React.Component<IDeviceDiscoveryEnlis
           if (data.deviceDiscoveryLog.enlistedConfiguration) {
             return <Segment>
               <Header as="h1">This {data.deviceDiscoveryLog.enlistedConfiguration.deviceName} is already enlisted.</Header>
-              <p>View this device: <Link to={`/devices/${data.deviceDiscoveryLog.enlistedConfiguration.id}`}>
+              <p>View this device: <Link to={`/devices/${data.deviceDiscoveryLog.enlistedConfiguration.id}/edit`}>
                   {data.deviceDiscoveryLog.enlistedConfiguration.humanNameWithZone}
                 </Link>
               </p>
@@ -128,7 +128,7 @@ export class DeviceDiscoveryEnlist extends React.Component<IDeviceDiscoveryEnlis
             <EnlistMutation mutation={EnlistMutation.mutation}>{
               (enlist, result) => {
                 if (result.data && result.data.enlistDevice && result.data.enlistDevice.deviceConfiguration) {
-                  return <Redirect to={`/devices/${result.data.enlistDevice.deviceConfiguration.id}`} />;
+                  return <Redirect to={`/devices/${result.data.enlistDevice.deviceConfiguration.id}/edit`} />;
                 }
 
                 return <Form loading={result.loading} onSubmit={(e) => {

@@ -2,6 +2,8 @@
 
 module Mutations
   class ResourceAndChildrenMutation < Mutations::BaseMutation
+    class MisconfiguredAssociationError < StandardError; end
+
     def resolve(input:)
       input = input.to_h
       farm = context[:current_farm]
@@ -23,15 +25,15 @@ module Mutations
     end
 
     def root_object_name
-      @root_object_name ||= self.class.fields.keys.detect { |key| key != "errors" }
+      @root_object_name ||= self.class.fields.keys.detect { |key| key != "errors" }&.underscore
     end
 
     def root_object_class
-      @root_object_class ||= root_object_name.titleize.constantize
+      @root_object_class ||= root_object_name.camelize.constantize
     end
 
-    def root_object(_input, farm)
-      root_object_class.where(farm_id: farm.id).find(intput.id)
+    def root_object(input, farm)
+      root_object_class.where(farm_id: farm.id).find(input[:id])
     end
 
     def mutatable_associations
@@ -49,7 +51,10 @@ module Mutations
 
     def apply_child_attributes(input, root_object)
       mutatable_associations.each do |association_name|
-        # association = object.association(association_name)
+        association = root_object.association(association_name)
+        unless association.options[:autosave]
+          raise MisconfiguredAssociationError, "Association #{association_name} on #{root_object} needs to be autosaved for this mutation to work"
+        end
         association_proxy = root_object.send(association_name)
         existing_records = association_proxy.index_by { |record| record.id.to_s }
 

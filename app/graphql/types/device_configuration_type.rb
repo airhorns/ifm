@@ -12,6 +12,7 @@ module Types
     field :device_name, String, null: false
     field :publishers, [Types::DevicePublisherType], null: false
     field :controllers, [Types::DeviceControllerType], null: false
+    field :device_controller_configurations, [Types::DeviceControllerConfigurationType], null: false
     field :data, Types::JsonType, null: true
     field :device_discovery_log, Types::DeviceDiscoveryLogType, null: true
     field :farm_zone, Types::FarmZoneType, null: false

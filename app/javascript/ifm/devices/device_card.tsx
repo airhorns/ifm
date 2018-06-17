@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Item, Label, Icon } from "semantic-ui-react";
+import { Item, Label, Icon, List, Header, Segment } from "semantic-ui-react";
 import { GetDeviceConfigurations } from "../types";
 import { LastSeenLabel } from "./last_seen_label";
-import { DeviceIOSegments } from "./device_io_segments";
+import { DevicePublishesSegment } from "./device_publishes_segment";
 
 interface IDeviceCardProps {
   deviceConfiguration: GetDeviceConfigurations.DeviceConfigurations;
@@ -24,6 +24,18 @@ export class DeviceCard extends React.Component<IDeviceCardProps, IDeviceCardSta
   }
 
   public render() {
+    const controllerItems = this.props.deviceConfiguration.controllers.map((controller) => {
+      return <List.Item key={controller.humanName}>
+        <List.Icon name={controller.icon as any} size="large" verticalAlign="middle" />
+        <List.Content>
+          <List.Header>{controller.nickname}: {controller.humanState}</List.Header>
+          <List.Description>
+            {controller.controlStrategyHumanName} control on {controller.humanName}
+          </List.Description>
+        </List.Content>
+      </List.Item>;
+    });
+
     return <Item>
       <Item.Image size="tiny" src={this.props.deviceConfiguration.imageUrl} />
 
@@ -40,9 +52,14 @@ export class DeviceCard extends React.Component<IDeviceCardProps, IDeviceCardSta
         <Item.Description>
           {this.state.showDetails && <React.Fragment>
             <a onClick={(_) => this.toggleDetails(false)}><Icon name="minus"/> Hide details</a>
-            <DeviceIOSegments deviceConfiguration={this.props.deviceConfiguration} />
+            <DevicePublishesSegment vertical deviceConfiguration={this.props.deviceConfiguration} />
           </React.Fragment>}
-          {!this.state.showDetails && <a onClick={(_) => this.toggleDetails(true)}><Icon name="plus"/> Show details</a>}        </Item.Description>
+          {!this.state.showDetails && <a onClick={(_) => this.toggleDetails(true)}><Icon name="plus"/> Show details</a>}
+          <Segment padded vertical>
+            {controllerItems.length > 0 && <Header size="small">Controls:</Header>}
+            {controllerItems.length > 0 && <List divided relaxed>{controllerItems}</List>}
+          </Segment>
+        </Item.Description>
       </Item.Content>
     </Item>;
   }
