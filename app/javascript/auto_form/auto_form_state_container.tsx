@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as _ from "lodash";
 import { DocumentNode } from "graphql";
-import { MutationResult } from "react-apollo";
 import { Form, Input, InputProps, FormSelectProps, FormCheckboxProps, FormRadioProps, FormFieldProps, FormInputProps, Message } from "semantic-ui-react";
 import { QueryInspector } from "./query_inspector";
 import { AutoInputFactory, AutoFormInput, TrustedFormInputType } from "./auto_input_factory";
@@ -28,10 +27,8 @@ export type IFormState<QueryData extends object, MutationVariables extends IInpu
 export interface IAutoFormStateContainerProps<QueryData extends object, MutationVariables extends IInputMutationVariables> {
   queryDocument: DocumentNode;
   queryData: QueryData;
-  mutationDocument: DocumentNode;
   loading: boolean;
   success: boolean;
-  mutationResult: MutationResult<MutationVariables>;
   submit: (variables: MutationVariables) => void;
   children: (form: AutoFormStateContainer<QueryData, MutationVariables>, data: QueryData) => React.ReactNode;
 }
@@ -58,10 +55,12 @@ export class AutoFormStateContainer<QueryData extends object, MutationVariables 
   public NestedFields: AutoFormNestedFields<QueryData>;
 
   private queryInspector: QueryInspector;
+  private seedKeys: string[];
 
   constructor(props: IAutoFormStateContainerProps<QueryData, MutationVariables>) {
     super(props);
     this.state = { formState: {} };
+    this.seedKeys = [];
     this.queryInspector = new QueryInspector(this.props.queryDocument);
     this.Input = AutoInputFactory(this, Form.Input);
     this.RawInput = AutoInputFactory(this, Input);
@@ -73,12 +72,6 @@ export class AutoFormStateContainer<QueryData extends object, MutationVariables 
     this.NestedFields = NestedFieldsFactory(this);
     this.AutoSubmit = AutoSubmitFactory(this);
   }
-
-  public componentWillReceiveProps(props: IAutoFormStateContainerProps<QueryData, MutationVariables>) {
-    this.setState({formState: props.queryData});
-  }
-
-  public handleChange = (event: React.FormEvent<HTMLInputElement>) => this.setValue(event.currentTarget.name, event.currentTarget.value);
 
   public setValue(key: string, value: any) {
     this.setState((prevState) => {
@@ -94,6 +87,7 @@ export class AutoFormStateContainer<QueryData extends object, MutationVariables 
   }
 
   public seedFormState(name: string) {
+    this.seedKeys.push(name);
     this.setValue(name, this.getSeedValue(name));
   }
 
@@ -118,11 +112,12 @@ export class AutoFormStateContainer<QueryData extends object, MutationVariables 
   }
 
   private prepareMutationVariables(): MutationVariables {
-    // Build an object of the shape {
-    // input: {
-    //     id:
-    //     fieldA:
-    //     fieldB:
+    // Build an object of the shape
+    // {
+    //   input: {
+    //     id: ...,
+    //     fieldA: ...,
+    //     fieldB: ...,
     //   }
     // }
     // To do this, we need to strip the leading resource key from the form state, and add in an ID
@@ -132,7 +127,6 @@ export class AutoFormStateContainer<QueryData extends object, MutationVariables 
     if (!_.isUndefined(this.resourceID())) {
       rootObject.id = this.resourceID();
     }
-    console.log(rootObject);
     // The queryData that got set as the formState to start has some fields in it that the mutation doesn't define, like __type.
     // Gotta get rid of those before sending off the variables.
     return { input: rootObject } as MutationVariables;

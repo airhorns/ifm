@@ -113,21 +113,19 @@ export class DevicesEdit extends React.Component<IDevicesEditProps, {}> {
                   <List.Content>
                     <List.Header>{controllerConfig.controller.humanName}</List.Header>
                     <List.Description>
-                      controlled via {controllerConfig.controller.controlStrategyHumanName}
-                    </List.Description>
-                    <form.Group>
+                      <p>controlled via {controllerConfig.controller.controlStrategyHumanName}</p>
                       <form.SendQueryField name={`deviceConfiguration.deviceControllerConfigurations[${index}].field`} />
                       <form.Input
                         required
                         name={`deviceConfiguration.deviceControllerConfigurations[${index}].nickname`}
-                        label={`${controllerConfig.controller.humanName} Nickname`}
+                        label={`Control Nickname`}
                       />
                       <form.Checkbox
                         required
                         name={`deviceConfiguration.deviceControllerConfigurations[${index}].enabled`}
                         label="Enabled"
                       />
-                    </form.Group>
+                    </List.Description>
                   </List.Content>
                 </List.Item>;
               }}</form.NestedFields>

@@ -51,7 +51,8 @@ export class AutoForm<QueryData extends object, QueryVariables, MutationData, Mu
     return React.createElement(this.props.mutation, {
       mutation: this.props.mutation.mutation,
       variables: this.props.variables,
-      children: (mutateFunction: MutationFn<MutationData, MutationVariables>, result: MutationResult<MutationVariables>) => {
+      refetchQueries: () => [{query: this.props.query.query, variables: this.props.variables}],
+      children: (mutateFunction: MutationFn<MutationData, MutationVariables>, mutationResult: MutationResult<MutationVariables>) => {
         const submit = (mutationVariables: MutationVariables) => {
           mutateFunction({variables: mutationVariables});
         };
@@ -60,18 +61,12 @@ export class AutoForm<QueryData extends object, QueryVariables, MutationData, Mu
           throw new Error("Unexpected undefined queryData");
         }
 
-        // When the mutation has come back successfully, fire the query again to refresh the form.
-        if (result.called && !result.loading && !result.error) {
-          queryResult.refetch(this.props.variables).then(() => this.setState({reloading: false}));
-        }
-
         return <AutoFormStateContainer
-          loading={this.state.reloading || queryResult.loading || result.loading}
-          success={result.called && !!result.data}
+          key={JSON.stringify(queryResult.data)}
+          loading={queryResult.loading || mutationResult.loading}
+          success={mutationResult.called && !!mutationResult.data}
           queryDocument={this.props.query.query}
           queryData={queryResult.data}
-          mutationDocument={this.props.mutation.mutation}
-          mutationResult={result}
           submit={submit}
           children={this.props.children}
         />;
