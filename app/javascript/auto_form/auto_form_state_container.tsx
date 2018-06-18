@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as _ from "lodash";
 import { DocumentNode } from "graphql";
-import { Form, Input, InputProps, FormSelectProps, FormCheckboxProps, FormRadioProps, FormFieldProps, FormInputProps, Message } from "semantic-ui-react";
+import { Form, Input, InputProps, FormSelectProps, FormCheckboxProps, FormRadioProps, FormFieldProps, FormInputProps, FormDropdownProps, Message } from "semantic-ui-react";
 import { QueryInspector } from "./query_inspector";
 import { AutoInputFactory, AutoFormInput, TrustedFormInputType } from "./auto_input_factory";
 import { AutoFormNestedFields, NestedFieldsFactory } from "./nested_fields";
@@ -45,6 +45,7 @@ export class AutoFormStateContainer<QueryData extends object, MutationVariables 
   public RawInput: AutoFormInput<InputProps>;
   public Field: AutoFormInput<FormFieldProps>;
   public Select: AutoFormInput<FormSelectProps>;
+  public Dropdown: AutoFormInput<FormDropdownProps>;
   public Checkbox: AutoFormInput<FormCheckboxProps>;
   public Radio: AutoFormInput<FormRadioProps>;
   public SendQueryField: SendQueryField;
@@ -65,6 +66,7 @@ export class AutoFormStateContainer<QueryData extends object, MutationVariables 
     this.Input = AutoInputFactory(this, Form.Input);
     this.RawInput = AutoInputFactory(this, Input);
     this.Select = AutoInputFactory(this, Form.Select);
+    this.Dropdown = AutoInputFactory(this, Form.Dropdown);
     this.Radio = AutoInputFactory(this, Form.Radio);
     this.Checkbox = AutoInputFactory(this, Form.Checkbox);
     this.Field = AutoInputFactory(this, (Form.Field as TrustedFormInputType));

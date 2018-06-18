@@ -1,12 +1,12 @@
 import * as React from "react";
-import { InputOnChangeData, DropdownProps } from "semantic-ui-react";
+import * as _ from "lodash";
+import { Form, InputOnChangeData, FormCheckboxProps, FormDropdownProps } from "semantic-ui-react";
 import { AutoFormStateContainer } from "./auto_form_state_container";
-import { Form, FormCheckboxProps } from "semantic-ui-react";
 
 type InputValueType = number | string | React.ReactText | boolean;
 
 export interface IAutoFormWrappeeRequiredProps {
-  onChange?: (event: React.SyntheticEvent, data?: InputOnChangeData | DropdownProps) => void;
+  onChange?: (event: React.SyntheticEvent, data?: InputOnChangeData | FormDropdownProps) => void;
   defaultValue?: string | number | boolean | Array<number | string>;
   value?: InputValueType | InputValueType[];
   checked?: boolean;
@@ -37,6 +37,13 @@ export const AutoInputFactory = <Props extends IAutoFormWrappeeRequiredProps>(
       switch (InputComponent) {
         case Form.Checkbox:
           this.setValue(!!(data as FormCheckboxProps).checked);
+          break;
+        case Form.Dropdown:
+          const value = (data as FormDropdownProps).value;
+          if (_.isUndefined(value)) {
+            throw new Error("Unexpected undefined value from form dropdown input");
+          }
+          this.setValue(value);
           break;
         default:
           this.setValue(event.currentTarget.value);

@@ -34,9 +34,11 @@ export class GetDeviceConfigurationQuery extends Query<GetDeviceConfiguration.Qu
             icon
           }
         }
-        farmZone {
-          name
-        }
+        farmZoneId
+      }
+      farmZones {
+        id
+        name
       }
     }
   `;
@@ -48,31 +50,6 @@ export class UpdateDeviceConfigurationMutation extends Mutation<UpdateDeviceConf
       updateDeviceConfiguration(input: $input) {
         deviceConfiguration {
           id
-          imageUrl
-          humanName
-          deviceName
-          lastSeen
-          publishers {
-            humanName
-            humanValue
-            comprehensionHumanName
-            comprehensionUnit
-            icon
-          }
-          deviceControllerConfigurations {
-            id
-            field
-            nickname
-            controller {
-              humanName
-              humanState
-              controlStrategyHumanName
-              icon
-            }
-          }
-          farmZone {
-            name
-          }
         }
       }
     }
@@ -104,7 +81,14 @@ export class DevicesEdit extends React.Component<IDevicesEditProps, {}> {
             </Item.Group>
           </Segment>
           <Segment padded>
-            <form.Input required label="Device nickname" name="deviceConfiguration.humanName" control="input"/>
+            <form.Input required label="Device nickname" name="deviceConfiguration.humanName"/>
+            <form.Dropdown
+              required
+              selection
+              label="Farm zone"
+              name="deviceConfiguration.farmZoneId"
+              options={data.farmZones.map((zone) => ({text: zone.name, value: zone.id}))}
+            />
             <Header size="tiny">Device controls</Header>
             <List divided relaxed>
               <form.NestedFields name="deviceConfiguration.deviceControllerConfigurations">{(_, controllerConfig, index) => {

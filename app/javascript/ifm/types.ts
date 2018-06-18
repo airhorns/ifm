@@ -1,5 +1,5 @@
 /* tslint:disable */
-/** Generated in 2018-06-16T22:57:34+00:00 */
+/** Generated in 2018-06-18T03:15:17+00:00 */
 
 export type Json = any;
 
@@ -23,6 +23,7 @@ export interface DeviceConfiguration {
   deviceDiscoveryLog?: DeviceDiscoveryLog | null;
   deviceName: string;
   farmZone: FarmZone;
+  farmZoneId: string;
   humanName: string;
   humanNameWithZone: string;
   id: string;
@@ -290,6 +291,7 @@ export namespace GetDeviceConfiguration {
   export type Query = {
     __typename?: "Query";
     deviceConfiguration: DeviceConfiguration;
+    farmZones: FarmZones[];
   };
 
   export type DeviceConfiguration = {
@@ -301,7 +303,7 @@ export namespace GetDeviceConfiguration {
     lastSeen: DateTime;
     publishers: Publishers[];
     deviceControllerConfigurations: DeviceControllerConfigurations[];
-    farmZone: FarmZone;
+    farmZoneId: string;
   };
 
   export type Publishers = {
@@ -329,8 +331,9 @@ export namespace GetDeviceConfiguration {
     icon: string;
   };
 
-  export type FarmZone = {
+  export type FarmZones = {
     __typename?: "FarmZone";
+    id: string;
     name: string;
   };
 }
@@ -352,43 +355,6 @@ export namespace UpdateDeviceConfiguration {
   export type DeviceConfiguration = {
     __typename?: "DeviceConfiguration";
     id: string;
-    imageUrl: string;
-    humanName: string;
-    deviceName: string;
-    lastSeen: DateTime;
-    publishers: Publishers[];
-    deviceControllerConfigurations: DeviceControllerConfigurations[];
-    farmZone: FarmZone;
-  };
-
-  export type Publishers = {
-    __typename?: "DevicePublisher";
-    humanName: string;
-    humanValue: string;
-    comprehensionHumanName: string;
-    comprehensionUnit?: string | null;
-    icon: string;
-  };
-
-  export type DeviceControllerConfigurations = {
-    __typename?: "DeviceControllerConfiguration";
-    id: string;
-    field: string;
-    nickname: string;
-    controller: Controller;
-  };
-
-  export type Controller = {
-    __typename?: "DeviceController";
-    humanName: string;
-    humanState: string;
-    controlStrategyHumanName: string;
-    icon: string;
-  };
-
-  export type FarmZone = {
-    __typename?: "FarmZone";
-    name: string;
   };
 }
 export namespace GetDeviceConfigurations {

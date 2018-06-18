@@ -16,6 +16,7 @@ module Types
     field :data, Types::JsonType, null: true
     field :device_discovery_log, Types::DeviceDiscoveryLogType, null: true
     field :farm_zone, Types::FarmZoneType, null: false
+    field :farm_zone_Id, ID, null: false
     field :image_url, String, null: false
 
     def human_name_with_zone
