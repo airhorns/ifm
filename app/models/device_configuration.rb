@@ -9,10 +9,24 @@ class DeviceConfiguration < ApplicationRecord
   belongs_to :farm
   belongs_to :farm_zone
   has_many :device_controller_configurations, validate: true, autosave: true
+  has_many :mqtt_topic_states, ->(device_configuration) { unscope(:where).where('topic LIKE ?', "#{device_configuration.mqtt_topic_space}/%") }
   has_one :device_discovery_log, dependent: :nullify
 
   def device_instance
     @device_instance ||= device_class.constantize.new(farm, self)
+  end
+
+  def mqtt_topic_space
+    @mqtt_key ||= if data_address.start_with?('mqtt')
+      data_address.sub("mqtt://", '')
+    else
+      raise "Can't get MQTT key for non mqtt device"
+    end
+  end
+
+  def mqtt_topic_state_for(absolute_topic)
+    @topic_states_by_topic = mqtt_topic_states.index_by(&:topic)
+    @topic_states_by_topic[absolute_topic]
   end
 
   private

@@ -5,6 +5,7 @@ module Devices
   class EspurnaSonoffThTest < ActiveSupport::TestCase
     setup do
       @device = device_configurations(:sonoff_th).device_instance
+      @device.farm.stubs(:mqtt_client).returns(stub)
     end
 
     test "it can turn a relay on and off" do

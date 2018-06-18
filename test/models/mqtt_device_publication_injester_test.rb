@@ -5,6 +5,7 @@ require 'test_helper'
 class MqttDevicePublicationInjesterTest < ActiveSupport::TestCase
   setup do
     @farm = farms(:bct)
+    @farm.stubs(:mqtt_client).returns(stub)
     @injester = MqttDevicePublicationInjester.new(@farm)
     @sensor = @farm.device_configurations.detect { |device| device.data_address == "mqtt://sensors/BCDDC2E81300" }
   end

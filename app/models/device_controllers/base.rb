@@ -25,7 +25,7 @@ module DeviceControllers
     end
 
     def mqtt_get(topic)
-      if topic_state = device.configuration.farm.mqtt_topic_states.where(topic: @device.absolute_mqtt_topic(topic)).first
+      if topic_state = device.configuration.mqtt_topic_state_for(@device.absolute_mqtt_topic(topic))
         topic_state.contents
       else
         :unknown

@@ -9,6 +9,7 @@ class Farm < ApplicationRecord
   has_many :farm_zones, validate: true, autosave: true
 
   def mqtt_client
+    raise "MQTT connections in test are disabled for performance and stability" if Rails.env.test?
     @mqtt_client ||= MQTT::Client.connect(ENV.fetch('MQTT_URL'))
   end
 end

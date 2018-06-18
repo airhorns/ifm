@@ -41,19 +41,11 @@ module Devices
     end
 
     def absolute_mqtt_topic(topic)
-      [mqtt_key, topic].join('/')
+      [@configuration.mqtt_topic_space, topic].join('/')
     end
 
     def tags
-      @tags ||= { device: self.class.file_key, name: configuration.human_name }
-    end
-
-    def mqtt_key
-      @mqtt_key ||= if configuration.data_address.start_with?('mqtt')
-        configuration.data_address.sub("mqtt://", '')
-      else
-        raise "Can't get MQTT key for non mqtt device"
-      end
+      @tags ||= { device: self.class.file_key, name: @configuration.human_name }
     end
   end
 end
