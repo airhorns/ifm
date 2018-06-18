@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Item, Label, Icon, List, Header, Segment } from "semantic-ui-react";
-import { GetDeviceConfigurations, DeviceControllerState } from "../types";
-import { LastSeenLabel } from "./last_seen_label";
+import { Item, Icon, List, Header, Segment } from "semantic-ui-react";
+import { GetDeviceConfigurations } from "../types";
+import { DeviceConfigurationLabels } from "./device_configuration_labels";
 import { DevicePublishesSegment } from "./device_publishes_segment";
 import { DeviceControllerStateLabel } from "./device_controller_state_label";
 
@@ -47,13 +47,7 @@ export class DeviceCard extends React.Component<IDeviceCardProps, IDeviceCardSta
           <Link to={`/devices/${this.props.deviceConfiguration.id}/edit`}>{this.props.deviceConfiguration.humanName}</Link>
         </Item.Header>
         <Item.Meta>
-          <Label color="green">
-            <Icon name="microchip" /> {this.props.deviceConfiguration.deviceName}
-          </Label>
-          <LastSeenLabel date={this.props.deviceConfiguration.lastSeen}/>
-          <Label color="purple">
-            <Icon name="bullseye" /> {this.props.deviceConfiguration.dataAddress}
-          </Label>
+          <DeviceConfigurationLabels deviceConfiguration={this.props.deviceConfiguration} />
         </Item.Meta>
         <Item.Description>
           {this.state.showDetails && <React.Fragment>

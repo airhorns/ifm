@@ -7,7 +7,7 @@ module DevicePublisher
     end
 
     def get
-      @device.mqtt_key.split('/')[-1]
+      @device.configuration.mqtt_topic_space.split('/')[-1]
     end
 
     def cached_value

@@ -5,7 +5,7 @@ import { Item, Segment, Header, List } from "semantic-ui-react";
 import { AutoForm } from "../../auto_form";
 import { GetDeviceConfiguration, UpdateDeviceConfiguration } from "../types";
 import { DevicePublishesSegment } from "./device_publishes_segment";
-import { LastSeenLabel } from "./last_seen_label";
+import { DeviceConfigurationLabels } from "./device_configuration_labels";
 import { DeviceControllerStateLabel } from "./device_controller_state_label";
 
 export class GetDeviceConfigurationQuery extends Query<GetDeviceConfiguration.Query, GetDeviceConfiguration.Variables> {
@@ -75,9 +75,9 @@ export class DevicesEdit extends React.Component<IDevicesEditProps, {}> {
               <Item>
                 <Item.Image size="tiny" src={data.deviceConfiguration.imageUrl} />
                 <Item.Content>
-                  <Item.Header>Device: {data.deviceConfiguration.deviceName}</Item.Header>
+                  <Item.Header>{data.deviceConfiguration.humanName}</Item.Header>
                   <Item.Meta>
-                    <LastSeenLabel date={data.deviceConfiguration.lastSeen}/>
+                    <DeviceConfigurationLabels deviceConfiguration={data.deviceConfiguration} />
                   </Item.Meta>
                 </Item.Content>
               </Item>
