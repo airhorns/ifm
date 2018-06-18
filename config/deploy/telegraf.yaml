@@ -1,0 +1,37 @@
+## Default values.yaml for Telegraf
+image:
+  repo: "telegraf"
+  tag: "1.7.0-alpine"
+  pullPolicy: IfNotPresent
+
+config:
+  agent:
+    interval: "10s"
+    round_interval: true
+    metric_batch_size: 1000
+    metric_buffer_limit: 10000
+    collection_jitter: "0s"
+    flush_interval: "10s"
+    flush_jitter: "0s"
+  outputs:
+    influxdb:
+      url: http://influxdb.ifm-production.svc.cluster.local:8086
+      database: "telegraf"
+      retention_policy: ""
+      timeout: "5s"
+      username: ""
+      password: ""
+      user_agent: "telegraf"
+      insecure_skip_verify: false
+  inputs:
+    kubernetes:
+      url: "http://$HOSTIP:10255"
+      bearer_token: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+      insecure_skip_verify: true
+    docker:
+      endpoint: "unix:///var/run/docker.sock"
+      timeout: "5s"
+      perdevice: true
+      total: false
+      docker_label_exclude:
+        - "annotation.kubernetes.io/*"
