@@ -50,7 +50,7 @@ export class FarmSettings extends React.Component<{}, {}> {
             <Segment>
               <Header size="small">Farm Zones</Header>
               <form.NestedFields name="farm.farmZones">{(_, zone, index) => {
-                return <form.Input required label="Farm zone name" name={`farm.farmZones[${index}].name`} control="input" key={zone.name}/>;
+                return <form.Input required label="Farm zone name" name={`farm.farmZones[${index}].name`} control="input" key={zone.id}/>;
               }}</form.NestedFields>
               <form.NestedFields name="farm.createFarmZones">{(_, __, index) => {
                 return <form.Input required label="New farm zone name" name={`farm.createFarmZones[${index}].name`} control="input" key={index}/>;

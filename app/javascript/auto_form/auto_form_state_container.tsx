@@ -56,12 +56,10 @@ export class AutoFormStateContainer<QueryData extends object, MutationVariables 
   public NestedFields: AutoFormNestedFields<QueryData>;
 
   private queryInspector: QueryInspector;
-  private seedKeys: string[];
 
   constructor(props: IAutoFormStateContainerProps<QueryData, MutationVariables>) {
     super(props);
     this.state = { formState: {} };
-    this.seedKeys = [];
     this.queryInspector = new QueryInspector(this.props.queryDocument);
     this.Input = AutoInputFactory(this, Form.Input);
     this.RawInput = AutoInputFactory(this, Input);
@@ -84,13 +82,16 @@ export class AutoFormStateContainer<QueryData extends object, MutationVariables 
   }
 
   public addNestedFieldChild(key: string, initialValues: any) {
-    const index = (this.getSeedValue(key) || []).length;
+    const index = (this.getCurrentValue(key) || this.getSeedValue(key) || []).length;
     this.setValue(`${key}[${index}]`, initialValues);
   }
 
   public seedFormState(name: string) {
-    this.seedKeys.push(name);
     this.setValue(name, this.getSeedValue(name));
+  }
+
+  public getCurrentValue(name: string) {
+    return _.get(this.state.formState, name);
   }
 
   public getSeedValue(name: string) {
