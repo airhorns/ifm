@@ -18,6 +18,7 @@ export class GetDeviceConfigurationsQuery extends Query<GetDeviceConfigurations.
           humanName
           deviceName
           lastSeen
+          dataAddress
           publishers {
             humanName
             humanValue

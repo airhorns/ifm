@@ -6,6 +6,7 @@ import { AutoForm } from "../../auto_form";
 import { GetDeviceConfiguration, UpdateDeviceConfiguration } from "../types";
 import { DevicePublishesSegment } from "./device_publishes_segment";
 import { LastSeenLabel } from "./last_seen_label";
+import { DeviceControllerStateLabel } from "./device_controller_state_label";
 
 export class GetDeviceConfigurationQuery extends Query<GetDeviceConfiguration.Query, GetDeviceConfiguration.Variables> {
   public static query = gql`
@@ -16,6 +17,7 @@ export class GetDeviceConfigurationQuery extends Query<GetDeviceConfiguration.Qu
         humanName
         deviceName
         lastSeen
+        dataAddress
         publishers {
           humanName
           humanValue
@@ -27,6 +29,7 @@ export class GetDeviceConfigurationQuery extends Query<GetDeviceConfiguration.Qu
           id
           field
           nickname
+          enabled
           controller {
             humanName
             humanState
@@ -97,7 +100,10 @@ export class DevicesEdit extends React.Component<IDevicesEditProps, {}> {
                   <List.Content>
                     <List.Header>{controllerConfig.controller.humanName}</List.Header>
                     <List.Description>
-                      <p>controlled via {controllerConfig.controller.controlStrategyHumanName}</p>
+                      <p>
+                        controlled via {controllerConfig.controller.controlStrategyHumanName},&nbsp;
+                        currently: <DeviceControllerStateLabel controller={controllerConfig.controller} />
+                      </p>
                       <form.SendQueryField name={`deviceConfiguration.deviceControllerConfigurations[${index}].field`} />
                       <form.Input
                         required

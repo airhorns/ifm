@@ -11,6 +11,14 @@ module DeviceControllers
       "Relay #{config[:relay]}"
     end
 
+    def current_state
+      case mqtt_get(@mqtt_key)
+      when "0" then :off
+      when "1" then :on
+      else :unknown
+      end
+    end
+
     def send_on!
       mqtt_send(@mqtt_key, 'on')
     end

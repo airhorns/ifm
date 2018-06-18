@@ -1,5 +1,5 @@
 /* tslint:disable */
-/** Generated in 2018-06-18T03:36:01+00:00 */
+/** Generated in 2018-06-18T14:46:52+00:00 */
 
 export type Json = any;
 
@@ -172,7 +172,8 @@ export interface UpdateFarmMutationArgs {
 
 export enum DeviceControllerState {
   off = "off",
-  on = "on"
+  on = "on",
+  unknown = "unknown"
 }
 
 export enum DiscoveryStateFilter {
@@ -306,6 +307,7 @@ export namespace GetDeviceConfiguration {
     humanName: string;
     deviceName: string;
     lastSeen: DateTime;
+    dataAddress: string;
     publishers: Publishers[];
     deviceControllerConfigurations: DeviceControllerConfigurations[];
     farmZoneId: string;
@@ -325,6 +327,7 @@ export namespace GetDeviceConfiguration {
     id: string;
     field: string;
     nickname: string;
+    enabled: boolean;
     controller: Controller;
   };
 
@@ -384,6 +387,7 @@ export namespace GetDeviceConfigurations {
     humanName: string;
     deviceName: string;
     lastSeen: DateTime;
+    dataAddress: string;
     publishers: Publishers[];
     controllers: Controllers[];
     farmZone: FarmZone;

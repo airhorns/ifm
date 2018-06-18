@@ -7,7 +7,7 @@ export class AppContainer extends React.Component<{}, {}> {
   public render() {
     return <div className="ifm-container">
       <Header/>
-      <Container text style={{ marginTop: "1em" }}>
+      <Container style={{ marginTop: "1em" }}>
       {this.props.children}
       </Container>
     </div>;

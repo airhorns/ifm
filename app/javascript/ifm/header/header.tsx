@@ -1,7 +1,6 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
-  Button,
   Container,
   Icon,
   Menu,
@@ -20,27 +19,20 @@ export class Header extends React.Component<{}, {}> {
       >
         <Menu inverted pointing secondary size="large">
           <Container>
-            <Menu.Item>
-              <Link to="/">
-                <Icon name="home" />
-                Home
-              </Link>
-            </Menu.Item>
-            <Menu.Item>
-              <Link to="/devices">Devices</Link>
-            </Menu.Item>
+            <Menu.Item as={Link} to="/"><Icon name="home" /> Home</Menu.Item>
+            <Menu.Item as={NavLink} to="/devices" activeClassName="active">Devices</Menu.Item>
             <Menu.Menu position="right">
               <Dropdown item text="Settings">
                 <Dropdown.Menu>
-                  <Dropdown.Item><Link to="/settings/farm">Farm Settings</Link></Dropdown.Item>
+                  <Dropdown.Item as={NavLink} to="/settings/farm" activeClassName="active">Farm Settings</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
               <Dropdown item text="Admin">
                 <Dropdown.Menu>
-                  <Dropdown.Item><a href="/admin/tools/sidekiq">Sidekiq</a></Dropdown.Item>
-                  <Dropdown.Item><a href="/admin/tools/graphiql">GraphIQL</a></Dropdown.Item>
-                  <Dropdown.Item><a href="/admin/tools/db">SQL Queries</a></Dropdown.Item>
-                  <Dropdown.Item><a href="/admin/">Admin Editor</a></Dropdown.Item>
+                  <Dropdown.Item as="a" href="/admin/tools/sidekiq">Sidekiq</Dropdown.Item>
+                  <Dropdown.Item as="a" href="/admin/tools/graphiql">GraphIQL</Dropdown.Item>
+                  <Dropdown.Item as="a" href="/admin/tools/db">SQL Queries</Dropdown.Item>
+                  <Dropdown.Item as="a" href="/admin/">Admin Editor</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Menu.Menu>

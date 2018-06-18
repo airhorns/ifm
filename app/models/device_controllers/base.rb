@@ -24,6 +24,14 @@ module DeviceControllers
       @device.farm.mqtt_client.publish(@device.absolute_mqtt_topic(topic), contents)
     end
 
+    def mqtt_get(topic)
+      if topic_state = device.configuration.farm.mqtt_topic_states.where(topic: @device.absolute_mqtt_topic(topic)).first
+        topic_state.contents
+      else
+        :unknown
+      end
+    end
+
     def device_controller_configuration
       @device.configuration.device_controller_configurations.detect { |config| config.field == @field.to_s }
     end
