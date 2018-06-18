@@ -1,5 +1,5 @@
 /* tslint:disable */
-/** Generated in 2018-06-18T03:15:17+00:00 */
+/** Generated in 2018-06-18T03:36:01+00:00 */
 
 export type Json = any;
 
@@ -36,7 +36,7 @@ export interface DeviceController {
   controlStrategyHumanName: string;
   field: string;
   humanName: string;
-  humanState: string;
+  humanState: DeviceControllerState;
   icon: string;
   nickname: string;
 }
@@ -168,6 +168,11 @@ export interface UpdateDeviceConfigurationMutationArgs {
 }
 export interface UpdateFarmMutationArgs {
   input: UpdateFarmInput;
+}
+
+export enum DeviceControllerState {
+  off = "off",
+  on = "on"
 }
 
 export enum DiscoveryStateFilter {
@@ -326,7 +331,7 @@ export namespace GetDeviceConfiguration {
   export type Controller = {
     __typename?: "DeviceController";
     humanName: string;
-    humanState: string;
+    humanState: DeviceControllerState;
     controlStrategyHumanName: string;
     icon: string;
   };
@@ -398,7 +403,7 @@ export namespace GetDeviceConfigurations {
     field: string;
     nickname: string;
     humanName: string;
-    humanState: string;
+    humanState: DeviceControllerState;
     controlStrategyHumanName: string;
     icon: string;
   };

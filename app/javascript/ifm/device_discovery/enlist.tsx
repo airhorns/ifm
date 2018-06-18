@@ -61,7 +61,6 @@ class EnlistMutation extends Mutation<SendEnlist.Mutation, SendEnlist.Variables>
       errors
     }
   }
-
   `;
 }
 

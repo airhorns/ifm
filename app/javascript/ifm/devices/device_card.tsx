@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { Item, Label, Icon, List, Header, Segment } from "semantic-ui-react";
-import { GetDeviceConfigurations } from "../types";
+import { GetDeviceConfigurations, DeviceControllerState } from "../types";
 import { LastSeenLabel } from "./last_seen_label";
 import { DevicePublishesSegment } from "./device_publishes_segment";
 
@@ -23,12 +23,21 @@ export class DeviceCard extends React.Component<IDeviceCardProps, IDeviceCardSta
     this.setState({showDetails});
   }
 
+  public colourForControllerState(state: DeviceControllerState) {
+    if (state === "on") {
+      return "green";
+    } else {
+      return "grey";
+    }
+  }
   public render() {
     const controllerItems = this.props.deviceConfiguration.controllers.map((controller) => {
       return <List.Item key={controller.humanName}>
         <List.Icon name={controller.icon as any} size="large" verticalAlign="middle" />
         <List.Content>
-          <List.Header>{controller.nickname}: {controller.humanState}</List.Header>
+          <List.Header>
+            {controller.nickname}: <Label color={this.colourForControllerState(controller.humanState)} horizontal>{controller.humanState}</Label>
+          </List.Header>
           <List.Description>
             {controller.controlStrategyHumanName} control on {controller.humanName}
           </List.Description>
