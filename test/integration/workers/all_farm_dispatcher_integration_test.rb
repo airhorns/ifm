@@ -8,10 +8,10 @@ class AllFarmDispatcherIntegrationTest < ActiveSupport::TestCase
   #     AllFarmDispatcher.new.perform('frequent')
   #   end
   # end
-  #
-  # test "rare dispatch job runs" do
-  #   Sidekiq::Testing.inline! do
-  #     AllFarmDispatcher.new.perform('rare')
-  #   end
-  # end
+
+  test "rare dispatch job runs" do
+    Sidekiq::Testing.inline! do
+      AllFarmDispatcher.new.perform('rare')
+    end
+  end
 end

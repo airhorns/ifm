@@ -45,7 +45,7 @@ module Devices
     end
 
     def tags
-      @tags ||= { device: self.class.file_key, name: @configuration.human_name }
+      @tags ||= { device: self.class.file_key, name: @configuration.human_name, farm_zone: @configuration.farm_zone.name }
     end
   end
 end
