@@ -1,14 +1,4 @@
 GIT
-  remote: https://github.com/airhorns/sidekiq-daemon.git
-  revision: a9f07b325cccbdd273b9d0fb1630df97e93f4dc5
-  ref: a9f07b325cccbdd273b9d0fb1630df97e93f4dc5
-  specs:
-    sidekiq-daemon (0.1.0)
-      mlanett-redis-lock (~> 0.2.7)
-      redis (~> 4.0.1)
-      sidekiq (~> 5.1.3)
-
-GIT
   remote: https://github.com/igorkasyanchuk/rails_db.git
   revision: e5a5de9f3204c7bd1642c2d1988903d4897f6f5d
   ref: e5a5de9f3204c7bd1642c2d1988903d4897f6f5d
@@ -27,6 +17,14 @@ GIT
   specs:
     mlanett-redis-lock (0.2.7)
       redis
+
+PATH
+  remote: ../sidekiq-daemon
+  specs:
+    sidekiq-daemon (0.1.0)
+      mlanett-redis-lock (~> 0.2.7)
+      redis (~> 4.0.1)
+      sidekiq (~> 5.1.3)
 
 GEM
   remote: https://rubygems.org/

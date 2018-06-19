@@ -21,7 +21,7 @@ class MqttStateInjest
         MqttTopicState.create!(farm_id: farm_id, topic: topic, contents: payload)
       end
 
-      daemon_lock.renew
+      return unless daemon_lock.checkin # rubocop:disable
     end
   end
 

@@ -13,7 +13,7 @@ class MqttDevicePublicationInjest
     if injester.subscribe
       loop do
         5.times { injester.injest_one }
-        daemon_lock.renew
+        break unless daemon_lock.checkin
       end
     end
   end
