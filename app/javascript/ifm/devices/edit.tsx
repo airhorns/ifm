@@ -100,10 +100,10 @@ export class DevicesEdit extends React.Component<IDevicesEditProps, {}> {
                   <List.Content>
                     <List.Header>{controllerConfig.controller.humanName}</List.Header>
                     <List.Description>
-                      <p>
+                      <div>
                         controlled via {controllerConfig.controller.controlStrategyHumanName},&nbsp;
                         currently: <DeviceControllerStateLabel controller={controllerConfig.controller} />
-                      </p>
+                      </div>
                       <form.SendQueryField name={`deviceConfiguration.deviceControllerConfigurations[${index}].field`} />
                       <form.Input
                         required

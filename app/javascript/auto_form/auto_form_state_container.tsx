@@ -103,11 +103,12 @@ export class AutoFormStateContainer<QueryData extends object, MutationVariables 
   public render() {
     return <Form loading={this.props.loading} success={this.props.success} onSubmit={this.submit}>
       {this.props.children(this, this.props.queryData)}
+      <this.SendQueryField name={`${this.queryInspector.rootFieldName()}.id`} />
     </Form>;
   }
 
   public resourceName() {
-    return _.capitalize(this.queryInspector.rootFieldName());
+    return _.startCase(this.queryInspector.rootFieldName());
   }
 
   public resourceID() {
@@ -127,9 +128,6 @@ export class AutoFormStateContainer<QueryData extends object, MutationVariables 
     // key if we queried for it.
     const key = this.queryInspector.rootFieldName();
     const rootObject = _.cloneDeep((this.state.formState as any)[key]);
-    if (!_.isUndefined(this.resourceID())) {
-      rootObject.id = this.resourceID();
-    }
     // The queryData that got set as the formState to start has some fields in it that the mutation doesn't define, like __type.
     // Gotta get rid of those before sending off the variables.
     return { input: rootObject } as MutationVariables;
