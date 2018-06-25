@@ -35,6 +35,8 @@ gem 'health_check'
 
 gem "sentry-raven", require: false
 
+gem 'montrose'
+
 group :development, :test do
   gem 'byebug'
   gem 'guard'
