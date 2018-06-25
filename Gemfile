@@ -33,7 +33,7 @@ gem 'rails_db', '~> 2.0.1', git: 'https://github.com/igorkasyanchuk/rails_db.git
 gem 'administrate', '~> 0.10.0'
 gem 'health_check'
 
-gem "sentry-raven"
+gem "sentry-raven", require: false
 
 group :development, :test do
   gem 'byebug'
