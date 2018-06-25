@@ -1,8 +1,0 @@
-## kapacitor values.yaml
-persistence:
-  enabled: true
-  storageClass: gce-ssd
-  accessMode: ReadWriteOnce
-  size: 8Gi
-
-influxURL: http://influxdb:8086

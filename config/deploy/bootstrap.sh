@@ -12,4 +12,3 @@ helm install --name nginx-ingress stable/nginx-ingress -f config/deploy/nginx-in
 
 helm repo add influx http://influx-charts.storage.googleapis.com
 helm install --name telegraf influx/telegraf-ds -f config/deploy/telegraf.yaml
-helm install --name kapacitor influx/kapacitor -f config/deploy/kapacitor.yaml
