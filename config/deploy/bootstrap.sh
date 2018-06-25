@@ -8,6 +8,8 @@ helm init --service-account tiller
 kubectl create namespace ifm-production
 
 helm install --name cert-manager --namespace kube-system stable/cert-manager
-kubectl create -f config/deploy/cluster-issuer.yaml
-
 helm install --name nginx-ingress stable/nginx-ingress -f config/deploy/nginx-ingress-controller.yml
+
+helm repo add influx http://influx-charts.storage.googleapis.com
+helm install --name telegraf influx/telegraf-ds -f config/deploy/telegraf.yaml
+helm install --name kapacitor influx/kapacitor -f config/deploy/kapacitor.yaml
