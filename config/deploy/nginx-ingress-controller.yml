@@ -1,3 +1,4 @@
+# values.yaml for nginx-ingress-controller helm chart
 controller:
   publishService:
     enabled: true

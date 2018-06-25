@@ -4,15 +4,15 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: redis-data
-  name: redis-data
+    io.kompose.service: redis-data-ssd
+  name: redis-data-ssd
 spec:
   accessModes:
   - ReadWriteOnce
+  storageClassName: gce-ssd
   resources:
     requests:
-      storage: 100Mi
-status: {}
+      storage: 10Gi
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -46,13 +46,12 @@ spec:
         resources: {}
         volumeMounts:
         - mountPath: /var/lib/redis
-          name: redis-data
+          name: redis-data-ssd
       restartPolicy: Always
       volumes:
-      - name: redis-data
+      - name: redis-data-ssd
         persistentVolumeClaim:
-          claimName: redis-data
-status: {}
+          claimName: redis-data-ssd
 ---
 apiVersion: v1
 kind: Service
@@ -71,6 +70,3 @@ spec:
     targetPort: 6379
   selector:
     io.kompose.service: redis
-status:
-  loadBalancer: {}
----

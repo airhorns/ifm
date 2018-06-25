@@ -4,14 +4,15 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: chronograf-data
-  name: chronograf-data
+    io.kompose.service: chronograf-data-ssd
+  name: chronograf-data-ssd
 spec:
   accessModes:
   - ReadWriteOnce
+  storageClassName: gce-ssd
   resources:
     requests:
-      storage: 100Mi
+      storage: 500Mi
 ---
 apiVersion: v1
 kind: Service
@@ -62,9 +63,9 @@ spec:
         resources: {}
         volumeMounts:
         - mountPath: /var/lib/chronograf
-          name: chronograf-data
+          name: chronograf-data-ssd
       restartPolicy: Always
       volumes:
-      - name: chronograf-data
+      - name: chronograf-data-ssd
         persistentVolumeClaim:
-          claimName: chronograf-data
+          claimName: chronograf-data-ssd

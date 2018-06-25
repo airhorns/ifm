@@ -1,4 +1,4 @@
-## Default values.yaml for Telegraf
+# values.yaml for Telegraf
 image:
   repo: "telegraf"
   tag: "1.7.0-alpine"

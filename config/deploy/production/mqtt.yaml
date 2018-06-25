@@ -4,15 +4,15 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: mqtt-data
-  name: mqtt-data
+    io.kompose.service: mqtt-data-ssd
+  name: mqtt-data-ssd
 spec:
   accessModes:
   - ReadWriteOnce
+  storageClassName: gce-ssd
   resources:
     requests:
-      storage: 100Mi
-status: {}
+      storage: 5Gi
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -43,13 +43,12 @@ spec:
         resources: {}
         volumeMounts:
         - mountPath: /mosquitto/data
-          name: mqtt-data
+          name: mqtt-data-ssd
       restartPolicy: Always
       volumes:
-      - name: mqtt-data
+      - name: mqtt-data-ssd
         persistentVolumeClaim:
-          claimName: mqtt-data
-status: {}
+          claimName: mqtt-data-ssd
 ---
 apiVersion: v1
 kind: Service
@@ -71,6 +70,4 @@ spec:
     targetPort: 9001
   selector:
     io.kompose.service: mqtt
-status:
-  loadBalancer: {}
 ---
