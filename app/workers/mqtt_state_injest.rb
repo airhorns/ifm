@@ -21,7 +21,7 @@ class MqttStateInjest
         MqttTopicState.create!(farm_id: farm_id, topic: topic, contents: payload)
       end
 
-      return unless daemon_lock.checkin # rubocop:disable
+      return unless daemon_lock.checkin # rubocop:disable Lint/NonLocalExitFromIterator
     end
   end
 

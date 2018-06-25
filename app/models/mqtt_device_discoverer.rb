@@ -8,7 +8,8 @@ class MqttDeviceDiscoverer
     Devices::EspurnaSonoffTh,
     Devices::EspurnaSonoffPowR2,
     Devices::MinewS1,
-    Devices::XiaomiBleHt
+    Devices::XiaomiBleHt,
+    Devices::Skybeacon
   ]
 
   attr_reader :farm
