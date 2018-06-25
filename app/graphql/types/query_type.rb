@@ -30,6 +30,18 @@ module Types
 
     field :device_controller_configuration, DeviceControllerConfigurationType, null: false do
       description "Get the details of one DeviceControllerConfiguration object"
+    end
+
+    field :device_controller_configurations, [DeviceControllerConfigurationType], null: false do
+      description "Get all the configured device controllers as DeviceConfigurationController objects"
+    end
+
+    field :schedules, [ScheduleType], null: false do
+      description "Get the details of many Schedule objects"
+    end
+
+    field :schedule, ScheduleType, null: false do
+      description "Get the details of a Schedule object"
       argument :id, ID, required: true
     end
 
@@ -59,6 +71,14 @@ module Types
       context[:current_farm].device_controller_configurations.find(id)
     end
 
+    def schedules
+      farm.schedules
+    end
+
+    def schedule(id:)
+      context[:current_farm].schedules.find(id)
+    end
+
     def farm_zones
       context[:current_farm].farm_zones
     end
@@ -69,6 +89,10 @@ module Types
 
     def device_configurations
       context[:current_farm].device_configurations
+    end
+
+    def device_controller_configurations
+      context[:current_farm].device_controller_configurations
     end
 
     private

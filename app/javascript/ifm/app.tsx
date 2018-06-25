@@ -8,6 +8,9 @@ import { ApolloProvider } from "react-apollo";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { AppContainer } from "./app_container/app_container";
+import { SchedulesIndex } from "./schedules/index";
+import { SchedulesEdit } from "./schedules/edit";
+import { SchedulesNew } from "./schedules/new";
 import { DevicesIndex } from "./devices/index";
 import { DevicesEdit } from "./devices/edit";
 import { DeviceControllersEdit } from "./device_controllers/edit";
@@ -66,6 +69,9 @@ export class App extends React.Component<{}, {}> {
               <Route path="/device_controllers/:id/edit" render={({match}) => <DeviceControllersEdit id={match.params.id}/>}/>
               <Route path="/device_discovery" exact component={DeviceDiscoveryIndex} />
               <Route path="/device_discovery/:id/enlist" render={({match}) => <DeviceDiscoveryEnlist id={match.params.id}/>}/>
+              <Route path="/schedules" exact component={SchedulesIndex} />
+              <Route path="/schedules/new" exact component={SchedulesNew} />
+              <Route path="/schedules/:id/edit" render={({match}) => <SchedulesEdit id={match.params.id}/>}/>
               <Route path="/settings/farm" exact component={FarmSettings} />
               <Route component={NoMatch} />
             </Switch>

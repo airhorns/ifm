@@ -10,6 +10,8 @@ class Farm < ApplicationRecord
   has_many :device_controller_configurations
   has_many :farm_zones, validate: true, autosave: true
   has_many :controller_state_transitions
+  has_many :schedules
+  has_many :scheduled_control_states
 
   def mqtt_client
     raise "MQTT connections in test are disabled for performance and stability" if Rails.env.test?

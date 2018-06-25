@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Types
   class DeviceControllerStateType < BaseEnum
     value "off", "Turned off"

@@ -1,0 +1,14 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+water-seedlings-pump-on:
+  farm: bct
+  schedule: water-seedlings
+  device_controller_configuration: sonoff_basic_relay_0
+  recurrence: '{"every": "day"}'
+  desired_state: "on"
+
+water-seedlings-pump-off:
+  farm: bct
+  schedule: water-seedlings
+  device_controller_configuration: sonoff_basic_relay_0
+  recurrence: '{"every": "day"}'
+  desired_state: "off"

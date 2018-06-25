@@ -35,7 +35,7 @@ gem 'health_check'
 
 gem "sentry-raven", require: false
 
-gem 'montrose'
+gem 'montrose', '~> 0.8.0', git: 'https://github.com/airhorns/montrose.git', ref: "d676f9ab3582ab30e8c148d471ad13226bc66c2c"
 
 group :development, :test do
   gem 'byebug'

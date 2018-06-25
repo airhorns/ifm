@@ -20,6 +20,7 @@ export class Header extends React.Component<{}, {}> {
         <Menu inverted pointing secondary size="large">
           <Container>
             <Menu.Item as={Link} to="/"><Icon name="home" /> Home</Menu.Item>
+            <Menu.Item as={NavLink} to="/schedules" activeClassName="active">Schedules</Menu.Item>
             <Menu.Item as={NavLink} to="/devices" activeClassName="active">Devices</Menu.Item>
             <Menu.Menu position="right">
               <Dropdown item text="Settings">

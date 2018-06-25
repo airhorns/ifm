@@ -5,5 +5,6 @@ module Types
     field :update_farm, mutation: Mutations::UpdateFarm
     field :update_device_configuration, mutation: Mutations::UpdateDeviceConfiguration
     field :update_device_controller_state, mutation: Mutations::UpdateDeviceControllerState
+    field :update_schedule, mutation: Mutations::UpdateSchedule
   end
 end

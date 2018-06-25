@@ -84,4 +84,22 @@ ActiveRecord::Schema.define(version: 2018_07_11_172742) do
     t.index ["farm_id"], name: "index_mqtt_topic_states_on_farm_id"
   end
 
+  create_table "scheduled_control_states", force: :cascade do |t|
+    t.bigint "farm_id", null: false
+    t.bigint "schedule_id", null: false
+    t.bigint "device_controller_configuration_id", null: false
+    t.string "recurrence", null: false
+    t.string "desired_state", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "schedules", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "farm_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "enabled", default: true, null: false
+  end
+
 end

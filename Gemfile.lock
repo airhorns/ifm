@@ -1,4 +1,12 @@
 GIT
+  remote: https://github.com/airhorns/montrose.git
+  revision: d676f9ab3582ab30e8c148d471ad13226bc66c2c
+  ref: d676f9ab3582ab30e8c148d471ad13226bc66c2c
+  specs:
+    montrose (0.8.0)
+      activesupport (>= 4.1, < 5.3)
+
+GIT
   remote: https://github.com/airhorns/sidekiq-daemon.git
   revision: 0155542121b72dba95c4ee5e9bbc030d112f3de8
   ref: 0155542121b72dba95c4ee5e9bbc030d112f3de8
@@ -232,8 +240,6 @@ GEM
       metaclass (~> 0.0.1)
     momentjs-rails (2.20.1)
       railties (>= 3.1)
-    montrose (0.8.0)
-      activesupport (>= 4.1, < 5.3)
     msgpack (1.2.4)
     multi_json (1.13.1)
     multipart-post (2.0.0)
@@ -421,7 +427,7 @@ DEPENDENCIES
   mini_magick (~> 4.8)
   mlanett-redis-lock!
   mocha
-  montrose
+  montrose (~> 0.8.0)!
   paho-mqtt
   pg (>= 0.18, < 2.0)
   puma (~> 3.11)
