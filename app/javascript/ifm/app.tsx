@@ -26,7 +26,7 @@ const client = new ApolloClient({
         graphQLErrors.map(({ message, locations, path }) =>
           console.log(                                                        // tslint:disable-line
             `[GraphQL error]: Message: ${message}`,
-            {locations, path}
+            {locations, path},
           ),
         );
       }

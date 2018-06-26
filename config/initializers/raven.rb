@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if ENV['SENTRY_DSN']
   require 'sentry-raven'
   Raven.configure do |config|
