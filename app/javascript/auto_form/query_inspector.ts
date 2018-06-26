@@ -8,7 +8,7 @@ export class QueryInspector {
     this.queryDocument = queryDocument;
   }
 
-  public rootFieldName() {
+  public queryRootFieldName() {
     const definitions = _.filter(
       this.queryDocument.definitions,
       (definition): definition is OperationDefinitionNode => definition.kind === "OperationDefinition",
@@ -23,5 +23,9 @@ export class QueryInspector {
     );
     if (fields.length === 0) { throw new Error("couldn't get root name, no fields in selection in gql document");  }
     return fields[0].name.value;
+  }
+
+  public mutationRootFieldName() {
+    return this.queryRootFieldName();
   }
 }

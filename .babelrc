@@ -21,6 +21,11 @@
       {
         "spec": true
       }
-    ]
+    ], [
+      "lodash",
+      {
+        "id": ["lodash", "semantic-ui-react"]
+      }
+    ],
   ]
 }

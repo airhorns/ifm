@@ -118,7 +118,8 @@ services:
     stdin_open: true
     tty: true
     ports:
-      - 3000:3000
+      - 3000:3000 # rails server
+      - 9229:9229 # node debugger
     environment:
       <<: *app_environment
       DB_POOL: 5

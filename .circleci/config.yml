@@ -43,9 +43,13 @@ jobs:
           no_output_timeout: 2m
           command: docker-compose -f docker-compose.yml -f .circleci/docker-compose.circle.yml run web bin/rake db:setup
       - run:
-          name: run tests
+          name: run rails tests
           no_output_timeout: 2m
           command: docker-compose -f docker-compose.yml -f .circleci/docker-compose.circle.yml run web bin/rails test
+      - run:
+          name: run javascript tests
+          no_output_timeout: 2m
+          command: docker-compose -f docker-compose.yml -f .circleci/docker-compose.circle.yml run web bin/jest
 
       - deploy:
           name: push container and deploy master to GKE
