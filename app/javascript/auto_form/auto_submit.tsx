@@ -1,9 +1,9 @@
 import * as React from "react";
 import * as _ from "lodash";
-import { Form } from "semantic-ui-react";
+import { Form, FormButtonProps } from "semantic-ui-react";
 import { AutoFormStateContainer } from "./auto_form_state_container";
 
-export interface IAutoSubmitProps {
+export interface IAutoSubmitProps extends FormButtonProps {
   children?: React.ReactNode;
 }
 
@@ -21,7 +21,7 @@ export const AutoSubmitFactory = (form: AutoFormStateContainer<any, any>): AutoS
     }
 
     public render() {
-      return <Form.Button floated="right">{this.props.children || this.buttonText()}</Form.Button>;
+      return <Form.Button {...this.props} floated="right">{this.props.children || this.buttonText()}</Form.Button>;
     }
   };
 };
