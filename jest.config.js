@@ -5,7 +5,7 @@ module.exports = {
   },
   roots: ["app/javascript"],
   setupTestFrameworkScriptFile: "/app/app/javascript/__tests__/test_setup.js",
-  testRegex: "(/app/javascript/.*/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+  testRegex: "app/javascript/.*/__tests__/.*(test|spec)\\.(jsx?|tsx?)$",
   moduleFileExtensions: [
     "ts",
     "tsx",

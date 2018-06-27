@@ -3,88 +3,88 @@
 module Types
   class RecurrenceType < Types::BaseObject
     field :every, String, null: false
+    field :total, Int, null: true
+    field :at, [RecurrenceAtType], null: true
     field :starts, String, null: true
     field :until, String, null: true
     field :between, String, null: true
-    field :hour, String, null: true
-    field :day, String, null: true
-    field :mday, String, null: true
-    field :yday, String, null: true
-    field :week, String, null: true
-    field :month, String, null: true
-    field :interval, String, null: true
-    field :total, String, null: true
-    field :at, String, null: true
-    field :on, String, null: true
+    field :hour, [Int], null: true
+    field :day, [RecurrenceDayType], null: true
+    field :mday, [Int], null: true
+    field :yday, [Int], null: true
+    field :week, [Int], null: true
+    field :month, [Int], null: true
+    field :interval, Int, null: true
+    field :on, [String], null: true
     field :except, String, null: true
     field :exclude_end, String, null: true
 
     def every
-      object_hash[:every]
+      transformed_object[:every]
     end
 
     def starts
-      object_hash[:starts]
+      transformed_object[:starts]
     end
 
     def until
-      object_hash[:until]
+      transformed_object[:until]
     end
 
     def between
-      object_hash[:between]
+      transformed_object[:between]
     end
 
     def hour
-      object_hash[:hour]
+      transformed_object[:hour]
     end
 
     def day
-      object_hash[:day]
+      transformed_object[:day]
     end
 
     def mday
-      object_hash[:mday]
+      transformed_object[:mday]
     end
 
     def yday
-      object_hash[:yday]
+      transformed_object[:yday]
     end
 
     def week
-      object_hash[:week]
+      transformed_object[:week]
     end
 
     def month
-      object_hash[:month]
+      transformed_object[:month]
     end
 
     def interval
-      object_hash[:interval]
+      transformed_object[:interval]
     end
 
     def total
-      object_hash[:total]
+      transformed_object[:total]
     end
 
     def at
-      object_hash[:at]
+      transformed_object[:at]
     end
 
     def on
-      object_hash[:on]
+      transformed_object[:on]
     end
 
     def except
-      object_hash[:except]
+      transformed_object[:except]
     end
 
     def exclude_end
-      object_hash[:exclude_end]
+      transformed_object[:exclude_end]
     end
 
-    def object_hash
-      @object_hash ||= object.to_h
+    def transformed_object
+      @transformed_object ||= RecurrenceTransform.transform(object)
     end
   end
 end

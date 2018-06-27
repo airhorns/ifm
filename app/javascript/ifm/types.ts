@@ -1,5 +1,5 @@
 /* tslint:disable */
-/** Generated in 2018-07-29T14:35:19+00:00 */
+/** Generated in 2018-07-29T14:40:46+00:00 */
 
 export type DateTime = any;
 
@@ -122,22 +122,33 @@ export interface ScheduledControlState {
 }
 
 export interface Recurrence {
-  at?: string | null;
+  at?: RecurrenceAt[] | null;
   between?: string | null;
-  day?: string | null;
+  day?: RecurrenceDay[] | null;
   every: string;
   except?: string | null;
   excludeEnd?: string | null;
-  hour?: string | null;
-  interval?: string | null;
-  mday?: string | null;
-  month?: string | null;
-  on?: string | null;
+  hour?: number[] | null;
+  interval?: number | null;
+  mday?: number[] | null;
+  month?: number[] | null;
+  on?: string[] | null;
   starts?: string | null;
-  total?: string | null;
+  total?: number | null;
   until?: string | null;
-  week?: string | null;
-  yday?: string | null;
+  week?: number[] | null;
+  yday?: number[] | null;
+}
+
+export interface RecurrenceAt {
+  hour: number;
+  minute: number;
+  second: number;
+}
+
+export interface RecurrenceDay {
+  day: number;
+  field?: number[] | null;
 }
 
 export interface Mutation {
