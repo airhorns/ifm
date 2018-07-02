@@ -57,4 +57,44 @@ describe("AutoFormStateContainer form.NestedFields", () => {
     (stateContainer.instance() as any).submit();
     expect(variables).toEqual(seedData);
   });
+
+  it("should remove child-child input elements from the form data if they're deleted in the state", () => {
+    const seedData = {
+      someObject: {
+        someChildren: [
+          {id: 1, name: "foo"},
+          {id: 2, name: "bar"},
+          {id: 3, name: "baz"},
+        ],
+      },
+    };
+    let variables: any;
+
+    const stateContainer = mount(<AutoFormStateContainer
+      seedData={seedData}
+      rootFieldName="someObject"
+      loading={false}
+      success={false}
+      onSubmit={(submittedVariables: any) => { variables = submittedVariables; }}
+    >
+      {(form, _) => {
+        return <form.NestedFields name="someObject.someChildren">{(__, ___, index) => {
+          return <form.Input name={`someObject.someChildren[${index}].name`} />;
+        }}</form.NestedFields>;
+      }}
+    </AutoFormStateContainer>);
+
+    (stateContainer.instance() as any).submit();
+    expect(variables).toEqual(seedData);
+    (stateContainer.instance() as any).removeNestedFieldChild("someObject.someChildren", 1, () => {
+      expect(variables).toEqual({
+        someObject: {
+          someChildren: [
+            {id: 1, name: "foo"},
+            {id: 3, name: "baz"},
+          ],
+        },
+      });
+    });
+  });
 });

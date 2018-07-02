@@ -5,7 +5,8 @@ import { AutoFormStateContainer } from "./auto_form_state_container";
 export type AutoFormNestedFields<QueryData> = React.ComponentType<INestedFieldsProps<QueryData>>;
 
 export interface IAutoFormNestedFieldsInstance<QueryData> extends React.Component<INestedFieldsProps<QueryData>, INestedFieldState> {
-  addChild(initialValues: any): void;
+  addChild(initialValues: any, callback?: () => void): void;
+  removeChild(index: number, callback?: () => void): void;
 }
 
 export interface INestedFieldsProps<QueryData> {
@@ -35,12 +36,20 @@ export const NestedFieldsFactory = <QueryData extends any>(form: AutoFormStateCo
       form.registerNestedFields(this);
     }
 
-    public addChild(initialValues: any) {
+    public addChild(initialValues: any, callback?: () => void) {
       this.setState((prevState) => {
         const childList = prevState.childList.slice(0);
         childList.push(initialValues);
         return {childList};
-      });
+      }, callback);
+    }
+
+    public removeChild(index: number, callback?: () => void) {
+      this.setState((prevState) => {
+        const childList = prevState.childList.slice(0);
+        childList.splice(index, 1);
+        return {childList};
+      }, callback);
     }
 
     public render(): React.ReactNode {

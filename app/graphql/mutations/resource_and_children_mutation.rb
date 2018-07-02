@@ -77,7 +77,7 @@ module Mutations
           if child_object = existing_records[delete_child_input.fetch(:id)]
             child_object.mark_for_destruction
           else
-            root_object.errors.add(:farm_zones, "Couldn't find child record with ID=#{delete_child_input[:id]} to update")
+            root_object.errors.add(:farm_zones, "Couldn't find child record with ID=#{delete_child_input[:id]} to delete")
           end
         end
       end

@@ -90,6 +90,14 @@ export class AutoFormStateContainer<SeedData extends object, MutationVariables e
     }
   }
 
+  public removeNestedFieldChild(key: string, index: number) {
+    if (this.registeredNestedFieldsComponents[key]) {
+      this.registeredNestedFieldsComponents[key].removeChild(index);
+    } else {
+      throw new Error(`Can't remove child for unknown nested key ${key}. Known keys are ${Object.keys(this.registeredNestedFieldsComponents).join(",")}`);
+    }
+  }
+
   public seedFormState(name: string) {
     this.setValue(name, this.getSeedValue(name));
   }
