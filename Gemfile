@@ -22,6 +22,7 @@ gem 'sidekiq-daemon', require: ['sidekiq-daemon', 'sidekiq-daemon/web'], git: "h
 gem "mlanett-redis-lock", git: "https://github.com/mlanett/redis-lock.git"
 
 gem 'mqtt', '~> 0.5.0'
+gem 'paho-mqtt'
 gem 'influxdb', '~> 0.5.3'
 gem 'graphql', '~> 1.8.2'
 gem 'graphiql-rails', ' ~> 1.4.10'

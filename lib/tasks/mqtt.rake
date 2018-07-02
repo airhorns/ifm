@@ -16,13 +16,18 @@ namespace :mqtt do
   desc "Dump contents of production MQTT bus onto local bus"
   task :mirror_production, [:pattern] => :environment do |_task, args|
     puts "Mirroring production MQTT to #{ENV['MQTT_URL']}... connecting ..."
-    production = MQTT::Client.connect(ENV.fetch('PRODUCTION_MQTT_URL'))
-    local = MQTT::Client.connect(ENV.fetch('MQTT_URL'))
+    production = MqttClientFactory.client_for_url(ENV.fetch('PRODUCTION_MQTT_URL'))
+    local = MqttClientFactory.client_for_url(ENV.fetch('MQTT_URL'))
     puts "MQTT clients connected."
 
-    production.subscribe(args[:pattern])
-    production.get do |topic, contents|
-      local.publish(topic, contents)
+    production.subscribe([args[:pattern], 2])
+    production.on_message do |packet|
+      local.publish(packet.topic, packet.payload, true, 1)
+    end
+
+    loop do
+      production.mqtt_loop
+      local.mqtt_loop
     end
   end
 end

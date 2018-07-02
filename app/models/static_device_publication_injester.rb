@@ -9,7 +9,7 @@ class StaticDevicePublicationInjester
   end
 
   def subscribe
-    @farm.mqtt_client.subscribe(*@topic_subscriptions.to_a.sort)
+    @farm.mqtt_client.subscribe(*@topic_subscriptions.to_a.sort.map { |topic| [topic, 2] })
   end
 
   def injest_all
