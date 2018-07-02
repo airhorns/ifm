@@ -29,7 +29,7 @@ gem 'graphiql-rails', ' ~> 1.4.10'
 gem 'ejson'
 gem 'sigdump'
 
-gem 'rails_db', '~> 2.0.1', git: 'https://github.com/igorkasyanchuk/rails_db.git', ref: "e5a5de9f3204c7bd1642c2d1988903d4897f6f5d"
+gem 'rails_db', '~> 2.0.1', git: 'https://github.com/igorkasyanchuk/rails_db.git', ref: "c9cf8269b30c905f131bacd5f25aad3e12c724de"
 gem 'administrate', '~> 0.10.0'
 gem 'health_check'
 

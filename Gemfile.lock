@@ -10,8 +10,8 @@ GIT
 
 GIT
   remote: https://github.com/igorkasyanchuk/rails_db.git
-  revision: e5a5de9f3204c7bd1642c2d1988903d4897f6f5d
-  ref: e5a5de9f3204c7bd1642c2d1988903d4897f6f5d
+  revision: c9cf8269b30c905f131bacd5f25aad3e12c724de
+  ref: c9cf8269b30c905f131bacd5f25aad3e12c724de
   specs:
     rails_db (2.0.2)
       codemirror-rails
@@ -232,7 +232,6 @@ GEM
       metaclass (~> 0.0.1)
     momentjs-rails (2.20.1)
       railties (>= 3.1)
-    mqtt (0.5.0)
     msgpack (1.2.4)
     multi_json (1.13.1)
     multipart-post (2.0.0)
@@ -420,7 +419,6 @@ DEPENDENCIES
   mini_magick (~> 4.8)
   mlanett-redis-lock!
   mocha
-  mqtt (~> 0.5.0)
   paho-mqtt
   pg (>= 0.18, < 2.0)
   puma (~> 3.11)
