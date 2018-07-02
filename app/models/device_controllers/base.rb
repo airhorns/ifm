@@ -21,7 +21,7 @@ module DeviceControllers
     end
 
     def mqtt_send(topic, contents)
-      @device.farm.mqtt_client.publish(@device.absolute_mqtt_topic(topic), contents)
+      @device.farm.mqtt_client.publish(@device.absolute_mqtt_topic(topic), contents, true, 1)
     end
 
     def mqtt_get(topic)

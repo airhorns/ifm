@@ -12,7 +12,7 @@ class MqttDevicePublicationInjest
     injester = MqttDevicePublicationInjester.new(farm)
     if injester.subscribe
       loop do
-        5.times { injester.injest_one }
+        injester.loop
         break unless daemon_lock.checkin
       end
     end

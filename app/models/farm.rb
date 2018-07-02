@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'uri'
 
 class Farm < ApplicationRecord
   validates :name, presence: true
@@ -11,6 +12,6 @@ class Farm < ApplicationRecord
 
   def mqtt_client
     raise "MQTT connections in test are disabled for performance and stability" if Rails.env.test?
-    @mqtt_client ||= MQTT::Client.connect(ENV.fetch('MQTT_URL'))
+    @mqtt_client ||= MqttClientFactory.client_for_url(ENV.fetch('MQTT_URL'))
   end
 end

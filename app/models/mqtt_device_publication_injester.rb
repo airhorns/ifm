@@ -21,15 +21,21 @@ class MqttDevicePublicationInjester
 
   def subscribe
     if !@topic_subscriptions.empty?
-      @farm.mqtt_client.subscribe(*@topic_subscriptions.to_a.sort)
+      @farm.mqtt_client.subscribe(*@topic_subscriptions.to_a.sort.map { |topic| [topic, 2] })
+      @farm.mqtt_client.on_message { |packet| process_packet(packet) }
       true
     else
       false
     end
   end
 
-  def injest_one
-    topic, message = @farm.mqtt_client.get
+  def loop
+    @farm.mqtt_client.mqtt_loop
+  end
+
+  def process_packet(packet)
+    topic = packet.topic
+    message = packet.payload
     if publisher = @topic_map[topic]
       publisher.publish(message)
     else

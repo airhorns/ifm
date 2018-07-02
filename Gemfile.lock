@@ -245,6 +245,7 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     os (0.9.6)
+    paho-mqtt (1.0.12)
     parallel (1.12.1)
     parser (2.5.1.0)
       ast (~> 2.4.0)
@@ -420,6 +421,7 @@ DEPENDENCIES
   mlanett-redis-lock!
   mocha
   mqtt (~> 0.5.0)
+  paho-mqtt
   pg (>= 0.18, < 2.0)
   puma (~> 3.11)
   rails (~> 5.2.0)

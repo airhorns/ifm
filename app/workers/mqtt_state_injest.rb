@@ -11,17 +11,21 @@ class MqttStateInjest
 
   def perform(farm_id)
     client = Farm.find(farm_id).mqtt_client
-    client.subscribe(*SUBSCRIPTION_PATTERNS)
-    client.get do |topic, payload|
-      payload = MqttHelper.sanitize_payload(payload)
+    client.subscribe(*SUBSCRIPTION_PATTERNS.map { |topic| [topic, 2] })
+    client.on_message do |packet|
+      topic = packet.topic
+      payload = MqttHelper.sanitize_payload(packet.payload)
       if existing_state = get_state(farm_id, topic)
         existing_state.contents = payload
         existing_state.save!
       else
         MqttTopicState.create!(farm_id: farm_id, topic: topic, contents: payload)
       end
+    end
 
-      return unless daemon_lock.checkin # rubocop:disable Lint/NonLocalExitFromIterator
+    loop do
+      client.mqtt_loop
+      break unless daemon_lock.checkin
     end
   end
 
