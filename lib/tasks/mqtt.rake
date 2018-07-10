@@ -20,8 +20,13 @@ namespace :mqtt do
     local = MqttClientFactory.client_for_url(ENV.fetch('MQTT_URL'))
     puts "MQTT clients connected."
 
+    messages = 0
     production.subscribe([args[:pattern], 2])
     production.on_message do |packet|
+      messages += 1
+      if (messages % 500) == 0
+        puts "Forwarded #{messages} messages"
+      end
       local.publish(packet.topic, packet.payload, true, 1)
     end
 
