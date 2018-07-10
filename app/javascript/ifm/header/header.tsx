@@ -31,7 +31,7 @@ export class Header extends React.Component<{}, {}> {
                 <Dropdown.Menu>
                   <Dropdown.Item as="a" href="/admin/tools/sidekiq">Sidekiq</Dropdown.Item>
                   <Dropdown.Item as="a" href="/admin/tools/graphiql">GraphIQL</Dropdown.Item>
-                  <Dropdown.Item as="a" href="/admin/tools/db">SQL Queries</Dropdown.Item>
+                  <Dropdown.Item as="a" href="/admin/tools/rails_db">SQL Queries</Dropdown.Item>
                   <Dropdown.Item as="a" href="/admin/">Admin Editor</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
