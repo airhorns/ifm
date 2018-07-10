@@ -7,6 +7,7 @@ class MqttDeviceDiscoverer
     Devices::EspurnaSonoffBasic,
     Devices::EspurnaSonoffTh,
     Devices::EspurnaSonoffPowR2,
+    Devices::EspurnaSonoffS31,
     Devices::MinewS1,
     Devices::XiaomiBleHt,
     Devices::Skybeacon

@@ -36,6 +36,30 @@ class DeviceDiscovererDevicesTest < ActiveSupport::TestCase
     assert_equal Devices::Skybeacon, @discovery[:device_class]
   end
 
+  test "it discovers Sonoff S31s" do
+    @discovery = discovery(
+      "relay/0" => "0",
+      "app" => "ESPURNA",
+      "version" => "1.13.0",
+      "board" => "ITEAD_SONOFF_S31",
+      "host" => "ESPURNA-EABD49",
+      "ip" => "192.168.2.229",
+      "mac" => "BC:DD:C2:EA:BD:49",
+      "rssi" => "-52",
+      "uptime" => "13",
+      "freeheap" => "21496",
+      "vcc" => "3212",
+      "status" => "0",
+      "loadavg" => "100",
+      "current" => "0.000",
+      "voltage" => "116",
+      "power" => "0",
+      "energy" => "10"
+    )
+
+    assert_equal Devices::EspurnaSonoffS31, @discovery[:device_class]
+  end
+
   def discovery(mqtt_topics)
     mac = "aa:11:22:33:44:55"
     mqtt_topics.each do |key, value|
