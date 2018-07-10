@@ -12,20 +12,31 @@ class MqttStateInjest
   def perform(farm_id)
     client = Farm.find(farm_id).mqtt_client
     client.subscribe(*SUBSCRIPTION_PATTERNS.map { |topic| [topic, 2] })
+
+    batch = []
     client.on_message do |packet|
-      topic = packet.topic
-      payload = MqttHelper.sanitize_payload(packet.payload)
-      if existing_state = get_state(farm_id, topic)
-        existing_state.contents = payload
-        existing_state.save!
-      else
-        MqttTopicState.create!(farm_id: farm_id, topic: topic, contents: payload)
-      end
+      batch << packet
     end
 
     loop do
       client.mqtt_loop
+      process_batch(farm_id, batch)
+      batch = []
       break unless daemon_lock.checkin
+    end
+  end
+
+  def process_batch(farm_id, batch)
+    batch.each do |packet|
+      topic = packet.topic
+      payload = MqttHelper.sanitize_payload(packet.payload)
+
+      if existing_state = get_state(farm_id, topic)
+        existing_state.contents = payload
+        existing_state.save!
+      else
+        @cache[topic] = MqttTopicState.create!(farm_id: farm_id, topic: topic, contents: payload)
+      end
     end
   end
 
