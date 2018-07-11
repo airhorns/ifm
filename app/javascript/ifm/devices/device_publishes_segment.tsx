@@ -29,7 +29,7 @@ export class DevicePublishesSegment extends React.Component<IDevicePublishesSegm
       return <List.Item key={publisher.humanName}>
         <List.Icon name={publisher.icon as any} size="large" verticalAlign="middle" />
         <List.Content>
-          <List.Header>{publisher.humanName}: {publisher.humanValue} {publisher.comprehensionUnit && publisher.comprehensionUnit}</List.Header>
+          <List.Header>{this.format(publisher)}</List.Header>
         </List.Content>
       </List.Item>;
     });
@@ -39,4 +39,12 @@ export class DevicePublishesSegment extends React.Component<IDevicePublishesSegm
         <List divided relaxed>{publisherItems}</List>
       </Segment>;
     }
+
+  public format(publisher: IDevicePublisher) {
+    if (publisher.humanName === "IP") {
+      return <React.Fragment>{publisher.humanName}: <a href={`http://${publisher.humanValue}`}>{publisher.humanValue}</a></React.Fragment>;
+    } else {
+      return <React.Fragment>{publisher.humanName}: {publisher.humanValue} {publisher.comprehensionUnit && publisher.comprehensionUnit}</React.Fragment>;
+    }
+  }
 }
