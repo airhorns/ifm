@@ -7,6 +7,10 @@ module DeviceControllers
       @mqtt_key = "relay/#{config[:relay]}"
     end
 
+    def control!(new_state)
+      mqtt_send("relay/#{config[:relay]}/set", new_state)
+    end
+
     def mqtt_topic_pattern
       @device.absolute_mqtt_topic("relay/#")
     end

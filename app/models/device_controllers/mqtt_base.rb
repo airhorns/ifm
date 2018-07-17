@@ -28,6 +28,10 @@ module DeviceControllers
       end
     end
 
+    def control!(new_state)
+      mqtt_send(absolute_mqtt_topic, new_state)
+    end
+
     def current_state
       raise "Controller needs an mqtt key set in the subclass" unless @mqtt_key.present?
       mqtt_get(@mqtt_key).try(&:to_sym) || :nil

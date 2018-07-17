@@ -32,6 +32,10 @@ module DeviceControllers
       false
     end
 
+    def control!(new_state)
+      raise NotImplementedError
+    end
+
     def current_state
       raise NotImplementedError
     end
