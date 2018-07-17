@@ -9,6 +9,7 @@ class AllFarmDispatcher
         if frequency == 'frequent'
           MqttStateInjest.perform_async(farm.id)
           MqttDevicePublicationInjest.perform_async(farm.id)
+          MqttDeviceControllerStateInjest.perform_async(farm.id)
           DiscoverMqttDevices.perform_async(farm.id)
           DeviceControllerStateInstrumentationPublish.perform_async(farm.id)
         elsif frequency == 'rare'

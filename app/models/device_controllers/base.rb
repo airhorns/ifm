@@ -28,6 +28,10 @@ module DeviceControllers
       @device.configuration.device_controller_configurations.detect { |config| config.field == @field.to_s }
     end
 
+    def mqtt?
+      false
+    end
+
     def current_state
       raise NotImplementedError
     end

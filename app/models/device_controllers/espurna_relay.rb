@@ -7,6 +7,10 @@ module DeviceControllers
       @mqtt_key = "relay/#{config[:relay]}"
     end
 
+    def mqtt_topic_pattern
+      @device.absolute_mqtt_topic("relay/#")
+    end
+
     def human_name
       "Relay #{config[:relay]}"
     end

@@ -2,6 +2,20 @@
 
 module DeviceControllers
   class MqttBase < Base
+    attr_reader :mqtt_key
+
+    def mqtt?
+      true
+    end
+
+    def absolute_mqtt_topic
+      @device.absolute_mqtt_topic(@mqtt_key)
+    end
+
+    def mqtt_topic_pattern
+      @device.absolute_mqtt_topic(@mqtt_key)
+    end
+
     def mqtt_send(topic, contents)
       @device.farm.mqtt_client.publish(@device.absolute_mqtt_topic(topic), contents, true, 1)
     end

@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_16_220213) do
+ActiveRecord::Schema.define(version: 2018_07_11_172742) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "controller_state_transitions", force: :cascade do |t|
+    t.string "to_state", null: false
+    t.string "initiator", null: false
+    t.datetime "confirmed_at"
+    t.bigint "device_controller_configuration_id", null: false
+    t.bigint "farm_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "device_configurations", force: :cascade do |t|
     t.bigint "farm_id", null: false
