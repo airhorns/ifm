@@ -28,6 +28,11 @@ module Types
       argument :id, ID, required: true
     end
 
+    field :device_controller_configuration, DeviceControllerConfigurationType, null: false do
+      description "Get the details of one DeviceControllerConfiguration object"
+      argument :id, ID, required: true
+    end
+
     def device_discovery_logs(filter:)
       scope = context[:current_farm].device_discovery_logs
       case filter
@@ -48,6 +53,10 @@ module Types
 
     def device_configuration(id:)
       context[:current_farm].device_configurations.find(id)
+    end
+
+    def device_controller_configuration(id:)
+      context[:current_farm].device_controller_configurations.find(id)
     end
 
     def farm_zones

@@ -1,5 +1,5 @@
 /* tslint:disable */
-/** Generated in 2018-06-22T19:06:13+00:00 */
+/** Generated in 2018-07-17T20:31:55+00:00 */
 
 export type Json = any;
 
@@ -8,6 +8,7 @@ export type DateTime = any;
 export interface Query {
   deviceConfiguration: DeviceConfiguration /** Get the details of one DeviceConfiguration object */;
   deviceConfigurations: DeviceConfiguration[] /** Get all the configured devices as DeviceConfiguration objects */;
+  deviceControllerConfiguration: DeviceControllerConfiguration /** Get the details of one DeviceControllerConfiguration object */;
   deviceDiscoveryLog: DeviceDiscoveryLog /** Get one DeviceDiscoveryLog */;
   deviceDiscoveryLogs: DeviceDiscoveryLog[] /** List DeviceDiscoveryLogs with scope arguments */;
   farm: Farm /** Get the details of the current farm */;
@@ -34,6 +35,7 @@ export interface DeviceConfiguration {
 
 export interface DeviceController {
   controlStrategyHumanName: string;
+  deviceControllerConfiguration: DeviceControllerConfiguration;
   field: string;
   humanName: string;
   humanState: DeviceControllerState;
@@ -43,6 +45,7 @@ export interface DeviceController {
 
 export interface DeviceControllerConfiguration {
   controller: DeviceController;
+  deviceConfiguration: DeviceConfiguration;
   enabled: boolean;
   field: string;
   id: string;
@@ -151,6 +154,9 @@ export interface DeleteFarmZoneInput {
 export interface DeviceConfigurationQueryArgs {
   id: string;
 }
+export interface DeviceControllerConfigurationQueryArgs {
+  id: string;
+}
 export interface DeviceDiscoveryLogQueryArgs {
   id: string;
 }
@@ -180,6 +186,39 @@ export enum DiscoveryStateFilter {
   DISMISSED = "DISMISSED",
   ENLISTED = "ENLISTED",
   PENDING = "PENDING"
+}
+export namespace GetDeviceControllerConfiguration {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+    deviceControllerConfiguration: DeviceControllerConfiguration;
+  };
+
+  export type DeviceControllerConfiguration = {
+    __typename?: "DeviceControllerConfiguration";
+    field: string;
+    nickname: string;
+    enabled: boolean;
+    controller: Controller;
+    deviceConfiguration: DeviceConfiguration;
+  };
+
+  export type Controller = {
+    __typename?: "DeviceController";
+    humanName: string;
+    humanState: DeviceControllerState;
+    controlStrategyHumanName: string;
+    icon: string;
+  };
+
+  export type DeviceConfiguration = {
+    __typename?: "DeviceConfiguration";
+    id: string;
+    humanName: string;
+  };
 }
 export namespace GetEnlist {
   export type Variables = {
@@ -410,6 +449,12 @@ export namespace GetDeviceConfigurations {
     humanState: DeviceControllerState;
     controlStrategyHumanName: string;
     icon: string;
+    deviceControllerConfiguration: DeviceControllerConfiguration;
+  };
+
+  export type DeviceControllerConfiguration = {
+    __typename?: "DeviceControllerConfiguration";
+    id: string;
   };
 
   export type FarmZone = {
@@ -435,6 +480,26 @@ export namespace GetFarm {
   export type FarmZones = {
     __typename?: "FarmZone";
     name: string;
+    deviceConfigurations: DeviceConfigurations[];
+  };
+
+  export type DeviceConfigurations = {
+    __typename?: "DeviceConfiguration";
+    humanName: string;
+    deviceControllerConfigurations: DeviceControllerConfigurations[];
+  };
+
+  export type DeviceControllerConfigurations = {
+    __typename?: "DeviceControllerConfiguration";
+    id: string;
+    nickname: string;
+    controller: Controller;
+  };
+
+  export type Controller = {
+    __typename?: "DeviceController";
+    icon: string;
+    humanState: DeviceControllerState;
   };
 }
 export namespace GetFarmSettings {

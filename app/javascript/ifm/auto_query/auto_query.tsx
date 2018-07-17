@@ -1,16 +1,27 @@
 import * as React from "react";
-import * as graphql from "graphql-tag";
-import { Query } from "react-apollo";
+import { DocumentNode } from "graphql";
+import { Query, QueryResult } from "react-apollo";
 
-export class AutoQuery<Data, Variables> extends Query<Data, Variables> {
+export interface IAutoQueryProps<Data, Variables> {
+  query: {
+    query: DocumentNode;
+    new(props: any, context?: any): Query<Data, Variables>;
+  };
+  variables?: Variables;
+  children: (data: Data) => React.ReactNode;
+}
+
+export class AutoQuery<Data, Variables> extends React.Component<IAutoQueryProps<Data, Variables>, {}> {
   public render() {
-    return <Query query={this.props.query}>
-    {({ loading, error, data }) => {
-      if (loading) { return "Loading..."; }
-      if (error) { return `Error! ${error.message}`; }
+    return React.createElement(this.props.query, {
+      variables: this.props.variables,
+      query: this.props.query.query,
+      children: ({ loading, error, data }: QueryResult) => {
+        if (loading) { return "Loading..."; }
+        if (error) { return `Error! ${error.message}`; }
 
-      return this.props.children(data);
-    }}
-  </Query>;
+        return this.props.children(data);
+      },
+    });
   }
 }

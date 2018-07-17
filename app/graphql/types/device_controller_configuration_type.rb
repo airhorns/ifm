@@ -6,6 +6,7 @@ module Types
     field :nickname, String, null: false
     field :enabled, Boolean, null: false
     field :controller, Types::DeviceControllerType, null: false
+    field :device_configuration, Types::DeviceConfigurationType, null: false
 
     def controllers
       object.device_instance.controllers.values

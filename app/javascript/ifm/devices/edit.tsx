@@ -6,7 +6,7 @@ import { AutoForm } from "../../auto_form";
 import { GetDeviceConfiguration, UpdateDeviceConfiguration } from "../types";
 import { DevicePublishesSegment } from "./device_publishes_segment";
 import { DeviceConfigurationLabels } from "./device_configuration_labels";
-import { DeviceControllerStateLabel } from "./device_controller_state_label";
+import { DeviceControllerStateLabel } from "../device_controllers/device_controller_state_label";
 
 export class GetDeviceConfigurationQuery extends Query<GetDeviceConfiguration.Query, GetDeviceConfiguration.Variables> {
   public static query = gql`
