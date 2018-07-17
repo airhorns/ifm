@@ -20,18 +20,6 @@ module DeviceControllers
       @field.to_s.humanize
     end
 
-    def mqtt_send(topic, contents)
-      @device.farm.mqtt_client.publish(@device.absolute_mqtt_topic(topic), contents, true, 1)
-    end
-
-    def mqtt_get(topic)
-      if topic_state = device.configuration.mqtt_topic_state_for(@device.absolute_mqtt_topic(topic))
-        topic_state.contents
-      else
-        :unknown
-      end
-    end
-
     def tags
       @tags ||= { field: @field }.merge(@device.tags)
     end

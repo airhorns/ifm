@@ -14,6 +14,8 @@ class MqttDevicePublicationInjester
         if publisher.mqtt?
           @topic_map[publisher.absolute_mqtt_topic] = publisher
           @topic_subscriptions << publisher.mqtt_topic_pattern
+        else
+          raise "Can't work with non-mqtt device type"
         end
       end
     end
