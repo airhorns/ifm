@@ -5,7 +5,7 @@ class MqttDeviceControllerStateInjest
   include SidekiqDaemon::Worker
   # include TooLoudInDevelopment
 
-  sidekiq_options retries: 0
+  sidekiq_options retries: 0, daemon_lock_duration: 35
 
   def perform(farm_id)
     farm = Farm.find(farm_id)

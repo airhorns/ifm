@@ -3,7 +3,7 @@
 class StaticDevicePublicationInjest
   include Sidekiq::Worker
   include SidekiqDaemon::Worker
-  sidekiq_options retries: 0
+  sidekiq_options retries: 0, daemon_lock_duration: 35
 
   def perform(farm_id)
     farm = Farm.find(farm_id)

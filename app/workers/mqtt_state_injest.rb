@@ -5,7 +5,7 @@ class MqttStateInjest
   include SidekiqDaemon::Worker
   prepend TooLoudInDevelopment
 
-  sidekiq_options retries: 0, daemon_lock_duration: 30
+  sidekiq_options retries: 0, daemon_lock_duration: 35
 
   SUBSCRIPTION_PATTERNS = ['#']
 
