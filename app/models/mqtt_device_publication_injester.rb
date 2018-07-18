@@ -10,13 +10,9 @@ class MqttDevicePublicationInjester
     @topic_subscriptions = Set.new
 
     @farm.device_configurations.each do |device_configuration|
-      device_configuration.device_instance.publishers.values.each do |publisher|
-        if publisher.mqtt?
-          @topic_map[publisher.absolute_mqtt_topic] = publisher
-          @topic_subscriptions << publisher.mqtt_topic_pattern
-        else
-          raise "Can't work with non-mqtt device type"
-        end
+      device_configuration.device_instance.publishers.values.keep_if(&:mqtt?).each do |publisher|
+        @topic_map[publisher.absolute_mqtt_topic] = publisher
+        @topic_subscriptions << publisher.mqtt_topic_pattern
       end
     end
   end

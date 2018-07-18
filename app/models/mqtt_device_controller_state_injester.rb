@@ -11,13 +11,9 @@ class MqttDeviceControllerStateInjester
     @topic_subscriptions = Set.new
 
     @farm.device_configurations.each do |device_configuration|
-      device_configuration.device_instance.controllers.values.each do |controller|
-        if controller.mqtt?
-          @topic_map[controller.absolute_mqtt_topic] = controller
-          @topic_subscriptions << controller.mqtt_topic_pattern
-        else
-          raise "Can't work with non-mqtt device type"
-        end
+      device_configuration.device_instance.controllers.values.keep_if(&:mqtt?).each do |controller|
+        @topic_map[controller.absolute_mqtt_topic] = controller
+        @topic_subscriptions << controller.mqtt_topic_pattern
       end
     end
   end
