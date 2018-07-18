@@ -40,7 +40,8 @@ class MqttDeviceControllerStateInjester
     topic = packet.topic
     message = packet.payload
     if controller = @topic_map[topic]
-      @controller_state_manager.update_transitions(controller.device_controller_configuration, message)
+      rich_message = controller.interpret_message(topic, message)
+      @controller_state_manager.update_transitions(controller.device_controller_configuration, rich_message)
     else
       Rails.logger.debug("Unknown topic for controller state injestor: #{topic} with message #{message}")
     end

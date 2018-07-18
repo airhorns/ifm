@@ -5,7 +5,7 @@ require 'test_helper'
 class MqttDeviceControllerStateInjesterTest < ActiveSupport::TestCase
   setup do
     @farm = farms(:bct)
-    @farm.stubs(:mqtt_client).returns(stub(on_message: nil))
+    @farm.stubs(:mqtt_client).returns(stub_mqtt_client)
     @injester = MqttDeviceControllerStateInjester.new(@farm)
     @controller = @farm
       .device_configurations
@@ -34,7 +34,7 @@ class MqttDeviceControllerStateInjesterTest < ActiveSupport::TestCase
 
     @farm.mqtt_client.expects(:subscribe).with(["sensors/BCDDC2E81300/relay/#", 2], ["sensors/aa11aa11aa11/relay/#", 2])
     @injester.subscribe
-    @injester.process_packet(mock(topic: "sensors/BCDDC2E81300/relay/0", payload: "on"))
+    @injester.process_packet(mock(topic: "sensors/BCDDC2E81300/relay/0", payload: "1"))
 
     transition_record.reload
     assert_not_nil transition_record.confirmed_at

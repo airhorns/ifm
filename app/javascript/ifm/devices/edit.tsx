@@ -1,5 +1,6 @@
 import * as React from "react";
 import gql from "graphql-tag";
+import { Link } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
 import { Item, Segment, Header, List } from "semantic-ui-react";
 import { AutoForm } from "../../auto_form";
@@ -103,6 +104,8 @@ export class DevicesEdit extends React.Component<IDevicesEditProps, {}> {
                       <div>
                         controlled via {controllerConfig.controller.controlStrategyHumanName},&nbsp;
                         currently: <DeviceControllerStateLabel controller={controllerConfig.controller} />
+                        <br/>
+                        <Link to={`/device_controllers/${controllerConfig.id}/edit`}>Manage</Link>
                       </div>
                       <form.SendQueryField name={`deviceConfiguration.deviceControllerConfigurations[${index}].field`} />
                       <form.Input

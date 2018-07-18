@@ -17,7 +17,9 @@ module DeviceControllers
     end
 
     def mqtt_send(topic, contents)
+      Rails.logger.info "Sending MQTT message: topic=#{@device.absolute_mqtt_topic(topic)} contents=#{contents}"
       @device.farm.mqtt_client.publish(@device.absolute_mqtt_topic(topic), contents, true, 1)
+      @device.farm.mqtt_client.mqtt_loop
     end
 
     def mqtt_get(topic)
@@ -26,6 +28,10 @@ module DeviceControllers
       else
         :unknown
       end
+    end
+
+    def interpret_message(_topic, _message)
+      raise NotImplementedError
     end
 
     def control!(new_state)

@@ -15,5 +15,9 @@ module ActiveSupport
     teardown do
       Timecop.return
     end
+
+    def stub_mqtt_client
+      @stub_mqtt_client ||= stub(on_message: nil, mqtt_loop: nil)
+    end
   end
 end
