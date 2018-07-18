@@ -2,7 +2,7 @@ import * as React from "react";
 import gql from "graphql-tag";
 import { Link } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
-import { Item, Icon, Button, Segment, Header, Message } from "semantic-ui-react";
+import { Item, Icon, Button, Segment, Header, Message, Table } from "semantic-ui-react";
 import { AutoQuery } from "../auto_query";
 import { GetDeviceControllerConfiguration, UpdateDeviceControllerState } from "../types";
 import { DeviceControllerStateLabel } from "./device_controller_state_label";
@@ -23,6 +23,12 @@ class GetDeviceControllerConfigurationQuery extends Query<GetDeviceControllerCon
         deviceConfiguration {
           id
           humanName
+        }
+        controllerStateTransitions {
+          toState
+          initiator
+          confirmedAt
+          createdAt
         }
       }
     }
@@ -52,6 +58,13 @@ export class DeviceControllersEdit extends React.Component<IDeviceControllersEdi
 
   public render() {
     return <AutoQuery query={GetDeviceControllerConfigurationQuery} variables={{id: this.props.id}}>{(data) => {
+      const stateTransitionRows = data.deviceControllerConfiguration.controllerStateTransitions.map((controllerStateTransition) => <Table.Row>
+        <Table.Cell>{controllerStateTransition.toState}</Table.Cell>
+        <Table.Cell>{controllerStateTransition.confirmedAt}</Table.Cell>
+        <Table.Cell>{controllerStateTransition.initiator}</Table.Cell>
+        <Table.Cell>{controllerStateTransition.createdAt}</Table.Cell>
+      </Table.Row>);
+
       return <React.Fragment>
         <Header>Edit Device Controller</Header>
         <Segment.Group>
@@ -88,6 +101,19 @@ export class DeviceControllersEdit extends React.Component<IDeviceControllersEdi
                         </React.Fragment>;
                       }}
                     </UpdateDeviceControllerStateMutation>
+                    <Table celled striped>
+                      <Table.Header>
+                        <Table.Row>
+                          <Table.HeaderCell>To State</Table.HeaderCell>
+                          <Table.HeaderCell>Confirmed</Table.HeaderCell>
+                          <Table.HeaderCell>Initiator</Table.HeaderCell>
+                          <Table.HeaderCell>Triggered At</Table.HeaderCell>
+                        </Table.Row>
+                      </Table.Header>
+                      <Table.Body>
+                        {stateTransitionRows}
+                      </Table.Body>
+                    </Table>
                   </Item.Meta>
                 </Item.Content>
               </Item>

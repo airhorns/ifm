@@ -22,6 +22,19 @@ class ControllerStateManagerTest < ActiveSupport::TestCase
     end
   end
 
+  test "requesting and confirming a state transition marks the transition as complete with symbol states" do
+    assert_difference "ControllerStateTransition.count", 1 do
+      transition_record = @manager.start_transition(@controller_configuration, :on)
+      assert_equal "on", transition_record.to_state
+      assert_equal "Tests", transition_record.initiator
+      assert_nil transition_record.confirmed_at
+
+      @manager.update_transitions(@controller_configuration, :on)
+      transition_record.reload
+      assert_not_nil transition_record.confirmed_at
+    end
+  end
+
   test "updating with a new state without any existing transitions adds an already confirmed logging transition" do
     assert_difference "ControllerStateTransition.count", 1 do
       transition_record = @manager.update_transitions(@controller_configuration, "on")
@@ -31,11 +44,22 @@ class ControllerStateManagerTest < ActiveSupport::TestCase
   end
 
   test "updating with a new state with existing but confirmed transition that already has that new state doesn't do anything" do
-    assert_difference "ControllerStateTransition.count", 1 do
-      @manager.start_transition(@controller_configuration, "on")
-      @manager.update_transitions(@controller_configuration, "on")
+    @manager.start_transition(@controller_configuration, "on")
+    @manager.update_transitions(@controller_configuration, "on")
 
+    assert_difference "ControllerStateTransition.count", 0 do
       transition_record = @manager.update_transitions(@controller_configuration, "on")
+      assert_not_nil transition_record.confirmed_at
+      assert_equal "on", transition_record.to_state
+    end
+  end
+
+  test "updating with a new state with existing but confirmed transition that already has that new state doesn't do anything with symbol states" do
+    @manager.start_transition(@controller_configuration, "on")
+    @manager.update_transitions(@controller_configuration, "on")
+
+    assert_difference "ControllerStateTransition.count", 0 do
+      transition_record = @manager.update_transitions(@controller_configuration, :on)
       assert_not_nil transition_record.confirmed_at
       assert_equal "on", transition_record.to_state
     end

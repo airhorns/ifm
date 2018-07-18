@@ -7,9 +7,10 @@ module Types
     field :enabled, Boolean, null: false
     field :controller, Types::DeviceControllerType, null: false
     field :device_configuration, Types::DeviceConfigurationType, null: false
+    field :controller_state_transitions, [Types::ControllerStateTransitionType], null: false
 
-    def controllers
-      object.device_instance.controllers.values
+    def controller_state_transitions
+      object.controller_state_transitions.order("created_at DESC").limit(50)
     end
   end
 end

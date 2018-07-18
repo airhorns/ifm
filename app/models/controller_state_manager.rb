@@ -27,11 +27,12 @@ class ControllerStateManager
   end
 
   def update_transitions(device_controller_configuration, new_state)
+    new_state = new_state.to_s
     transition = farm.controller_state_transitions.where(device_controller_configuration_id: device_controller_configuration.id).order("created_at DESC, id DESC").first
 
     if transition
       if transition.confirmed_at.nil?
-        if transition.to_state.to_s == new_state.to_s
+        if transition.to_state == new_state
           transition.confirmed_at = Time.now.utc
           transition.save!
           transition
