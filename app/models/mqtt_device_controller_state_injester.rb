@@ -1,19 +1,20 @@
 # frozen_string_literal: true
 require 'set'
 
-class MqttDevicePublicationInjester
-  attr_reader :farm, :topic_patterns
+class MqttDeviceControllerStateInjester
+  attr_reader :farm, :topic_patterns, :controller_state_manager
 
   def initialize(farm)
     @farm = farm
+    @controller_state_manager = ControllerStateManager.new(farm, "Device State Injestor Background Task")
     @topic_map = {}
     @topic_subscriptions = Set.new
 
     @farm.device_configurations.each do |device_configuration|
-      device_configuration.device_instance.publishers.values.each do |publisher|
-        if publisher.mqtt?
-          @topic_map[publisher.absolute_mqtt_topic] = publisher
-          @topic_subscriptions << publisher.mqtt_topic_pattern
+      device_configuration.device_instance.controllers.values.each do |controller|
+        if controller.mqtt?
+          @topic_map[controller.absolute_mqtt_topic] = controller
+          @topic_subscriptions << controller.mqtt_topic_pattern
         else
           raise "Can't work with non-mqtt device type"
         end
@@ -38,10 +39,11 @@ class MqttDevicePublicationInjester
   def process_packet(packet)
     topic = packet.topic
     message = packet.payload
-    if publisher = @topic_map[topic]
-      publisher.publish(message)
+    if controller = @topic_map[topic]
+      rich_message = controller.interpret_message(topic, message)
+      @controller_state_manager.update_transitions(controller.device_controller_configuration, rich_message)
     else
-      Rails.logger.debug("Unknown topic for publication injestor: #{topic} with message #{message}")
+      Rails.logger.debug("Unknown topic for controller state injestor: #{topic} with message #{message}")
     end
   end
 

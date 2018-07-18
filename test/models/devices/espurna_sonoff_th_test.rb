@@ -5,15 +5,15 @@ module Devices
   class EspurnaSonoffThTest < ActiveSupport::TestCase
     setup do
       @device = device_configurations(:sonoff_th).device_instance
-      @device.farm.stubs(:mqtt_client).returns(stub)
+      @device.farm.stubs(:mqtt_client).returns(stub_mqtt_client)
     end
 
     test "it can turn a relay on and off" do
-      @device.farm.mqtt_client.expects(:publish).with('sensors/BCDDC2E81300/relay/0', 'on', true, 1)
-      @device.controllers[:relay_0].send_on!
+      @device.farm.mqtt_client.expects(:publish).with('sensors/BCDDC2E81300/relay/0/set', 'on', true, 1)
+      @device.controllers[:relay_0].control!("on")
 
-      @device.farm.mqtt_client.expects(:publish).with('sensors/BCDDC2E81300/relay/0', 'off', true, 1)
-      @device.controllers[:relay_0].send_off!
+      @device.farm.mqtt_client.expects(:publish).with('sensors/BCDDC2E81300/relay/0/set', 'off', true, 1)
+      @device.controllers[:relay_0].control!("off")
     end
   end
 end

@@ -33,6 +33,9 @@ export class GetDeviceConfigurationsQuery extends Query<GetDeviceConfigurations.
             humanState
             controlStrategyHumanName
             icon
+            deviceControllerConfiguration {
+              id
+            }
           }
           farmZone {
             name

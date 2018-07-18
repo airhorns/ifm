@@ -1,12 +1,13 @@
 import * as React from "react";
 import gql from "graphql-tag";
+import { Link } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
 import { Item, Segment, Header, List } from "semantic-ui-react";
 import { AutoForm } from "../../auto_form";
 import { GetDeviceConfiguration, UpdateDeviceConfiguration } from "../types";
 import { DevicePublishesSegment } from "./device_publishes_segment";
 import { DeviceConfigurationLabels } from "./device_configuration_labels";
-import { DeviceControllerStateLabel } from "./device_controller_state_label";
+import { DeviceControllerStateLabel } from "../device_controllers/device_controller_state_label";
 
 export class GetDeviceConfigurationQuery extends Query<GetDeviceConfiguration.Query, GetDeviceConfiguration.Variables> {
   public static query = gql`
@@ -103,6 +104,8 @@ export class DevicesEdit extends React.Component<IDevicesEditProps, {}> {
                       <div>
                         controlled via {controllerConfig.controller.controlStrategyHumanName},&nbsp;
                         currently: <DeviceControllerStateLabel controller={controllerConfig.controller} />
+                        <br/>
+                        <Link to={`/device_controllers/${controllerConfig.id}/edit`}>Manage</Link>
                       </div>
                       <form.SendQueryField name={`deviceConfiguration.deviceControllerConfigurations[${index}].field`} />
                       <form.Input

@@ -7,6 +7,7 @@ module Types
     field :human_state, Types::DeviceControllerStateType, null: false
     field :control_strategy_human_name, String, null: false
     field :icon, String, null: false
+    field :device_controller_configuration, Types::DeviceControllerConfigurationType, null: false
 
     def human_state
       object.current_state.to_s

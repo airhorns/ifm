@@ -4,7 +4,7 @@ import { Item, Icon, List, Header, Segment } from "semantic-ui-react";
 import { GetDeviceConfigurations } from "../types";
 import { DeviceConfigurationLabels } from "./device_configuration_labels";
 import { DevicePublishesSegment } from "./device_publishes_segment";
-import { DeviceControllerStateLabel } from "./device_controller_state_label";
+import { DeviceControllerStateLabel } from "../device_controllers/device_controller_state_label";
 
 interface IDeviceCardProps {
   deviceConfiguration: GetDeviceConfigurations.DeviceConfigurations;
@@ -34,6 +34,8 @@ export class DeviceCard extends React.Component<IDeviceCardProps, IDeviceCardSta
           </List.Header>
           <List.Description>
             {controller.controlStrategyHumanName} control on {controller.humanName}
+            <br/>
+            <Link to={`/device_controllers/${controller.deviceControllerConfiguration.id}/edit`}>Manage</Link>
           </List.Description>
         </List.Content>
       </List.Item>;

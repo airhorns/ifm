@@ -42,7 +42,7 @@ export class DevicePublishesSegment extends React.Component<IDevicePublishesSegm
 
   public format(publisher: IDevicePublisher) {
     if (publisher.humanName === "IP") {
-      return <React.Fragment>{publisher.humanName}: <a href={`http://${publisher.humanValue}`}>{publisher.humanValue}</a></React.Fragment>;
+      return <React.Fragment>{publisher.humanName}: <a target="_blank" href={`http://${publisher.humanValue}`}>{publisher.humanValue}</a></React.Fragment>;
     } else {
       return <React.Fragment>{publisher.humanName}: {publisher.humanValue} {publisher.comprehensionUnit && publisher.comprehensionUnit}</React.Fragment>;
     }

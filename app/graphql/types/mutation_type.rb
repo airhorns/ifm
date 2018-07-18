@@ -4,5 +4,6 @@ module Types
     field :enlist_device, mutation: Mutations::EnlistDevice
     field :update_farm, mutation: Mutations::UpdateFarm
     field :update_device_configuration, mutation: Mutations::UpdateDeviceConfiguration
+    field :update_device_controller_state, mutation: Mutations::UpdateDeviceControllerState
   end
 end

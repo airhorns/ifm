@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MqttClientFactory
   def self.client_for_url(url, options = {})
     uri = URI(url)
