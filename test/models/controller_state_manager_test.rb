@@ -35,6 +35,16 @@ class ControllerStateManagerTest < ActiveSupport::TestCase
     end
   end
 
+  test "updating a controller that never had a transition before logs it" do
+    assert_difference "ControllerStateTransition.count", 1 do
+      assert @controller_configuration.controller_state_transitions.to_a
+
+      transition_record = @manager.update_transitions(@controller_configuration, "on")
+      assert_not_nil transition_record.confirmed_at
+      assert_equal "on", transition_record.to_state
+    end
+  end
+
   test "updating with a new state without any existing transitions adds an already confirmed logging transition" do
     assert_difference "ControllerStateTransition.count", 1 do
       transition_record = @manager.update_transitions(@controller_configuration, "on")

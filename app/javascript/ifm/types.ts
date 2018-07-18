@@ -1,5 +1,5 @@
 /* tslint:disable */
-/** Generated in 2018-07-18T18:09:11+00:00 */
+/** Generated in 2018-07-18T18:35:55+00:00 */
 
 export type DateTime = any;
 
@@ -59,7 +59,7 @@ export interface ControllerStateTransition {
   deviceControllerConfiguration: DeviceControllerConfiguration;
   id: string;
   initiator: string;
-  toState: DeviceControllerState;
+  toState: string;
   updatedAt: DateTime;
 }
 
@@ -250,7 +250,7 @@ export namespace GetDeviceControllerConfiguration {
 
   export type ControllerStateTransitions = {
     __typename?: "ControllerStateTransition";
-    toState: DeviceControllerState;
+    toState: string;
     initiator: string;
     confirmedAt?: DateTime | null;
     createdAt: DateTime;
