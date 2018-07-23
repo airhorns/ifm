@@ -57,11 +57,20 @@ spec:
       containers:
       - env:
         - name: INFLUXDB_ADMIN_PASSWORD
-          value: bigclear1
+          valueFrom:
+            secretKeyRef:
+              name: influx-secrets
+              key: password
         - name: INFLUXDB_ADMIN_USER
-          value: admin
+          valueFrom:
+            secretKeyRef:
+              name: influx-secrets
+              key: username
         - name: INFLUXDB_DB
-          value: ifm_development
+          valueFrom:
+            secretKeyRef:
+              name: influx-secrets
+              key: database
         - name: INFLUXDB_HTTP_LOG_ENABLED
           value: "false"
         - name: INFLUXDB_LOGGING_LEVEL

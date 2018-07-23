@@ -4,7 +4,10 @@
       name: cloudsql-db-credentials
       key: database_url
 - name: INFLUXDB_URL
-  value: http://influxdb:8086/ifm_development
+  valueFrom:
+    secretKeyRef:
+      name: influx-secrets
+      key: url
 - name: MQTT_URL
   valueFrom:
     secretKeyRef:
