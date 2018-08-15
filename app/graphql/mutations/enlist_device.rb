@@ -10,7 +10,7 @@ module Mutations
     field :errors, [String], null: false
 
     def resolve(input:)
-      device_discovery_log = DeviceDiscoveryLog.find(input[:device_discovery_log_id])
+      device_discovery_log = DeviceDiscoveryLog.find(input[:id])
       device_configuration = DeviceEnlister.new(context[:current_farm]).enlist(
         device_discovery_log,
         input[:device_nickname],

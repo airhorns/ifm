@@ -16,7 +16,12 @@ export interface IAutoFormProps<QueryData extends object, QueryVariables, Mutati
     new(props: any, context?: any): Mutation<MutationData, MutationVariables>;
   };
   variables?: QueryVariables;
-  children: (form: AutoFormStateContainer<QueryData, MutationVariables>, data: QueryData) => React.ReactNode;
+  children: (
+    form: AutoFormStateContainer<QueryData, MutationVariables, MutationData>,
+    data: QueryData,
+    mutationData?: MutationData,
+  ) => React.ReactNode;
+  mutationRootName?: string,
 }
 
 export interface IAutoFormState {
@@ -72,6 +77,7 @@ export class AutoForm<QueryData extends object, QueryVariables, MutationData, Mu
           loading={queryResult.loading || mutationResult.loading}
           success={mutationResult.called && !!mutationResult.data}
           seedData={queryResult.data}
+          mutationData={mutationResult.data}
           rootFieldName={this.queryInspector.queryRootFieldName()}
           onSubmit={onSubmit}
           children={this.props.children}
@@ -100,7 +106,7 @@ export class AutoForm<QueryData extends object, QueryVariables, MutationData, Mu
     // }
     // To do this, we need to strip the leading resource key from the form state, and add in an ID
     // key if we queried for it.
-    const key = this.queryInspector.queryRootFieldName();
+    const key = this.props.mutationRootName || this.queryInspector.queryRootFieldName();
     const rootObject = _.cloneDeep(variables[key]);
     // The seedData that got set as the formState to start has some fields in it that the mutation doesn't define, like __type.
     // Gotta get rid of those before sending off the variables.

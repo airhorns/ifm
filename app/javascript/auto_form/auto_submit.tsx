@@ -9,7 +9,7 @@ export interface IAutoSubmitProps extends FormButtonProps {
 
 export type AutoSubmit = React.ComponentType<IAutoSubmitProps>;
 
-export const AutoSubmitFactory = (form: AutoFormStateContainer<any, any>): AutoSubmit => {
+export const AutoSubmitFactory = (form: AutoFormStateContainer<any, any, any>): AutoSubmit => {
   return class AutoSubmitComponent extends React.Component<IAutoSubmitProps, {}> {
     public buttonText() {
       const rootObjectName = form.resourceName();

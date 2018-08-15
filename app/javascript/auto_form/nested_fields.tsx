@@ -24,7 +24,7 @@ export interface INestedFieldState {
   childList: any[];
 }
 
-export const NestedFieldsFactory = <QueryData extends any>(form: AutoFormStateContainer<any, any>) => {
+export const NestedFieldsFactory = <QueryData extends any>(form: AutoFormStateContainer<any, any, any>) => {
   return class NestedFields extends React.Component<INestedFieldsProps<QueryData>, INestedFieldState> {
     public constructor(props: INestedFieldsProps<QueryData>) {
       super(props);

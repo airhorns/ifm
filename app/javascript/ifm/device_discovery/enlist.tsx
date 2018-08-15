@@ -67,10 +67,10 @@ interface IDeviceDiscoveryEnlistProps {
 export class DeviceDiscoveryEnlist extends React.Component<IDeviceDiscoveryEnlistProps, {}> {
 
   public render() {
-    return <AutoForm query={EnlistQuery} mutation={EnlistMutation} variables={{id: this.props.id}}>
-      {(form, data) => {
-        if (form.success) {
-          return <Redirect to={`/devices/${data.enlistDevice.deviceConfiguration.id}/edit`} />;
+    return <AutoForm query={EnlistQuery} mutation={EnlistMutation} mutationRootName="enlistDevice" variables={{id: this.props.id}}>
+      {(form, data, mutationData) => {
+        if (form.props.success && mutationData && mutationData.enlistDevice && mutationData.enlistDevice.deviceConfiguration) {
+          return <Redirect to={`/devices/${mutationData.enlistDevice.deviceConfiguration.id}/edit`} />;
         }
 
         const zoneOptions = data.farmZones.map((zone) => ({ text: zone.name, value: zone.id }));
@@ -91,26 +91,28 @@ export class DeviceDiscoveryEnlist extends React.Component<IDeviceDiscoveryEnlis
             <Item.Group><DeviceDiscoveryCard log={data.deviceDiscoveryLog}/></Item.Group>
           </Segment>
           <Segment.Group>
-            {result.data && result.data.enlistDevice && result.data.enlistDevice.errors && <Segment>
-              {result.data.enlistDevice.errors.map((e) => <p>{e}</p>)}
+            {mutationData && mutationData.enlistDevice && mutationData.enlistDevice.errors && <Segment>
+              {mutationData.enlistDevice.errors.map((e) => <p>{e}</p>)}
             </Segment>}
             <DeviceDiscoveryIOSegments
                deviceConfiguration={data.deviceDiscoveryLog.proposedConfiguration}
-               contentForControllerList={(controller) => {
+               contentForControllerList={(controller, index) => {
                  return <List.Content floated="right">
-                   <form.Input required name={controller.field} label={`${controller.humanName} Nickname`} />
+                   <form.HiddenField name={`enlistDevice.enlistControls[${index}].field`} value={controller.field} />
+                   <form.Input required name={`enlistDevice.enlistControls[${index}].controlNickname`} label={`${controller.humanName} Nickname`} />
                  </List.Content>;
                }}
              />
             <Segment padded>
-              <form.Input required label="Device Nickname" name="deviceNickname"/>
-              <form.Field required>
+              <form.Input required label="Device Nickname" name="enlistDevice.deviceNickname"/>
+              <Form.Field required>
                 <label>Device Zone</label>
-                <Dropdown selection placeholder="Zone" options={zoneOptions} name="farmZoneId" />
-              </form.Field>
+                <form.Dropdown selection placeholder="Zone" options={zoneOptions} name="enlistDevice.farmZoneId" />
+              </Form.Field>
               <form.AutoSubmit>Enlist</form.AutoSubmit>
             </Segment>
           </Segment.Group>
+          <form.HiddenField name="enlistDevice.id" value={data.deviceDiscoveryLog.id} />
         </React.Fragment>
       }}
     </AutoForm>;

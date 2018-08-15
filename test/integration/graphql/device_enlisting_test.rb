@@ -79,7 +79,7 @@ module Graphql
         context: @context,
         variables: {
           input: {
-            deviceDiscoveryLogId: @log.id,
+            id: @log.id,
             deviceNickname: "Enlisted Doodad",
             farmZoneId: @farm_zone.id,
           }
@@ -124,7 +124,7 @@ module Graphql
         context: @context,
         variables: {
           input: {
-            deviceDiscoveryLogId: @log.id,
+            id: @log.id,
             deviceNickname: "Enlisted Doodad with Control",
             farmZoneId: @farm_zone.id,
             enlistControls: [{ field: "relay_0", controlNickname: "Pump relay" }]
@@ -158,7 +158,7 @@ module Graphql
         context: @context,
         variables: {
           input: {
-            deviceDiscoveryLogId: @log.id,
+            id: @log.id,
             deviceNickname: "Enlisted Doodad with Control",
             farmZoneId: @farm_zone.id,
             enlistControls: []

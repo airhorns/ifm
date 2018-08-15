@@ -22,15 +22,15 @@ interface IDeviceIoSegmentsProps {
     controllers: IDeviceController[];
     publishers: IDevicePublisher[];
   };
-  contentForControllerList?: (controller: IDeviceController) => JSX.Element;
-  contentForPublisherList?: (publisher: IDevicePublisher) => JSX.Element;
+  contentForControllerList?: (controller: IDeviceController, index?: number) => JSX.Element;
+  contentForPublisherList?: (publisher: IDevicePublisher, index?: number) => JSX.Element;
 }
 
 export class DeviceDiscoveryIOSegments extends React.Component<IDeviceIoSegmentsProps, {}> {
   public render() {
-    const publisherItems = this.props.deviceConfiguration.publishers.map((publisher) => {
+    const publisherItems = this.props.deviceConfiguration.publishers.map((publisher, index) => {
       return <List.Item key={publisher.humanName}>
-        { this.props.contentForPublisherList && this.props.contentForPublisherList(publisher) }
+        { this.props.contentForPublisherList && this.props.contentForPublisherList(publisher, index) }
         <List.Icon name={publisher.icon as any} size="large" verticalAlign="middle" />
         <List.Content>
           <List.Header>{publisher.humanName}</List.Header>
@@ -39,9 +39,9 @@ export class DeviceDiscoveryIOSegments extends React.Component<IDeviceIoSegments
       </List.Item>;
     });
 
-    const controllerItems = this.props.deviceConfiguration.controllers.map((controller) => {
+    const controllerItems = this.props.deviceConfiguration.controllers.map((controller, index) => {
       return <List.Item key={controller.humanName}>
-        { this.props.contentForControllerList && this.props.contentForControllerList(controller) }
+        { this.props.contentForControllerList && this.props.contentForControllerList(controller, index) }
         <List.Icon name={controller.icon as any} size="large" verticalAlign="middle" />
         <List.Content>
           <List.Header>{controller.humanName}</List.Header>
