@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as _ from "lodash";
-import { Form, InputOnChangeData, FormCheckboxProps, FormDropdownProps } from "semantic-ui-react";
+import { Form, FormCheckboxProps, FormDropdownProps } from "semantic-ui-react";
 import { AutoFormStateContainer } from "./auto_form_state_container";
 
 type InputValueType = number | string | React.ReactText | boolean;
@@ -67,4 +67,4 @@ export const AutoInputFactory = <Props extends IAutoFormWrappeeRequiredProps>(
 };
 
 // Hacks to extend semantic-ui-react to report that there is in fact an onChange handler on a Form.Field
-export type TrustedFormInputType = React.ComponentType<IAutoFormInputRequiredProps>;
+export type TrustedFormInputType = React.ComponentType<IAutoFormWrappeeRequiredProps>;

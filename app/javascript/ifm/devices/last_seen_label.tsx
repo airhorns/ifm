@@ -12,7 +12,7 @@ interface ILastSeenLabelState {
 }
 
 export class LastSeenLabel extends React.Component<ILastSeenLabelProps, ILastSeenLabelState> {
-  private countdown: number;
+  private countdown?: number;
 
   public constructor(props: ILastSeenLabelProps) {
     super(props);

@@ -21,7 +21,7 @@ export interface IAutoFormProps<QueryData extends object, QueryVariables, Mutati
     data: QueryData,
     mutationData?: MutationData,
   ) => React.ReactNode;
-  mutationRootName?: string,
+  mutationRootName?: string;
 }
 
 export interface IAutoFormState {
