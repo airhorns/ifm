@@ -47,8 +47,9 @@ export class AutoCreateForm<SeedData extends object, MutationData, MutationVaria
             success={success}
             rootFieldName={this.queryInspector.mutationRootFieldName()}
             seedData={this.props.seedData || {}}
+            mutationData={mutationResult.data}
             onSubmit={submit}
-            children={this.props.children}
+            children={this.props.children as any} // typescript bug I think wanting the children function to have a key prop
           />;
         }
       },
