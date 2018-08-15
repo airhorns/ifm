@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_11_172742) do
+ActiveRecord::Schema.define(version: 2018_08_15_144241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,42 @@ ActiveRecord::Schema.define(version: 2018_07_11_172742) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "grow_plan_actions", force: :cascade do |t|
+    t.bigint "farm_id", null: false
+    t.bigint "grow_plan_id", null: false
+    t.string "action_type", null: false
+    t.integer "occurs_at_hours", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "grow_plan_environments", force: :cascade do |t|
+    t.bigint "farm_id", null: false
+    t.bigint "grow_plan_id", null: false
+    t.integer "starts_at_hours", null: false
+    t.string "environment_type", null: false
+    t.float "minimum_ec"
+    t.float "maximum_ec"
+    t.float "minimum_ph"
+    t.float "maximum_ph"
+    t.float "minimum_hours_light", null: false
+    t.float "maximum_hours_light", null: false
+    t.float "minimum_temperature", null: false
+    t.float "maximum_temperature", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "grow_plans", force: :cascade do |t|
+    t.bigint "farm_id", null: false
+    t.string "name", null: false
+    t.string "category", null: false
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_grow_plans_on_name", unique: true
+  end
+
   create_table "mqtt_topic_states", force: :cascade do |t|
     t.bigint "farm_id", null: false
     t.string "topic", null: false
@@ -82,6 +118,24 @@ ActiveRecord::Schema.define(version: 2018_07_11_172742) do
     t.datetime "updated_at", null: false
     t.index ["farm_id", "topic"], name: "index_mqtt_topic_states_on_farm_id_and_topic", unique: true
     t.index ["farm_id"], name: "index_mqtt_topic_states_on_farm_id"
+  end
+
+  create_table "scheduled_control_states", force: :cascade do |t|
+    t.bigint "farm_id", null: false
+    t.bigint "schedule_id", null: false
+    t.bigint "device_controller_configuration_id", null: false
+    t.string "recurrence", null: false
+    t.string "desired_state", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "schedules", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "farm_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "enabled", default: true, null: false
   end
 
 end

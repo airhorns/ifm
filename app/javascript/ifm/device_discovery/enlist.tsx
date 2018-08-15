@@ -113,7 +113,7 @@ export class DeviceDiscoveryEnlist extends React.Component<IDeviceDiscoveryEnlis
             </Segment>
           </Segment.Group>
           <form.HiddenField name="enlistDevice.id" value={data.deviceDiscoveryLog.id} />
-        </React.Fragment>
+        </React.Fragment>;
       }}
     </AutoForm>;
   }

@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  minimum_ec: 1.5
+  maximum_ec: 1.5
+  minimum_ph: 1.5
+  maximum_ph: 1.5
+  minimum_hours_light: 1.5
+  maximum_hours_light: 1.5
+  minimum_temperature: 1.5
+  maximum_temperature: 1.5
+
+two:
+  name: MyString
+  minimum_ec: 1.5
+  maximum_ec: 1.5
+  minimum_ph: 1.5
+  maximum_ph: 1.5
+  minimum_hours_light: 1.5
+  maximum_hours_light: 1.5
+  minimum_temperature: 1.5
+  maximum_temperature: 1.5
