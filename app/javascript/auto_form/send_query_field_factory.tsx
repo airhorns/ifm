@@ -7,7 +7,7 @@ export interface ISendQueryFieldProps {
 
 export type SendQueryField = React.ComponentType<ISendQueryFieldProps>;
 
-export const SendQueryFieldFactory = (form: AutoFormStateContainer<any, any>): SendQueryField => {
+export const SendQueryFieldFactory = (form: AutoFormStateContainer<any, any, any>): SendQueryField => {
   return class SendQueryFieldComponent extends React.Component<ISendQueryFieldProps, {}> {
     constructor(props: ISendQueryFieldProps) {
       super(props);

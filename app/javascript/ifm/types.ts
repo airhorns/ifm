@@ -1,5 +1,33 @@
 /* tslint:disable */
-/** Generated in 2018-07-18T18:35:55+00:00 */
+/** Generated in 2018-08-15T01:22:59+00:00 */
+import { GraphQLResolveInfo } from "graphql";
+
+export type Resolver<Result, Parent = any, Context = any, Args = any> = (
+  parent?: Parent,
+  args?: Args,
+  context?: Context,
+  info?: GraphQLResolveInfo
+) => Promise<Result> | Result;
+
+export type SubscriptionResolver<
+  Result,
+  Parent = any,
+  Context = any,
+  Args = any
+> = {
+  subscribe<R = Result, P = Parent>(
+    parent?: P,
+    args?: Args,
+    context?: Context,
+    info?: GraphQLResolveInfo
+  ): AsyncIterator<R | Result>;
+  resolve?<R = Result, P = Parent>(
+    parent?: P,
+    args?: Args,
+    context?: Context,
+    info?: GraphQLResolveInfo
+  ): R | Result | Promise<R | Result>;
+};
 
 export type DateTime = any;
 
@@ -131,6 +159,13 @@ export interface UpdateFarmPayload {
   farm?: Farm | null;
 }
 
+export interface EnlistDeviceInput {
+  deviceDiscoveryLogId: string;
+  deviceNickname: string;
+  farmZoneId: string;
+  enlistControls?: EnlistControlInput[] | null;
+}
+
 export interface EnlistControlInput {
   field: string;
   controlNickname: string;
@@ -188,10 +223,7 @@ export interface DeviceDiscoveryLogsQueryArgs {
   filter?: DiscoveryStateFilter | null;
 }
 export interface EnlistDeviceMutationArgs {
-  deviceDiscoveryLogId: string;
-  deviceNickname: string;
-  farmZoneId: string;
-  enlistControls?: EnlistControlInput[] | null;
+  input: EnlistDeviceInput;
 }
 export interface UpdateDeviceConfigurationMutationArgs {
   input: UpdateDeviceConfigurationInput;
@@ -214,6 +246,718 @@ export enum DiscoveryStateFilter {
   ENLISTED = "ENLISTED",
   PENDING = "PENDING"
 }
+
+export namespace QueryResolvers {
+  export interface Resolvers<Context = any> {
+    deviceConfiguration?: DeviceConfigurationResolver<
+      DeviceConfiguration,
+      any,
+      Context
+    > /** Get the details of one DeviceConfiguration object */;
+    deviceConfigurations?: DeviceConfigurationsResolver<
+      DeviceConfiguration[],
+      any,
+      Context
+    > /** Get all the configured devices as DeviceConfiguration objects */;
+    deviceControllerConfiguration?: DeviceControllerConfigurationResolver<
+      DeviceControllerConfiguration,
+      any,
+      Context
+    > /** Get the details of one DeviceControllerConfiguration object */;
+    deviceDiscoveryLog?: DeviceDiscoveryLogResolver<
+      DeviceDiscoveryLog,
+      any,
+      Context
+    > /** Get one DeviceDiscoveryLog */;
+    deviceDiscoveryLogs?: DeviceDiscoveryLogsResolver<
+      DeviceDiscoveryLog[],
+      any,
+      Context
+    > /** List DeviceDiscoveryLogs with scope arguments */;
+    farm?: FarmResolver<
+      Farm,
+      any,
+      Context
+    > /** Get the details of the current farm */;
+    farmZones?: FarmZonesResolver<
+      FarmZone[],
+      any,
+      Context
+    > /** Get the list of zones for the current farm */;
+  }
+
+  export type DeviceConfigurationResolver<
+    R = DeviceConfiguration,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, DeviceConfigurationArgs>;
+  export interface DeviceConfigurationArgs {
+    id: string;
+  }
+
+  export type DeviceConfigurationsResolver<
+    R = DeviceConfiguration[],
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type DeviceControllerConfigurationResolver<
+    R = DeviceControllerConfiguration,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, DeviceControllerConfigurationArgs>;
+  export interface DeviceControllerConfigurationArgs {
+    id: string;
+  }
+
+  export type DeviceDiscoveryLogResolver<
+    R = DeviceDiscoveryLog,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, DeviceDiscoveryLogArgs>;
+  export interface DeviceDiscoveryLogArgs {
+    id: string;
+  }
+
+  export type DeviceDiscoveryLogsResolver<
+    R = DeviceDiscoveryLog[],
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, DeviceDiscoveryLogsArgs>;
+  export interface DeviceDiscoveryLogsArgs {
+    filter?: DiscoveryStateFilter | null;
+  }
+
+  export type FarmResolver<R = Farm, Parent = any, Context = any> = Resolver<
+    R,
+    Parent,
+    Context
+  >;
+  export type FarmZonesResolver<
+    R = FarmZone[],
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace DeviceConfigurationResolvers {
+  export interface Resolvers<Context = any> {
+    controllers?: ControllersResolver<DeviceController[], any, Context>;
+    data?: DataResolver<Json | null, any, Context>;
+    dataAddress?: DataAddressResolver<string, any, Context>;
+    deviceClass?: DeviceClassResolver<string, any, Context>;
+    deviceControllerConfigurations?: DeviceControllerConfigurationsResolver<
+      DeviceControllerConfiguration[],
+      any,
+      Context
+    >;
+    deviceDiscoveryLog?: DeviceDiscoveryLogResolver<
+      DeviceDiscoveryLog | null,
+      any,
+      Context
+    >;
+    deviceName?: DeviceNameResolver<string, any, Context>;
+    farmZone?: FarmZoneResolver<FarmZone, any, Context>;
+    farmZoneId?: FarmZoneIdResolver<string, any, Context>;
+    humanName?: HumanNameResolver<string, any, Context>;
+    humanNameWithZone?: HumanNameWithZoneResolver<string, any, Context>;
+    id?: IdResolver<string, any, Context>;
+    imageUrl?: ImageUrlResolver<string, any, Context>;
+    lastSeen?: LastSeenResolver<DateTime, any, Context>;
+    publishers?: PublishersResolver<DevicePublisher[], any, Context>;
+  }
+
+  export type ControllersResolver<
+    R = DeviceController[],
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type DataResolver<
+    R = Json | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type DataAddressResolver<
+    R = string,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type DeviceClassResolver<
+    R = string,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type DeviceControllerConfigurationsResolver<
+    R = DeviceControllerConfiguration[],
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type DeviceDiscoveryLogResolver<
+    R = DeviceDiscoveryLog | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type DeviceNameResolver<
+    R = string,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type FarmZoneResolver<
+    R = FarmZone,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type FarmZoneIdResolver<
+    R = string,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type HumanNameResolver<
+    R = string,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type HumanNameWithZoneResolver<
+    R = string,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
+    R,
+    Parent,
+    Context
+  >;
+  export type ImageUrlResolver<
+    R = string,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type LastSeenResolver<
+    R = DateTime,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type PublishersResolver<
+    R = DevicePublisher[],
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace DeviceControllerResolvers {
+  export interface Resolvers<Context = any> {
+    controlStrategyHumanName?: ControlStrategyHumanNameResolver<
+      string,
+      any,
+      Context
+    >;
+    deviceControllerConfiguration?: DeviceControllerConfigurationResolver<
+      DeviceControllerConfiguration,
+      any,
+      Context
+    >;
+    field?: FieldResolver<string, any, Context>;
+    humanName?: HumanNameResolver<string, any, Context>;
+    humanState?: HumanStateResolver<DeviceControllerState, any, Context>;
+    icon?: IconResolver<string, any, Context>;
+    nickname?: NicknameResolver<string, any, Context>;
+  }
+
+  export type ControlStrategyHumanNameResolver<
+    R = string,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type DeviceControllerConfigurationResolver<
+    R = DeviceControllerConfiguration,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type FieldResolver<R = string, Parent = any, Context = any> = Resolver<
+    R,
+    Parent,
+    Context
+  >;
+  export type HumanNameResolver<
+    R = string,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type HumanStateResolver<
+    R = DeviceControllerState,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type IconResolver<R = string, Parent = any, Context = any> = Resolver<
+    R,
+    Parent,
+    Context
+  >;
+  export type NicknameResolver<
+    R = string,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace DeviceControllerConfigurationResolvers {
+  export interface Resolvers<Context = any> {
+    controller?: ControllerResolver<DeviceController, any, Context>;
+    controllerStateTransitions?: ControllerStateTransitionsResolver<
+      ControllerStateTransition[],
+      any,
+      Context
+    >;
+    deviceConfiguration?: DeviceConfigurationResolver<
+      DeviceConfiguration,
+      any,
+      Context
+    >;
+    enabled?: EnabledResolver<boolean, any, Context>;
+    field?: FieldResolver<string, any, Context>;
+    id?: IdResolver<string, any, Context>;
+    nickname?: NicknameResolver<string, any, Context>;
+  }
+
+  export type ControllerResolver<
+    R = DeviceController,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ControllerStateTransitionsResolver<
+    R = ControllerStateTransition[],
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type DeviceConfigurationResolver<
+    R = DeviceConfiguration,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type EnabledResolver<
+    R = boolean,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type FieldResolver<R = string, Parent = any, Context = any> = Resolver<
+    R,
+    Parent,
+    Context
+  >;
+  export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
+    R,
+    Parent,
+    Context
+  >;
+  export type NicknameResolver<
+    R = string,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace ControllerStateTransitionResolvers {
+  export interface Resolvers<Context = any> {
+    confirmedAt?: ConfirmedAtResolver<DateTime | null, any, Context>;
+    createdAt?: CreatedAtResolver<DateTime, any, Context>;
+    deviceControllerConfiguration?: DeviceControllerConfigurationResolver<
+      DeviceControllerConfiguration,
+      any,
+      Context
+    >;
+    id?: IdResolver<string, any, Context>;
+    initiator?: InitiatorResolver<string, any, Context>;
+    toState?: ToStateResolver<string, any, Context>;
+    updatedAt?: UpdatedAtResolver<DateTime, any, Context>;
+  }
+
+  export type ConfirmedAtResolver<
+    R = DateTime | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type CreatedAtResolver<
+    R = DateTime,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type DeviceControllerConfigurationResolver<
+    R = DeviceControllerConfiguration,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
+    R,
+    Parent,
+    Context
+  >;
+  export type InitiatorResolver<
+    R = string,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ToStateResolver<
+    R = string,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type UpdatedAtResolver<
+    R = DateTime,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace DeviceDiscoveryLogResolvers {
+  export interface Resolvers<Context = any> {
+    data?: DataResolver<Json | null, any, Context>;
+    dataAddress?: DataAddressResolver<string, any, Context>;
+    deviceClass?: DeviceClassResolver<string, any, Context>;
+    deviceName?: DeviceNameResolver<string, any, Context>;
+    enlistedConfiguration?: EnlistedConfigurationResolver<
+      DeviceConfiguration | null,
+      any,
+      Context
+    >;
+    id?: IdResolver<string, any, Context>;
+    imageUrl?: ImageUrlResolver<string, any, Context>;
+    lastSeen?: LastSeenResolver<DateTime, any, Context>;
+    proposedConfiguration?: ProposedConfigurationResolver<
+      ProposedDeviceConfiguration,
+      any,
+      Context
+    >;
+  }
+
+  export type DataResolver<
+    R = Json | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type DataAddressResolver<
+    R = string,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type DeviceClassResolver<
+    R = string,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type DeviceNameResolver<
+    R = string,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type EnlistedConfigurationResolver<
+    R = DeviceConfiguration | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
+    R,
+    Parent,
+    Context
+  >;
+  export type ImageUrlResolver<
+    R = string,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type LastSeenResolver<
+    R = DateTime,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ProposedConfigurationResolver<
+    R = ProposedDeviceConfiguration,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace ProposedDeviceConfigurationResolvers {
+  export interface Resolvers<Context = any> {
+    config?: ConfigResolver<Json, any, Context>;
+    controllers?: ControllersResolver<DeviceController[], any, Context>;
+    publishers?: PublishersResolver<DevicePublisher[], any, Context>;
+  }
+
+  export type ConfigResolver<R = Json, Parent = any, Context = any> = Resolver<
+    R,
+    Parent,
+    Context
+  >;
+  export type ControllersResolver<
+    R = DeviceController[],
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type PublishersResolver<
+    R = DevicePublisher[],
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace DevicePublisherResolvers {
+  export interface Resolvers<Context = any> {
+    comprehensionHumanName?: ComprehensionHumanNameResolver<
+      string,
+      any,
+      Context
+    >;
+    comprehensionUnit?: ComprehensionUnitResolver<string | null, any, Context>;
+    field?: FieldResolver<string, any, Context>;
+    humanName?: HumanNameResolver<string, any, Context>;
+    humanValue?: HumanValueResolver<string, any, Context>;
+    icon?: IconResolver<string, any, Context>;
+  }
+
+  export type ComprehensionHumanNameResolver<
+    R = string,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ComprehensionUnitResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type FieldResolver<R = string, Parent = any, Context = any> = Resolver<
+    R,
+    Parent,
+    Context
+  >;
+  export type HumanNameResolver<
+    R = string,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type HumanValueResolver<
+    R = string,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type IconResolver<R = string, Parent = any, Context = any> = Resolver<
+    R,
+    Parent,
+    Context
+  >;
+}
+
+export namespace FarmZoneResolvers {
+  export interface Resolvers<Context = any> {
+    deviceConfigurations?: DeviceConfigurationsResolver<
+      DeviceConfiguration[],
+      any,
+      Context
+    >;
+    id?: IdResolver<string, any, Context>;
+    name?: NameResolver<string, any, Context>;
+  }
+
+  export type DeviceConfigurationsResolver<
+    R = DeviceConfiguration[],
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
+    R,
+    Parent,
+    Context
+  >;
+  export type NameResolver<R = string, Parent = any, Context = any> = Resolver<
+    R,
+    Parent,
+    Context
+  >;
+}
+
+export namespace FarmResolvers {
+  export interface Resolvers<Context = any> {
+    dashboardHost?: DashboardHostResolver<string, any, Context>;
+    farmZones?: FarmZonesResolver<FarmZone[], any, Context>;
+    name?: NameResolver<string, any, Context>;
+  }
+
+  export type DashboardHostResolver<
+    R = string,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type FarmZonesResolver<
+    R = FarmZone[],
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type NameResolver<R = string, Parent = any, Context = any> = Resolver<
+    R,
+    Parent,
+    Context
+  >;
+}
+
+export namespace MutationResolvers {
+  export interface Resolvers<Context = any> {
+    enlistDevice?: EnlistDeviceResolver<
+      EnlistDevicePayload | null,
+      any,
+      Context
+    >;
+    updateDeviceConfiguration?: UpdateDeviceConfigurationResolver<
+      UpdateDeviceConfigurationPayload | null,
+      any,
+      Context
+    >;
+    updateDeviceControllerState?: UpdateDeviceControllerStateResolver<
+      UpdateDeviceControllerStatePayload | null,
+      any,
+      Context
+    >;
+    updateFarm?: UpdateFarmResolver<UpdateFarmPayload | null, any, Context>;
+  }
+
+  export type EnlistDeviceResolver<
+    R = EnlistDevicePayload | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, EnlistDeviceArgs>;
+  export interface EnlistDeviceArgs {
+    input: EnlistDeviceInput;
+  }
+
+  export type UpdateDeviceConfigurationResolver<
+    R = UpdateDeviceConfigurationPayload | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, UpdateDeviceConfigurationArgs>;
+  export interface UpdateDeviceConfigurationArgs {
+    input: UpdateDeviceConfigurationInput;
+  }
+
+  export type UpdateDeviceControllerStateResolver<
+    R = UpdateDeviceControllerStatePayload | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, UpdateDeviceControllerStateArgs>;
+  export interface UpdateDeviceControllerStateArgs {
+    input: UpdateDeviceControllerStateInput;
+  }
+
+  export type UpdateFarmResolver<
+    R = UpdateFarmPayload | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, UpdateFarmArgs>;
+  export interface UpdateFarmArgs {
+    input: UpdateFarmInput;
+  }
+}
+/** Autogenerated return type of EnlistDevice */
+export namespace EnlistDevicePayloadResolvers {
+  export interface Resolvers<Context = any> {
+    deviceConfiguration?: DeviceConfigurationResolver<
+      DeviceConfiguration | null,
+      any,
+      Context
+    >;
+    errors?: ErrorsResolver<string[], any, Context>;
+  }
+
+  export type DeviceConfigurationResolver<
+    R = DeviceConfiguration | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ErrorsResolver<
+    R = string[],
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+/** Autogenerated return type of UpdateDeviceConfiguration */
+export namespace UpdateDeviceConfigurationPayloadResolvers {
+  export interface Resolvers<Context = any> {
+    deviceConfiguration?: DeviceConfigurationResolver<
+      DeviceConfiguration | null,
+      any,
+      Context
+    >;
+    errors?: ErrorsResolver<string[], any, Context>;
+  }
+
+  export type DeviceConfigurationResolver<
+    R = DeviceConfiguration | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ErrorsResolver<
+    R = string[],
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+/** Autogenerated return type of UpdateDeviceControllerState */
+export namespace UpdateDeviceControllerStatePayloadResolvers {
+  export interface Resolvers<Context = any> {
+    controllerStateTransition?: ControllerStateTransitionResolver<
+      ControllerStateTransition | null,
+      any,
+      Context
+    >;
+    deviceController?: DeviceControllerResolver<
+      DeviceController | null,
+      any,
+      Context
+    >;
+    deviceControllerConfiguration?: DeviceControllerConfigurationResolver<
+      DeviceControllerConfiguration | null,
+      any,
+      Context
+    >;
+    errors?: ErrorsResolver<string[], any, Context>;
+  }
+
+  export type ControllerStateTransitionResolver<
+    R = ControllerStateTransition | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type DeviceControllerResolver<
+    R = DeviceController | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type DeviceControllerConfigurationResolver<
+    R = DeviceControllerConfiguration | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ErrorsResolver<
+    R = string[],
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+/** Autogenerated return type of UpdateFarm */
+export namespace UpdateFarmPayloadResolvers {
+  export interface Resolvers<Context = any> {
+    errors?: ErrorsResolver<string[], any, Context>;
+    farm?: FarmResolver<Farm | null, any, Context>;
+  }
+
+  export type ErrorsResolver<
+    R = string[],
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type FarmResolver<
+    R = Farm | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+
 export namespace GetDeviceControllerConfiguration {
   export type Variables = {
     id: string;
@@ -256,6 +1000,7 @@ export namespace GetDeviceControllerConfiguration {
     createdAt: DateTime;
   };
 }
+
 export namespace UpdateDeviceControllerState {
   export type Variables = {
     input: UpdateDeviceControllerStateInput;
@@ -276,6 +1021,7 @@ export namespace UpdateDeviceControllerState {
     humanState: DeviceControllerState;
   };
 }
+
 export namespace GetEnlist {
   export type Variables = {
     id: string;
@@ -334,12 +1080,10 @@ export namespace GetEnlist {
     name: string;
   };
 }
+
 export namespace SendEnlist {
   export type Variables = {
-    deviceDiscoveryLogId: string;
-    deviceNickname: string;
-    farmZoneId: string;
-    enlistControls: EnlistControlInput[];
+    input: EnlistDeviceInput;
   };
 
   export type Mutation = {
@@ -358,6 +1102,7 @@ export namespace SendEnlist {
     id: string;
   };
 }
+
 export namespace GetDeviceDiscoveryLogs {
   export type Variables = {};
 
@@ -384,6 +1129,7 @@ export namespace GetDeviceDiscoveryLogs {
     deviceName: string;
   };
 }
+
 export namespace GetDeviceConfiguration {
   export type Variables = {
     id: string;
@@ -440,6 +1186,7 @@ export namespace GetDeviceConfiguration {
     name: string;
   };
 }
+
 export namespace UpdateDeviceConfiguration {
   export type Variables = {
     input: UpdateDeviceConfigurationInput;
@@ -460,6 +1207,7 @@ export namespace UpdateDeviceConfiguration {
     id: string;
   };
 }
+
 export namespace GetDeviceConfigurations {
   export type Variables = {};
 
@@ -518,6 +1266,7 @@ export namespace GetDeviceConfigurations {
     name: string;
   };
 }
+
 export namespace GetFarm {
   export type Variables = {};
 
@@ -558,6 +1307,7 @@ export namespace GetFarm {
     humanState: DeviceControllerState;
   };
 }
+
 export namespace GetFarmSettings {
   export type Variables = {};
 
@@ -578,6 +1328,7 @@ export namespace GetFarmSettings {
     name: string;
   };
 }
+
 export namespace UpdateFarm {
   export type Variables = {
     input: UpdateFarmInput;

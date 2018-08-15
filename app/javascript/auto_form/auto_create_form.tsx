@@ -12,7 +12,11 @@ export interface IAutoCreateFormProps<SeedData extends object, MutationData, Mut
     new(props: any, context?: any): Mutation<MutationData, MutationVariables>;
   };
   seedData?: SeedData;
-  children: (form: AutoFormStateContainer<SeedData, MutationVariables>, data: SeedData) => React.ReactNode;
+  children: (
+    form: AutoFormStateContainer<SeedData, MutationVariables, MutationData>,
+    data: SeedData,
+    mutationData?: MutationData,
+  ) => React.ReactNode;
   redirectRoute: (result: MutationData) => string;
 }
 

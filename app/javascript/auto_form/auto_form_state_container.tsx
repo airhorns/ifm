@@ -1,14 +1,16 @@
 import * as React from "react";
 import * as _ from "lodash";
 import { Form, Input, InputProps, FormSelectProps, FormCheckboxProps, FormRadioProps, FormFieldProps, FormInputProps, FormDropdownProps, Message } from "semantic-ui-react";
+
 import { AutoInputFactory, AutoFormInput, TrustedFormInputType } from "./auto_input_factory";
 import { AutoFormNestedFields, IAutoFormNestedFieldsInstance, NestedFieldsFactory } from "./nested_fields";
 import { SendQueryFieldFactory, SendQueryField } from "./send_query_field_factory";
+import { HiddenFieldFactory, HiddenField } from "./hidden_field_factory";
 import { AutoSubmit, AutoSubmitFactory } from "./auto_submit";
 
 // All mutations that AutoForm works with have a root key of input that points to the fields of the object.
 export interface IInputMutationVariables {
-  input: object;
+    input: object;
 }
 
 // Form state is the data that will get sent as the mutation variables. It's of the form {farm: {id: 1, name: foo}}
@@ -22,21 +24,26 @@ export type IFormState<SeedData extends object, MutationVariables extends IInput
 [K in keyof SeedData]?: Partial<MutationVariables>
 };
 
-export interface IAutoFormStateContainerProps<SeedData extends object, MutationVariables extends IInputMutationVariables> {
+export interface IAutoFormStateContainerProps<SeedData extends object, MutationVariables extends IInputMutationVariables, MutationData> {
   seedData: SeedData;
+  mutationData?: MutationData;
   rootFieldName: string;
   loading: boolean;
   success: boolean;
   onSubmit: (variables: MutationVariables) => void;
-  children: (form: AutoFormStateContainer<SeedData, MutationVariables>, data: SeedData) => React.ReactNode;
+  children: (
+    form: AutoFormStateContainer<SeedData, MutationVariables, MutationData>,
+    data: SeedData,
+    mutationData?: MutationData,
+  ) => React.ReactNode;
 }
 
 export interface IAutoFormStateContainerState<SeedData extends object, MutationVariables extends IInputMutationVariables> {
   formState: IFormState<SeedData, MutationVariables>;
 }
 
-export class AutoFormStateContainer<SeedData extends object, MutationVariables extends IInputMutationVariables> extends
-    React.Component<IAutoFormStateContainerProps<SeedData, MutationVariables>,
+export class AutoFormStateContainer<SeedData extends object, MutationVariables extends IInputMutationVariables, MutationData> extends
+    React.Component<IAutoFormStateContainerProps<SeedData, MutationVariables, MutationData>,
                     IAutoFormStateContainerState<SeedData, MutationVariables>> {
 
   public Input: AutoFormInput<FormInputProps>;
@@ -47,6 +54,7 @@ export class AutoFormStateContainer<SeedData extends object, MutationVariables e
   public Checkbox: AutoFormInput<FormCheckboxProps>;
   public Radio: AutoFormInput<FormRadioProps>;
   public SendQueryField: SendQueryField;
+  public HiddenField: HiddenField;
   public AutoSubmit: AutoSubmit;
   public Message = Message;
   public Group = Form.Group;
@@ -54,7 +62,7 @@ export class AutoFormStateContainer<SeedData extends object, MutationVariables e
   public NestedFields: AutoFormNestedFields<SeedData>;
   private registeredNestedFieldsComponents: {[key: string]: IAutoFormNestedFieldsInstance<SeedData>};
 
-  constructor(props: IAutoFormStateContainerProps<SeedData, MutationVariables>) {
+  constructor(props: IAutoFormStateContainerProps<SeedData, MutationVariables, MutationData>) {
     super(props);
     this.state = { formState: {} };
     this.registeredNestedFieldsComponents = {};
@@ -66,6 +74,7 @@ export class AutoFormStateContainer<SeedData extends object, MutationVariables e
     this.Checkbox = AutoInputFactory(this, Form.Checkbox);
     this.Field = AutoInputFactory(this, (Form.Field as TrustedFormInputType));
     this.SendQueryField = SendQueryFieldFactory(this);
+    this.HiddenField = HiddenFieldFactory(this);
     this.NestedFields = NestedFieldsFactory(this);
     this.AutoSubmit = AutoSubmitFactory(this);
   }
@@ -107,7 +116,7 @@ export class AutoFormStateContainer<SeedData extends object, MutationVariables e
   public render() {
     const idKey = `${this.props.rootFieldName}.id`;
     return <Form loading={this.props.loading} success={this.props.success} onSubmit={this.submit}>
-      {this.props.children(this, this.props.seedData)}
+      {this.props.children(this, this.props.seedData, this.props.mutationData)}
       {!_.isUndefined(this.getSeedValue(idKey)) && <this.SendQueryField name={idKey} />}
     </Form>;
   }

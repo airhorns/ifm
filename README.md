@@ -22,6 +22,12 @@ And you'll have a prompt to run stuff! At that point you can do:
 bash3.4# bin/rails test
 ```
 
+or
+
+```
+bash3.4# bin/jest
+```
+
 and the tests should run fine.
 
 #### Adding secrets
