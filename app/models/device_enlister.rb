@@ -35,7 +35,7 @@ class DeviceEnlister
   private
 
   def controller_configurations(enlist_controls)
-    enlist_controls.map do |enlist_control|
+    Array(enlist_controls).map do |enlist_control|
       DeviceControllerConfiguration.new(
         farm: farm,
         field: enlist_control.field,

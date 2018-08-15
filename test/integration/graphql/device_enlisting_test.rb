@@ -54,8 +54,8 @@ module Graphql
 
     test "enlisting devices" do
       mutation = "
-        mutation($deviceDiscoveryLogId: ID!, $deviceNickname: String!, $farmZoneId: ID!) {
-          enlistDevice(deviceDiscoveryLogId: $deviceDiscoveryLogId, deviceNickname: $deviceNickname, farmZoneId: $farmZoneId) {
+        mutation($input: EnlistDeviceInput!) {
+          enlistDevice(input: $input) {
             deviceConfiguration {
               id
               dataAddress
@@ -78,9 +78,11 @@ module Graphql
         mutation,
         context: @context,
         variables: {
-          deviceDiscoveryLogId: @log.id,
-          deviceNickname: "Enlisted Doodad",
-          farmZoneId: @farm_zone.id,
+          input: {
+            deviceDiscoveryLogId: @log.id,
+            deviceNickname: "Enlisted Doodad",
+            farmZoneId: @farm_zone.id,
+          }
         }
       )
 
@@ -93,8 +95,8 @@ module Graphql
 
     test "enlisting devices with controllers" do
       mutation = "
-        mutation($deviceDiscoveryLogId: ID!, $deviceNickname: String!, $farmZoneId: ID!, $enlistControls: [EnlistControlInput!]) {
-          enlistDevice(deviceDiscoveryLogId: $deviceDiscoveryLogId, deviceNickname: $deviceNickname, farmZoneId: $farmZoneId, enlistControls: $enlistControls) {
+      mutation($input: EnlistDeviceInput!) {
+        enlistDevice(input: $input) {
             deviceConfiguration {
               id
               dataAddress
@@ -121,10 +123,12 @@ module Graphql
         mutation,
         context: @context,
         variables: {
-          deviceDiscoveryLogId: @log.id,
-          deviceNickname: "Enlisted Doodad with Control",
-          farmZoneId: @farm_zone.id,
-          enlistControls: [{ field: "relay_0", controlNickname: "Pump relay" }]
+          input: {
+            deviceDiscoveryLogId: @log.id,
+            deviceNickname: "Enlisted Doodad with Control",
+            farmZoneId: @farm_zone.id,
+            enlistControls: [{ field: "relay_0", controlNickname: "Pump relay" }]
+          }
         }
       )
 
@@ -137,8 +141,8 @@ module Graphql
 
     test "enlisting devices with controllers shouldn't work unless a value is provided for each controller" do
       mutation = "
-        mutation($deviceDiscoveryLogId: ID!, $deviceNickname: String!, $farmZoneId: ID!, $enlistControls: [EnlistControlInput!]) {
-          enlistDevice(deviceDiscoveryLogId: $deviceDiscoveryLogId, deviceNickname: $deviceNickname, farmZoneId: $farmZoneId, enlistControls: $enlistControls) {
+      mutation($input: EnlistDeviceInput!) {
+        enlistDevice(input: $input) {
             deviceConfiguration {
               id
             }
@@ -153,10 +157,12 @@ module Graphql
         mutation,
         context: @context,
         variables: {
-          deviceDiscoveryLogId: @log.id,
-          deviceNickname: "Enlisted Doodad with Control",
-          farmZoneId: @farm_zone.id,
-          enlistControls: []
+          input: {
+            deviceDiscoveryLogId: @log.id,
+            deviceNickname: "Enlisted Doodad with Control",
+            farmZoneId: @farm_zone.id,
+            enlistControls: []
+          }
         }
       )
 
