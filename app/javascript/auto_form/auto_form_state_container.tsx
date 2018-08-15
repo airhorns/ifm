@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as _ from "lodash";
 import { Form, Input, InputProps, FormSelectProps, FormCheckboxProps, FormRadioProps, FormFieldProps, FormInputProps, FormDropdownProps, Message } from "semantic-ui-react";
+
 import { AutoInputFactory, AutoFormInput, TrustedFormInputType } from "./auto_input_factory";
 import { AutoFormNestedFields, IAutoFormNestedFieldsInstance, NestedFieldsFactory } from "./nested_fields";
 import { SendQueryFieldFactory, SendQueryField } from "./send_query_field_factory";
@@ -8,7 +9,7 @@ import { AutoSubmit, AutoSubmitFactory } from "./auto_submit";
 
 // All mutations that AutoForm works with have a root key of input that points to the fields of the object.
 export interface IInputMutationVariables {
-  input: object;
+    input: object;
 }
 
 // Form state is the data that will get sent as the mutation variables. It's of the form {farm: {id: 1, name: foo}}

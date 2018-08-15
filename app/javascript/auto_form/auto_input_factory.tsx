@@ -6,8 +6,8 @@ import { AutoFormStateContainer } from "./auto_form_state_container";
 type InputValueType = number | string | React.ReactText | boolean;
 
 export interface IAutoFormWrappeeRequiredProps {
-  onChange?: (event: React.SyntheticEvent, data?: InputOnChangeData | FormDropdownProps) => void;
-  defaultValue?: string | number | boolean | Array<number | string>;
+  onChange?: (event: React.FormEvent<HTMLInputElement>, data?: any) => void;
+  defaultValue?: InputValueType | InputValueType[];
   value?: InputValueType | InputValueType[];
   checked?: boolean;
 }
