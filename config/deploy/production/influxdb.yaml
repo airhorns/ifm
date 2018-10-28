@@ -12,7 +12,7 @@ spec:
   storageClassName: gce-ssd
   resources:
     requests:
-      storage: 20Gi
+      storage: 15Gi
 status: {}
 ---
 apiVersion: v1

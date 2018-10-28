@@ -8,12 +8,12 @@ spec:
     name: letsencrypt-production
     kind: ClusterIssuer
   dnsNames:
-    - "*.bigclear.farm"
-    - "*.app.bigclear.farm"
+    - "*.berries.fun"
+    - "*.app.berries.fun"
   acme:
     config:
     - dns01:
         provider: ifm-clouddns
       domains:
-      - "*.bigclear.farm"
-      - "*.app.bigclear.farm"
+      - "*.berries.fun"
+      - "*.app.berries.fun"

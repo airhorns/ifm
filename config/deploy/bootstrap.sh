@@ -3,10 +3,12 @@
 # Note: the user running this has to have cluster admin priviledges!
 # Run kubectl create clusterrolebinding harry-cluster-admin-binding --clusterrole=cluster-admin --user=harry.brundage@gmail.com for example to give yourself priviledges on a new cluster
 set -ex
-helm repo update
+kubectl create -f config/deploy/tiller-service-account.yaml
 helm init --service-account tiller
+helm repo update
 kubectl create namespace ifm-production
 
+sleep 30
 helm install --name cert-manager --namespace kube-system stable/cert-manager
 helm install --name nginx-ingress stable/nginx-ingress -f config/deploy/nginx-ingress-controller.yml
 

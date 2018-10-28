@@ -10,23 +10,23 @@ spec:
   tls:
     - secretName: tls-bigclear-farm-production
       hosts:
-        - chronograf.app.bigclear.farm
-        - influxdb.app.bigclear.farm
-        - app.bigclear.farm
+        - chronograf.app.berries.fun
+        - influxdb.app.berries.fun
+        - app.berries.fun
   rules:
-  - host: chronograf.app.bigclear.farm
+  - host: chronograf.app.berries.fun
     http:
       paths:
         - backend:
             serviceName: chronograf
             servicePort: 8888
-  - host: influxdb.app.bigclear.farm
+  - host: influxdb.app.berries.fun
     http:
       paths:
         - backend:
             serviceName: influxdb
             servicePort: 8086
-  - host: app.bigclear.farm
+  - host: app.berries.fun
     http:
       paths:
         - backend:

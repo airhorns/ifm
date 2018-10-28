@@ -3,7 +3,7 @@
 set -ex
 export KUBECONFIG=${HOME}/.kube/config
 export ENVIRONMENT=production
-export CLUSTER="gke_integrated-farm-manager_us-central1-a_development-tiny"
+export CLUSTER="gke_harrys-berries_us-central1-a_production"
 
 if [[ -z "${CIRCLECI}" ]]; then
   # kubernetes-deploy is in the bundle

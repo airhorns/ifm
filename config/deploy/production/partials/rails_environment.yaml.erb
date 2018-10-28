@@ -1,8 +1,8 @@
 - name: DATABASE_URL
   valueFrom:
     secretKeyRef:
-      name: cloudsql-db-credentials
-      key: database_url
+      name: mysql-secrets
+      key: DATABASE_URL
 - name: INFLUXDB_URL
   valueFrom:
     secretKeyRef:

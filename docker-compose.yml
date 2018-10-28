@@ -30,7 +30,7 @@ services:
       - 3001:80
     restart: on-failure
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@bigclear.farm
+      PGADMIN_DEFAULT_EMAIL: admin@berries.fun
       PGADMIN_DEFAULT_PASSWORD: bigclear1
 
   redis:
@@ -109,7 +109,7 @@ services:
 
   web:
     <<: *app_base
-    image: integrated-farm-manager/ifm
+    image: harrys-berries/ifm
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
     stdin_open: true
     tty: true
