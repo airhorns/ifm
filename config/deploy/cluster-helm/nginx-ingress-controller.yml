@@ -3,7 +3,7 @@ controller:
   publishService:
     enabled: true
   service:
-    loadBalancerIP: 35.232.61.172
+    type: LoadBalancer
   stats:
     enabled: true
 rbac:

@@ -1,0 +1,18 @@
+sources:
+  - ingress
+
+provider: google
+google:
+  project: harrys-berries
+
+domainFilters:
+  - app.berries.fun
+
+# When using the TXT registry, a name that identifies this instance of ExternalDNS
+txtOwnerId: "production.ops.berries.fun"
+
+rbac:
+  create: true
+  apiVersion: v1
+
+logLevel: debug

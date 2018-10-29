@@ -1,7 +1,7 @@
 - name: DATABASE_URL
   valueFrom:
     secretKeyRef:
-      name: mysql-secrets
+      name: postgres-secrets
       key: DATABASE_URL
 - name: INFLUXDB_URL
   valueFrom:
@@ -11,8 +11,8 @@
 - name: MQTT_URL
   valueFrom:
     secretKeyRef:
-      name: cloudmqtt-credentials
-      key: url
+      name: mqtt-credentials
+      key: MQTT_URL
 - name: RAILS_ENV
   value: production
 - name: REDIS_URL

@@ -17,10 +17,6 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert -f ../../docker-compose.yml
-    kompose.version: 1.14.0 ()
-  creationTimestamp: null
   labels:
     io.kompose.service: mqtt
   name: mqtt
@@ -37,6 +33,7 @@ spec:
       containers:
       - image: eclipse-mosquitto
         name: mqtt
+        # command: ["sleep", "1000000"]
         ports:
         - containerPort: 1883
         - containerPort: 9001
@@ -44,19 +41,46 @@ spec:
         volumeMounts:
         - mountPath: /mosquitto/data
           name: mqtt-data-ssd
+        - mountPath: /mosquitto/config/mosquitto.conf
+          name: mosquitto-config
+          subPath: mosquitto.conf
+          readOnly: true
+        - mountPath: "/mosquitto/mosquitto_passwd"
+          name: mosquitto-passwd
+          subPath: mosquitto_passwd
+          readOnly: true
       restartPolicy: Always
       volumes:
       - name: mqtt-data-ssd
         persistentVolumeClaim:
           claimName: mqtt-data-ssd
+      - name: mosquitto-config
+        configMap:
+          name: mosquitto-config
+          items:
+          - key: mosquitto.conf
+            path: mosquitto.conf
+      - name: mosquitto-passwd
+        secret:
+          secretName: mqtt-credentials
+          items:
+          - key: mosquitto_passwd
+            path: mosquitto_passwd
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mosquitto-config
+data:
+  mosquitto.conf: |
+    password_file /mosquitto/mosquitto_passwd
+    allow_anonymous false
+    persistence true
+    persistence_location /mosquitto/data/
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    kompose.cmd: kompose convert -f ../../docker-compose.yml
-    kompose.version: 1.14.0 ()
-  creationTimestamp: null
   labels:
     io.kompose.service: mqtt
   name: mqtt
@@ -70,4 +94,3 @@ spec:
     targetPort: 9001
   selector:
     io.kompose.service: mqtt
----

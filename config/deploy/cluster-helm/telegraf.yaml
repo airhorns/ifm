@@ -1,0 +1,10 @@
+# values.yaml for Telegraf
+image:
+  repo: "telegraf"
+  tag: "1.8-alpine"
+  pullPolicy: IfNotPresent
+
+config:
+  outputs:
+    - influxdb:
+        url: http://influxdb.ifm-production.svc.cluster.local:8086
