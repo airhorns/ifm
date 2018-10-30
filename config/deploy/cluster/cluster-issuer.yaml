@@ -14,7 +14,7 @@ spec:
           clouddns:
             serviceAccountSecretRef:
               name: clouddns-service-account
-              key: credentials.json
+              key: cert-manager-production-key.json
             project: harrys-berries
 ---
 apiVersion: certmanager.k8s.io/v1alpha1
@@ -33,5 +33,5 @@ spec:
           clouddns:
             serviceAccountSecretRef:
               name: clouddns-service-account
-              key: credentials.json
+              key: cert-manager-production-key.json
             project: harrys-berries
