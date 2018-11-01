@@ -8,7 +8,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-body-size: 10M
 spec:
   tls:
-    - secretName: tls-bigclear-farm-production
+    - secretName: berries-fun-production
       hosts:
         - chronograf.app.berries.fun
         - influxdb.app.berries.fun

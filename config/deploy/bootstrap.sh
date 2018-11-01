@@ -9,7 +9,7 @@ helm repo update
 kubectl create namespace ifm-production
 
 sleep 30
-helm install --name cert-manager --namespace kube-system stable/cert-manager
+helm install --name cert-manager stable/cert-manager -f config/deploy/cluster-helm/cert-manager.yaml
 helm install --name nginx-ingress stable/nginx-ingress -f config/deploy/cluster-helm/nginx-ingress-controller.yml
 helm install --name external-dns stable/external-dns -f config/deploy/cluster-helm/external-dns.yaml
 

@@ -1,40 +1,40 @@
+# ---
+# apiVersion: certmanager.k8s.io/v1alpha1
+# kind: Certificate
+# metadata:
+#   name: berries-fun-staging
+# spec:
+#   secretName: berries-fun-staging
+#   issuerRef:
+#     name: letsencrypt-staging
+#     kind: ClusterIssuer
+#   dnsNames:
+#     - "app.berries.fun"
+#     - "*.app.berries.fun"
+#   acme:
+#     config:
+#     - dns01:
+#         provider: ifm-clouddns
+#       domains:
+#       - "app.berries.fun"
+#       - "*.app.berries.fun"
 ---
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
-  name: tls-berries-fun-staging
+  name: berries-fun-production
 spec:
-  secretName: tls-berries-fun-staging
-  issuerRef:
-    name: letsencrypt-staging
-    kind: ClusterIssuer
-  dnsNames:
-    - "*.berries.fun"
-    - "*.app.berries.fun"
-  acme:
-    config:
-    - dns01:
-        provider: ifm-clouddns
-      domains:
-      - "*.berries.fun"
-      - "*.app.berries.fun"
----
-apiVersion: certmanager.k8s.io/v1alpha1
-kind: Certificate
-metadata:
-  name: tls-berries-fun-production
-spec:
-  secretName: tls-berries-fun-production
+  secretName: berries-fun-production
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
   dnsNames:
-    - "*.berries.fun"
+    - "app.berries.fun"
     - "*.app.berries.fun"
   acme:
     config:
     - dns01:
         provider: ifm-clouddns
       domains:
-      - "*.berries.fun"
+      - "app.berries.fun"
       - "*.app.berries.fun"

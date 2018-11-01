@@ -6,7 +6,7 @@ google:
   project: harrys-berries
 
 domainFilters:
-  - app.berries.fun
+  - berries.fun
 
 # When using the TXT registry, a name that identifies this instance of ExternalDNS
 txtOwnerId: "production.ops.berries.fun"
