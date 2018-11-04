@@ -130,6 +130,3 @@ services:
   production-mqtt-mirror:
     <<: *app_base
     command: bin/rake mqtt:mirror_production[sensors/#]
-    environment:
-      <<: *app_environment
-      PRODUCTION_MQTT_URL: mqtt://peacxxic:rfLeHoJBFMAp@m10.cloudmqtt.com:13796
