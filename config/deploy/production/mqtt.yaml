@@ -84,7 +84,10 @@ metadata:
   labels:
     io.kompose.service: mqtt
   name: mqtt
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: mqtt.app.berries.fun
 spec:
+  type: LoadBalancer
   ports:
   - name: "1883"
     port: 1883
