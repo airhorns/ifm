@@ -23,6 +23,7 @@ class MqttStateInjest
       process_batch(farm_id, batch)
       batch = []
       break unless daemon_lock.checkin
+      sleep 1
     end
   end
 
