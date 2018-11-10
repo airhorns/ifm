@@ -21,7 +21,7 @@ gem 'sidecloq', '~> 0.4.1', require: ['sidecloq', 'sidecloq/web']
 gem 'sidekiq-daemon', require: ['sidekiq-daemon', 'sidekiq-daemon/web'], git: "https://github.com/airhorns/sidekiq-daemon.git", ref: "0155542121b72dba95c4ee5e9bbc030d112f3de8"
 gem "mlanett-redis-lock", git: "https://github.com/mlanett/redis-lock.git"
 
-gem 'paho-mqtt'
+gem 'paho-mqtt', git: "https://github.com/RubyDevInc/paho.mqtt.ruby.git"
 gem 'influxdb', '~> 0.5.3'
 gem 'graphql', '~> 1.8.2'
 gem 'graphiql-rails', ' ~> 1.4.10'

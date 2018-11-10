@@ -25,7 +25,9 @@ jobs:
       # I am sorry.
       - run:
           name: configure docker-compose
-          command: ruby .circleci/remove-docker-compose-volumes.rb docker-compose.yml
+          command: |
+            ruby .circleci/remove-docker-compose-volumes.rb docker-compose.yml
+            touch .env
 
       # build and start docker images
       - run:

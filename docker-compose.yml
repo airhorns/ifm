@@ -43,7 +43,7 @@ services:
     command: redis-server --appendonly yes
 
   mqtt:
-    image: eclipse-mosquitto
+    image: eclipse-mosquitto:latest
     ports:
       - 1883:1883
       - 9001:9001
@@ -53,7 +53,7 @@ services:
       - mqtt-data:/mosquitto/data:delegated
 
   influxdb:
-    image: influxdb
+    image: influxdb:latest
     ports:
       - 8086:8086
     volumes:
@@ -90,6 +90,8 @@ services:
       - .:/app:delegated
       - ~/Code:/root/Code:delegated # useful for linking other gems
       - app-gems:/usr/local/bundle:delegated
+    env_file:
+      - .env
     depends_on:
       - postgres
       - redis
