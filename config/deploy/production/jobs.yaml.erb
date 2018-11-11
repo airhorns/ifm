@@ -30,4 +30,8 @@ spec:
             - default
           env: <%= partial 'rails_environment' %>
           resources: {}
+          securityContext:
+            capabilities:
+              add:
+                - SYS_PTRACE
       restartPolicy: Always

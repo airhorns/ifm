@@ -54,6 +54,10 @@ spec:
           ports:
             - containerPort: 3000
           resources: {}
+          securityContext:
+            capabilities:
+              add:
+                - SYS_PTRACE
           readinessProbe:
             httpGet:
               path: /health_check
