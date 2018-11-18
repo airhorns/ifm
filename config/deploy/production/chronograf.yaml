@@ -51,12 +51,7 @@ spec:
         io.kompose.service: chronograf
     spec:
       containers:
-      - env:
-        - name: INFLUXDB_URL
-          value: http://influxdb:8086
-        - name: LOG_LEVEL
-          value: error
-        image: chronograf:1.3.8
+      - image: chronograf:1.3.8
         name: chronograf
         ports:
         - containerPort: 8888
@@ -64,6 +59,28 @@ spec:
         volumeMounts:
         - mountPath: /var/lib/chronograf
           name: chronograf-data-ssd
+        env:
+        - name: INFLUXDB_URL
+          value: http://influxdb:8086
+        - name: LOG_LEVEL
+          value: error
+        - name: PUBLIC_URL
+          value: https://chronograf.app.berries.fun
+        - name: GOOGLE_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: influx-secrets
+              key: google_oauth_client_id
+        - name: GOOGLE_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: influx-secrets
+              key: google_oauth_client_secret
+        - name: TOKEN_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: influx-secrets
+              key: token_secret
       restartPolicy: Always
       volumes:
       - name: chronograf-data-ssd
