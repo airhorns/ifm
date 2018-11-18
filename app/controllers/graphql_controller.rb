@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class GraphqlController < ApplicationController
+class GraphqlController < FarmAreaController
   skip_before_action :verify_authenticity_token, if: :local_introspection?
 
   def execute
@@ -36,9 +36,5 @@ class GraphqlController < ApplicationController
 
   def local_introspection?
     Rails.env.development? && params[:query].include?("IntrospectionQuery")
-  end
-
-  def current_farm
-    @farm ||= Farm.first
   end
 end

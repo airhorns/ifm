@@ -27,6 +27,16 @@
     secretKeyRef:
       name: application-secrets
       key: sentry_dsn
+- name: GOOGLE_OAUTH_CLIENT_ID
+  valueFrom:
+    secretKeyRef:
+      name: application-secrets
+      key: google_oauth_client_id
+- name: GOOGLE_OAUTH_CLIENT_SECRET
+  valueFrom:
+    secretKeyRef:
+      name: application-secrets
+      key: google_oauth_client_secret
 - name: RAILS_SERVE_STATIC_FILES
   value: "true"
 - name: RAILS_LOG_TO_STDOUT

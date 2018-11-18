@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class ClientSideAppController < ApplicationController
+class ClientSideAppController < FarmAreaController
   def index
   end
 end

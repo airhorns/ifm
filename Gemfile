@@ -35,6 +35,9 @@ gem 'health_check'
 
 gem "sentry-raven", require: false
 
+gem "devise"
+gem "omniauth-google-oauth2"
+
 group :development, :test do
   gem 'byebug'
   gem 'guard'

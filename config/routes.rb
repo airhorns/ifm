@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  devise_for :farmers, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+  devise_scope :farmer do
+    get 'sign_in', :to => 'omniauth_callbacks#signin', :as => :new_farmer_session
+    get 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_farmer_session
+  end
+
   post "/graphql", to: "graphql#execute"
 
   root to: 'client_side_app#index'
